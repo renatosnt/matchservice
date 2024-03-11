@@ -5,7 +5,7 @@ Agendamento de Serviços Locais.
 
 ## Membros
 - Bruna Caroline Cardoso da Silva - 2021049404 - Fullstack
-- Gabriel - Fullstack
+- Gabriel Teixeira - 2020054420 - Fullstack
 - Michel Barros da Fonseca - 2020006906 - Fullstack
 - Renato Santos - 2020006981 - Fullstack
 
