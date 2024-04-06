@@ -48,17 +48,6 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 ### Frontend
 - React
 
-## Backlog do Sprint
-
-### história 1
-### história 2
-### história 3
-### história 4
-### história 5
-### história 6
-### história 7
-### história 8
-
 ## Backlog do Produto
 
 - Como usuário gostaria de criar e acessar uma conta no sistema.
@@ -75,4 +64,23 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 - Como cliente gostaria de agendar o serviço na data especificada do prestador de serviço.
 - Como cliente gostaria de ver os serviços que agendei com diversos prestadores de serviço.
 - Como prestador de serviço gostaria de ver os meus serviços que foram agendados.
-- Como prestador de serviço gostaria de cancelar os serviços agendados por quaisuqer motivos.
+- Como prestador de serviço gostaria de cancelar os serviços agendados por quaisquer motivos.
+
+## Backlog do Sprint
+
+### história 1
+### Como usuário, gostaria de criar e acessar uma conta no sistema.
+  - Criar e estruturar a base de dados para armazenar usuários (Bruna)
+  - Implementar a lógica de autenticação e criação de contas (Bruna)
+  - Criar a interface de login e cadastro (Bruna)
+### história 2
+### Como cliente, gostaria de visualizar os serviços disponíveis.
+  - Criar a interface de listagem de serviços (Bruna)
+  - Implementar a lógica de busca e filtro de serviços (Bruna)
+  - Integrar a interface de listagem com a API de serviços (Bruna)
+### história 3
+### história 4
+### história 5
+### história 6
+### história 7
+### história 8
