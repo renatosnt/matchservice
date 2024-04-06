@@ -79,7 +79,15 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
   - Implementar a lógica de busca e filtro de serviços (Bruna)
   - Integrar a interface de listagem com a API de serviços (Bruna)
 ### história 3
+### Como prestador de serviço gostaria de anunciar meus serviços no meu perfil.
+- Adicionar, editar e remover serviços facilmente. (Renato)
+- Incluir detalhes como nome, descrição, preço e fotos. (Renato)
+- Confirmação visual de que as alterações foram salvas. (Renato)
 ### história 4
+### Como cliente gostaria de ver mais informações sobre o prestador de algum serviço.
+- Acesso a perfil completo do prestador com todos os serviços oferecidos. (Renato)
+- Visualizar avaliações, comentários e portfólio de trabalhos anteriores. (Renato)
+- Informações de contato claras para comunicação direta. (Renato)
 ### história 5
 ### história 6
 ### história 7
