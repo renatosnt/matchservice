@@ -90,23 +90,23 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 - Informações de contato claras para comunicação direta. (Renato)
 ### história 5
 ### Como cliente gostaria de filtrar os serviços disponíveis baseado em vários critérios.
-- Implementar a lógica de busca de serviços (Bruna)
-- Implementar filtros por categoria de serviço (Gabriel)
-- Implementar filtros por localização do prestador de serviço (Gabriel)
-- Implementar filtros por avaliação do prestador de serviço (Gabriel)
-- Implementar filtros por horário de funcionamento do prestador (Gabriel)
+- Implementar a lógica de busca de serviços. (Bruna)
+- Implementar filtros por categoria de serviço. (Gabriel)
+- Implementar filtros por localização do prestador de serviço. (Gabriel)
+- Implementar filtros por avaliação do prestador de serviço. (Gabriel)
+- Implementar filtros por horário de funcionamento do prestador. (Gabriel)
 ### história 6
 ### Como cliente gostaria de visualizar o número de telefone de um prestador de serviço para entrar em contato.
-- Exibir, nas interfaces de um serviço e de perfil de um prestador, o número de telefone de tal prestador de serviço. (Gabriel)
+- Exibir, nas interfaces de um serviço e de perfil de um prestador, o número de telefone de tal prestador de serviço. (Gabriel).
 ### história 7
 ### Como prestador de serviço gostaria de deletar serviços do meu perfil.
-- Implementar rota de DELETE para serviços na API.
-- Implementar validação da rota de DELETE (apenas o prestador de serviço criador de serviço X deve poder deletá-lo).
-- Criar um botão de delete, que deve ser exibido à um prestador de serviço, para cada um de seus serviços, quando acessar seu próprio perfil.
-- Implementar modal de confirmação de remoção do serviço.
-- Implementar tela/modal/pop-up de confirmação de remoção com sucesso.
+- Implementar rota de DELETE para serviços na API. (Gabriel)
+- Implementar validação da rota de DELETE (apenas o prestador de serviço criador de serviço X deve poder deletá-lo). (Gabriel)
+- Criar um botão de delete, que deve ser exibido à um prestador de serviço, para cada um de seus serviços, quando acessar seu próprio perfil. (Gabriel)
+- Implementar modal de confirmação de remoção do serviço. (Gabriel)
+- Implementar tela/modal/pop-up de confirmação de remoção com sucesso. (Gabriel)
 ### história 8
 ### Como prestador de serviço gostaria de disponibilizar meu calendário de dias disponíveis para os clientes.
-- Fornecer, no momento de criação de um serviço, a possibilidade de estabelecer datas de disponibilidade de serviço.
-- Exibir, em cada serviço, seus dias disponíveis.
-- Viabilizar a alterção da data de disponibilidade de um serviço, por parte do prestador de serviço.
+- Fornecer, no momento de criação de um serviço, a possibilidade de estabelecer datas de disponibilidade de serviço. (Gabriel)
+- Exibir, em cada serviço, seus dias disponíveis. (Gabriel)
+- Viabilizar a alterção da data de disponibilidade de um serviço, por parte do prestador de serviço. (Gabriel)
