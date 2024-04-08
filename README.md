@@ -82,18 +82,18 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 ### Como prestador de serviço gostaria de anunciar meus serviços no meu perfil.
 - Criar rotas para a adição, edição e remoção de serviços. (Michel)
 - Incluir campos no banco de dados como nome, descrição, preço e fotos. (Gabriel)
-- Adicionar modal com a confirmação de que as alterações foram salvas. 
+- Adicionar modal com a confirmação de que as alterações foram salvas. (Renato)
 ### história 4
 ### Como cliente gostaria de ver mais informações sobre o prestador de algum serviço.
-- Criar página de perfil do prestador de serviços e seus serviços oferecidos.
+- Criar página de perfil do prestador de serviços e seus serviços oferecidos. (Renato)
 - Criar estrutura de avaliações, e comentários de trabalhos anteriores do prestador. (Michel)
 ### história 5
 ### Como cliente gostaria de filtrar os serviços disponíveis baseado em vários critérios.
 - Implementar a lógica de busca de serviços. (Bruna)
 - Implementar filtros por categoria de serviço. (Michel)
-- Implementar filtros por localização do prestador de serviço. 
-- Implementar filtros por avaliação do prestador de serviço. 
-- Implementar filtros por horário de funcionamento do prestador. 
+- Implementar filtros por localização do prestador de serviço. (Renato)
+- Implementar filtros por avaliação do prestador de serviço. (Renato)
+- Implementar filtros por horário de funcionamento do prestador. (Renato)
 ### história 6
 ### Como cliente gostaria de visualizar o número de telefone de um prestador de serviço para entrar em contato.
 - Exibir nas interfaces de um serviço e de perfil de um prestador, informações de contato claras para comunicação direta. (Gabriel)
