@@ -46,7 +46,7 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 - PostgreSQL
 
 ### Frontend
-- React
+- React + TypeScript
 
 ## Backlog do Produto
 
