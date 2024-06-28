@@ -12,3 +12,70 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum UserType {
+  Customer
+  ServiceProvider
+}
+
+model Location {
+  id        String    @id @unique @db.Uuid
+  address   String    @unique
+  latitude  Decimal
+  longitude Decimal
+  Service   Service[]
+}
+
+model User {
+  id                     String                  @id @unique @db.Uuid
+  username               String                  @unique
+  realName               String
+  email                  String                  @unique
+  passwordHash           String
+  type                   UserType
+  createdAt              DateTime                @default(now())
+  scheduledServices      Scheduling[]
+  serviceProviderProfile ServiceProviderProfile?
+}
+
+model ServiceProviderProfile {
+  id              String       @id @unique @db.Uuid
+  user            User         @relation(fields: [userId], references: [id])
+  userId          String       @unique @db.Uuid
+  telephoneNumber String
+  specialty       String
+  averageRating   Decimal
+  services        Service[]
+  history         Scheduling[]
+}
+
+model Service {
+  id                       String                 @id @unique @db.Uuid
+  title                    String
+  description              String
+  viewCount                Int
+  category                 String
+  location                 Location               @relation(fields: [locationId], references: [id])
+  // email String || não é necessário já que o usuário possui e-mail no perfil (?)
+  createdAt                DateTime               @default(now())
+  active                   Boolean                @default(true)
+  availableDates           DateTime[]
+  creatorProfile           ServiceProviderProfile @relation(fields: [serviceProviderProfileId], references: [id])
+  schedules                Scheduling[]
+  serviceProviderProfileId String                 @db.Uuid
+  locationId               String                 @db.Uuid
+}
+
+model Scheduling {
+  id                       String                  @id @unique @db.Uuid
+  service                  Service                 @relation(fields: [serviceId], references: [id])
+  serviceId                String                  @db.Uuid
+  scheduledDate            DateTime
+  isCompleted              Boolean
+  isCanceled               Boolean
+  customer                 User                    @relation(fields: [customerId], references: [id])
+  customerId               String                  @db.Uuid
+  rating                   Decimal
+  serviceProviderProfile   ServiceProviderProfile? @relation(fields: [serviceProviderProfileId], references: [id])
+  serviceProviderProfileId String?                 @db.Uuid
+}
