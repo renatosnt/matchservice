@@ -50,20 +50,20 @@ model ServiceProviderProfile {
 }
 
 model Service {
-  id                       String                 @id @unique @db.Uuid
-  title                    String
-  description              String
-  viewCount                Int
-  category                 String
-  location                 Location               @relation(fields: [locationId], references: [id])
+  id               String                 @id @unique @db.Uuid
+  title            String
+  description      String
+  viewCount        Int
+  category         String
+  location         Location               @relation(fields: [locationId], references: [id])
   // email String || não é necessário já que o usuário possui e-mail no perfil (?)
-  createdAt                DateTime               @default(now())
-  active                   Boolean                @default(true)
-  availableDates           DateTime[]
-  creatorProfile           ServiceProviderProfile @relation(fields: [serviceProviderProfileId], references: [id])
-  schedules                Scheduling[]
-  serviceProviderProfileId String                 @db.Uuid
-  locationId               String                 @db.Uuid
+  createdAt        DateTime               @default(now())
+  active           Boolean                @default(true)
+  availableDates   DateTime[]
+  creatorProfile   ServiceProviderProfile @relation(fields: [creatorProfileId], references: [id])
+  schedules        Scheduling[]
+  creatorProfileId String                 @db.Uuid
+  locationId       String                 @db.Uuid
 }
 
 model Scheduling {
