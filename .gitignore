@@ -24,3 +24,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+
+# ignoring pnpm-lock because npm should be used instead
+pnpm-lock.yaml
