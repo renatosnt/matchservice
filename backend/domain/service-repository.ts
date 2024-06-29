@@ -1,4 +1,4 @@
-import { Service } from "@prisma/client";
+import { Service } from "./entities/service.entity";
 import { UUID } from "crypto";
 
 export interface ServiceRepository {

@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User } from "./entities/user.entity";
 import { UUID } from "crypto";
 
 export interface UserRepository {

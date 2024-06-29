@@ -1,4 +1,4 @@
-import { Location } from "@prisma/client";
+import { Location } from "./entities/location.entity";
 import { UUID } from "crypto";
 
 export interface LocationRepository {
