@@ -82,10 +82,10 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 ### História 3: Como prestador de serviço, gostaria de anunciar meus serviços no meu perfil.
 - [ ] Criar rotas para a adição, edição e remoção de serviços. (Michel)
 - [ ] Incluir campos no banco de dados como nome, descrição, preço e fotos. (Gabriel)
-- [ ] Adicionar modal com a confirmação de que as alterações foram salvas. (Renato)
+- [x] Adicionar modal com a confirmação de que as alterações foram salvas. (Renato)
 
 ### História 4: Como cliente, gostaria de ver mais informações sobre o prestador de algum serviço.
-- [ ] Criar página de perfil do prestador de serviços e seus serviços oferecidos. (Renato)
+- [x] Criar página de perfil do prestador de serviços e seus serviços oferecidos. (Renato)
 - [ ] Criar estrutura de avaliações e comentários de trabalhos anteriores do prestador. (Michel)
 
 ### História 5: Como cliente, gostaria de filtrar os serviços disponíveis baseado em vários critérios.
