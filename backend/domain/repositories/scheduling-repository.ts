@@ -1,4 +1,4 @@
-import { Scheduling } from "./entities/scheduling.entity";
+import { Scheduling } from "../entities/scheduling.entity";
 import { UUID } from "crypto";
 
 export interface SchedulingRepository {

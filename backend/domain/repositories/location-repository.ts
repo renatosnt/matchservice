@@ -1,4 +1,4 @@
-import { Location } from "./entities/location.entity";
+import { Location } from "../entities/location.entity";
 import { UUID } from "crypto";
 
 export interface LocationRepository {
