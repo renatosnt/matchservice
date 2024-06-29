@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Container,
     Grid,
@@ -8,7 +8,7 @@ import {
     Typography,
     Button,
 } from "@mui/material";
-
+import { ServiceModal } from "./ServiceModal";
 const services = [
     {
         id: 1,
@@ -61,6 +61,19 @@ const services = [
 ];
 
 export const ServiceList = () => {
+    const [open, setOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState(null);
+
+    const handleClickOpen = (service) => {
+        setSelectedService(service);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setSelectedService(null);
+    };
+
     return (
         <Container>
             <Button
@@ -73,7 +86,7 @@ export const ServiceList = () => {
             <Grid container spacing={4}>
                 {services.map((service) => (
                     <Grid item key={service.id} xs={12} sm={6} md={3}>
-                        <Card>
+                        <Card onClick={() => handleClickOpen(service)}>
                             <CardMedia
                                 component="img"
                                 alt={service.title}
@@ -101,6 +114,11 @@ export const ServiceList = () => {
                     </Grid>
                 ))}
             </Grid>
+            <ServiceModal
+                open={open}
+                handleClose={handleClose}
+                service={selectedService}
+            />
         </Container>
     );
 };
