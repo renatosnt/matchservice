@@ -5,7 +5,10 @@ import { Service } from "../entities/service.entity";
 export interface ServiceProviderProfileRepository {
   getById(id: UUID): ServiceProviderProfile;
   getByServiceProviderId(serviceProviderId: UUID): ServiceProviderProfile;
-  addService(serviceProviderProfileRepository: ServiceProviderProfile, service: Service): ServiceProviderProfile;
+  addService(
+    serviceProviderProfileRepository: ServiceProviderProfile,
+    service: Service,
+  ): ServiceProviderProfile;
   update(serviceProviderProfile: ServiceProviderProfile): void;
   save(serviceProviderProfile: ServiceProviderProfile): void;
 }

@@ -3,13 +3,21 @@ import { Service } from "../entities/service.entity";
 import { ServiceProviderProfileRepository } from "../repositories/service-provider-profile-repository";
 
 export class addServiceToProfileUsecase {
-    private readonly serviceProviderProfileRepository: ServiceProviderProfileRepository;
+  private readonly serviceProviderProfileRepository: ServiceProviderProfileRepository;
 
-    constructor(serviceProviderProfileRepository: ServiceProviderProfileRepository) {
-        this.serviceProviderProfileRepository = serviceProviderProfileRepository;
-    }
+  constructor(
+    serviceProviderProfileRepository: ServiceProviderProfileRepository,
+  ) {
+    this.serviceProviderProfileRepository = serviceProviderProfileRepository;
+  }
 
-    async execute(serviceProviderProfile: ServiceProviderProfile, service: Service): Promise<ServiceProviderProfile | null> {
-        return this.serviceProviderProfileRepository.addService(serviceProviderProfile, service);
-    }
+  async execute(
+    serviceProviderProfile: ServiceProviderProfile,
+    service: Service,
+  ): Promise<ServiceProviderProfile | null> {
+    return this.serviceProviderProfileRepository.addService(
+      serviceProviderProfile,
+      service,
+    );
+  }
 }
