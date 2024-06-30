@@ -1,7 +1,6 @@
-import { Login } from "./adapters/ui/Login";
-import { ServiceList } from "./adapters/ui/ServiceList";
+import AppRouter from "./router/Router";
 function App() {
-  return <ServiceList />;
+  return <AppRouter />;
 }
 
 export default App;
