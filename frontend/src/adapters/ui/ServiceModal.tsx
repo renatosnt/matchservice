@@ -14,6 +14,7 @@ import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ptBR from "date-fns/locale/pt-BR";
 import { ConfirmModal } from "./ConfirmModal";
+import BasicDateCalendar from "./Calendar";
 export const ServiceModal = ({ open, handleClose, service }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -82,6 +83,7 @@ export const ServiceModal = ({ open, handleClose, service }) => {
               <Typography variant="h6" component="h3">
                 Agenda
               </Typography>
+              <BasicDateCalendar />
             </Box>
           </DialogContent>
         )}
