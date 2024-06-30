@@ -17,17 +17,19 @@ export interface IService {
 }
 
 export class Service implements IService {
-  public readonly id: string;
-  public title: string;
-  public description: string;
-  public viewCount: number;
-  public category: string;
-  public location: Location;
-  public createdAt: Date;
-  public active: boolean;
-  public creatorProfile: ServiceProviderProfile;
-  private availableDates: Date[];
-  private schedules: Scheduling[];
+  constructor(
+    public readonly id: string,
+    public title: string,
+    public description: string,
+    public viewCount: number,
+    public category: string,
+    public location: Location,
+    public createdAt: Date,
+    public active: boolean,
+    public creatorProfile: ServiceProviderProfile,
+    private availableDates: Date[],
+    private schedules: Scheduling[],
+  ) {}
 
   public getAvailableDates(): Date[] {
     return this.availableDates;

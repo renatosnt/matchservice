@@ -16,14 +16,16 @@ export interface IScheduling {
 }
 
 export class Scheduling implements IScheduling {
-  public readonly id: string;
-  public service: Service;
-  public serviceId: string;
-  public scheduledDate: Date;
-  public isCompleted: boolean;
-  public isCanceled: boolean;
-  public customer: User;
-  public customerId: string;
-  public rating: number;
-  public serviceProviderProfile?: ServiceProviderProfile;
+  constructor(
+    public readonly id: string,
+    public service: Service,
+    public serviceId: string,
+    public scheduledDate: Date,
+    public isCompleted: boolean,
+    public isCanceled: boolean,
+    public customer: User,
+    public customerId: string,
+    public rating: number,
+    public serviceProviderProfile?: ServiceProviderProfile,
+  ) {}
 }

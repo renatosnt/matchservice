@@ -9,11 +9,13 @@ export interface ILocation {
 }
 
 export class Location implements ILocation {
-  public readonly id: string;
-  public address: string;
-  public latitude: number;
-  public longitude: number;
-  private services: Service[];
+  constructor(
+    public readonly id: string,
+    public address: string,
+    public latitude: number,
+    public longitude: number,
+    private services: Service[],
+  ) {}
 
   public getRelatedSevices(): Service[] {
     return this.services;

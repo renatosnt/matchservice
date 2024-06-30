@@ -17,14 +17,16 @@ export interface IServiceProviderProfile {
 }
 
 export class ServiceProviderProfile implements IServiceProviderProfile {
-  public readonly id: string;
-  public user: User;
-  public userId: string;
-  public telephoneNumber: string;
-  public specialty: string;
-  public averageRating: number;
-  private services: Service[];
-  private history: Scheduling[];
+  constructor(
+    public readonly id: string,
+    public user: User,
+    public userId: string,
+    public telephoneNumber: string,
+    public specialty: string,
+    public averageRating: number,
+    private services: Service[],
+    private history: Scheduling[],
+  ) {}
 
   public addService(service: Service): ServiceProviderProfile {
     this.services.push(service);

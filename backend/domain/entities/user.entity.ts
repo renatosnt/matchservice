@@ -15,15 +15,17 @@ export interface IUser {
 }
 
 export class User implements IUser {
-  public readonly id: string;
-  public username: string;
-  public realName: string;
-  public email: string;
-  public passwordHash: string;
-  public type: UserType;
-  public createdAt: Date;
-  public serviceProviderProfile?: ServiceProviderProfile;
-  private scheduledServices: Scheduling[];
+  constructor(
+    public readonly id: string,
+    public username: string,
+    public realName: string,
+    public email: string,
+    public passwordHash: string,
+    public type: UserType,
+    public createdAt: Date,
+    private scheduledServices: Scheduling[],
+    public serviceProviderProfile?: ServiceProviderProfile,
+  ) {}
 
   public getScheduledServices(): Scheduling[] {
     return this.scheduledServices;
