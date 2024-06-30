@@ -12,7 +12,6 @@ export interface ServiceRepository {
     active?: boolean,
     creatorProfileId?: string,
   ): Service[];
-  addDate(service: Service, date: Date): Service;
   update(service: Service): void;
   save(service: Service): Service;
 }

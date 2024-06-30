@@ -1,9 +1,21 @@
 import { Service } from "./service.entity";
 
-export interface Location {
+export interface ILocation {
   id: string;
   address: string;
   latitude: number;
   longitude: number;
-  services: Service[];
+  getRelatedSevices(): Service[];
+}
+
+export class Location implements ILocation {
+  public readonly id: string;
+  public address: string;
+  public latitude: number;
+  public longitude: number;
+  private services: Service[];
+
+  public getRelatedSevices(): Service[] {
+    return this.services;
+  }
 }
