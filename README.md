@@ -72,7 +72,7 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 ### História 1: Como usuário, gostaria de criar e acessar uma conta no sistema.
 - [ ] Criar e estruturar a base de dados para armazenar usuários (Michel)
 - [ ] Implementar a lógica de autenticação e criação de contas (Michel)
-- [ ] Criar a interface de login e cadastro (Bruna)
+- [x] Criar a interface de login e cadastro (Bruna)
 
 ### História 2: Como cliente, gostaria de visualizar os serviços disponíveis.
 - [ ] Modelar e criar tabela para serviços, bem como implementar a sua relação com a tabela de prestadores de Serviço (Gabriel)

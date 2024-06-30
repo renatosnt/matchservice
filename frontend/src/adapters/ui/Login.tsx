@@ -49,6 +49,7 @@ export const Login = () => {
           p: 4,
           borderRadius: 2,
           boxShadow: 3,
+          backgroundColor: "#F2FAFA",
         }}
       >
         <Box
@@ -77,6 +78,7 @@ export const Login = () => {
                 </InputAdornment>
               ),
             }}
+            sx={{ background: "white" }}
           />
 
           <TextField
@@ -86,6 +88,7 @@ export const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
             size="small"
+            sx={{ background: "white" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -124,7 +127,7 @@ export const Login = () => {
           <Button
             sx={{
               textTransform: "none",
-              color: "inherit",
+              color: "gray",
             }}
           >
             Esqueci a senha

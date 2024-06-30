@@ -40,6 +40,7 @@ export const Register = () => {
           p: 4,
           borderRadius: 2,
           boxShadow: 3,
+          backgroundColor: "#F2FAFA",
         }}
       >
         <Box
@@ -72,6 +73,7 @@ export const Register = () => {
                 </InputAdornment>
               ),
             }}
+            sx={{ background: "white" }}
           />
           <TextField
             label="E-mail"
@@ -87,6 +89,7 @@ export const Register = () => {
                 </InputAdornment>
               ),
             }}
+            sx={{ background: "white" }}
           />
 
           <TextField
@@ -96,6 +99,7 @@ export const Register = () => {
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
             size="small"
+            sx={{ background: "white" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
