@@ -1,11 +1,11 @@
 import { UUID } from "crypto";
 import { User } from "../entities/user.entity";
-import { UserRepository } from "../repositories/user-repository";
+import { IUserRepository } from "../repositories/user-repository";
 
 export class getUserUsecase {
-  private readonly userRepository: UserRepository;
+  private readonly userRepository: IUserRepository;
 
-  constructor(userRepository: UserRepository) {
+  constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 

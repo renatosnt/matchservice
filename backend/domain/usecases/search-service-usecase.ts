@@ -1,10 +1,10 @@
 import { Service } from "../entities/service.entity";
-import { ServiceRepository } from "../repositories/service-repository";
+import { IServiceRepository } from "../repositories/service-repository";
 
 export class searchServiceUsecase {
-  private readonly serviceRepository: ServiceRepository;
+  private readonly serviceRepository: IServiceRepository;
 
-  constructor(serviceRepository: ServiceRepository) {
+  constructor(serviceRepository: IServiceRepository) {
     this.serviceRepository = serviceRepository;
   }
 

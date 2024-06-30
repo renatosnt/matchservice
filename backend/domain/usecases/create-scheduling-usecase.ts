@@ -1,10 +1,10 @@
 import { Scheduling } from "../entities/scheduling.entity";
-import { SchedulingRepository } from "../repositories/scheduling-repository";
+import { ISchedulingRepository } from "../repositories/scheduling-repository";
 
 export class createSchedulingUsecase {
-  private readonly schedulingRepository: SchedulingRepository;
+  private readonly schedulingRepository: ISchedulingRepository;
 
-  constructor(schedulingRepository: SchedulingRepository) {
+  constructor(schedulingRepository: ISchedulingRepository) {
     this.schedulingRepository = schedulingRepository;
   }
 
