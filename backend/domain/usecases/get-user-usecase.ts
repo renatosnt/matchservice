@@ -1,15 +1,15 @@
 import { UUID } from "crypto";
 import { User } from "../entities/user.entity";
-import { IUserRepository } from "../repositories/user-repository";
+import { IUserPort } from "../ports/user-port";
 
 export class getUserUsecase {
-  private readonly userRepository: IUserRepository;
+  private readonly userPort: IUserPort;
 
-  constructor(userRepository: IUserRepository) {
-    this.userRepository = userRepository;
+  constructor(userPort: IUserPort) {
+    this.userPort = userPort;
   }
 
   async execute(id: UUID): Promise<User | null> {
-    return this.userRepository.getById(id);
+    return this.userPort.getById(id);
   }
 }

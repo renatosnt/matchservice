@@ -1,14 +1,14 @@
 import { Service } from "../entities/service.entity";
-import { IServiceRepository } from "../repositories/service-repository";
+import { IServicePort } from "../ports/service-port";
 
 export class createServiceUsecase {
-  private readonly serviceRepository: IServiceRepository;
+  private readonly servicePort: IServicePort;
 
-  constructor(serviceRepository: IServiceRepository) {
-    this.serviceRepository = serviceRepository;
+  constructor(servicePort: IServicePort) {
+    this.servicePort = servicePort;
   }
 
   async execute(service: Service): Promise<Service | null> {
-    return this.serviceRepository.save(service);
+    return this.servicePort.save(service);
   }
 }

@@ -1,15 +1,15 @@
 import { UUID } from "crypto";
 import { Service } from "../entities/service.entity";
-import { IServiceRepository } from "../repositories/service-repository";
+import { IServicePort } from "../ports/service-port";
 
 export class deleteServiceUsecase {
-  private readonly serviceRepository: IServiceRepository;
+  private readonly servicePort: IServicePort;
 
-  constructor(serviceRepository: IServiceRepository) {
-    this.serviceRepository = serviceRepository;
+  constructor(servicePort: IServicePort) {
+    this.servicePort = servicePort;
   }
 
   async execute(id: UUID): Promise<Service | null> {
-    return this.serviceRepository.deleteById(id);
+    return this.servicePort.deleteById(id);
   }
 }

@@ -1,11 +1,11 @@
 import { Service } from "../entities/service.entity";
-import { IServiceRepository } from "../repositories/service-repository";
+import { IServicePort } from "../ports/service-port";
 
 export class searchServiceUsecase {
-  private readonly serviceRepository: IServiceRepository;
+  private readonly servicePort: IServicePort;
 
-  constructor(serviceRepository: IServiceRepository) {
-    this.serviceRepository = serviceRepository;
+  constructor(servicePort: IServicePort) {
+    this.servicePort = servicePort;
   }
 
   async execute(
@@ -14,7 +14,7 @@ export class searchServiceUsecase {
     category?: string,
     creatorProfileId?: string,
   ): Promise<Service[] | null> {
-    return this.serviceRepository.search(
+    return this.servicePort.search(
       title,
       description,
       category,
