@@ -1,7 +1,7 @@
 import { Service } from "../entities/service.entity";
 import { UUID } from "crypto";
 
-export interface IServiceRepository {
+export interface IServicePort {
   getById(id: UUID): Service;
   deleteById(id: UUID): Service;
   getByServiceProviderId(serviceProviderId: UUID): Service[];
