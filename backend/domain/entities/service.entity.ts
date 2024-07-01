@@ -11,9 +11,8 @@ export interface IService {
   locationCity: string;
   createdAt: Date;
   creatorProfile: ServiceProviderProfile;
-  getAvailableDates(): Date[];
-  getSchedules(): Scheduling[];
-  addAvailableDate(date: Date): Service;
+  getSchedule(): Scheduling[];
+  addSchedule(schedule: Scheduling): Service;
 }
 
 export class Service implements IService {
@@ -27,20 +26,16 @@ export class Service implements IService {
     public locationCity: string,
     public createdAt: Date,
     public creatorProfile: ServiceProviderProfile,
-    private availableDates: Date[],
-    private schedules: Scheduling[],
+    private schedule: Scheduling[],
   ) {}
 
-  public getAvailableDates(): Date[] {
-    return this.availableDates;
+
+  public getSchedule(): Scheduling[] {
+    return this.schedule;
   }
 
-  public getSchedules(): Scheduling[] {
-    return this.schedules;
-  }
-
-  public addAvailableDate(date: Date) {
-    this.availableDates.push(date);
+  public addSchedule(schedule: Scheduling): Service {
+    this.schedule.push(schedule);
     return this;
   }
 }

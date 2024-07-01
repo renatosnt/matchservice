@@ -52,7 +52,7 @@ model Service {
   createdAt        DateTime               @default(now())
   availableDates   DateTime[]
   creatorProfile   ServiceProviderProfile @relation(fields: [creatorProfileId], references: [id])
-  schedules        Scheduling[]
+  schedule         Scheduling[]
   creatorProfileId String                 @db.Uuid
 }
 
