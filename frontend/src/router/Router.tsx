@@ -4,7 +4,7 @@ import { Login } from "../adapters/ui/Login";
 import { ServiceList } from "../adapters/ui/ServiceList";
 import Home from "../adapters/ui/Home";
 import { Register } from "../adapters/ui/Register";
-import AccountMenu from "../adapters/ui/Header";
+import Profile from "../adapters/ui/Profile";
 
 const AppRouter = () => {
   return (
@@ -13,6 +13,7 @@ const AppRouter = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/services" element={<ServiceList />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/account" element={<Profile />} />
     </Routes>
   );
 };

@@ -12,6 +12,7 @@ import {
 import { SetStateAction, useState } from "react";
 import Header from "./Header";
 import { ServiceModal } from "./ServiceModal";
+
 const services = [
   {
     id: 1,
@@ -93,11 +94,26 @@ export const ServiceList = () => {
 
   return (
     <Container>
-      <AppBar position="static" color="transparent" elevation={0}>
+      <AppBar
+        position="fixed"
+        color="transparent"
+        elevation={0}
+        sx={{
+          backgroundColor: "White",
+          borderBottom: "1px solid #E0E0E0",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        }}
+      >
         <Toolbar>
           <Grid container justifyContent="right" alignItems="center">
             <Grid item>
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  borderRadius: 20,
+                }}
+              >
                 Anunciar Serviço
               </Button>
             </Grid>
