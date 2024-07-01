@@ -76,7 +76,7 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 
 ### História 2: Como cliente, gostaria de visualizar os serviços disponíveis.
 - [ ] Modelar e criar tabela para serviços, bem como implementar a sua relação com a tabela de prestadores de Serviço (Gabriel)
-- [ ] Criar a interface de listagem de serviços. (Bruna)
+- [x] Criar a interface de listagem de serviços. (Bruna)
 - [ ] Integrar a interface de listagem com a API de serviços (Michel)
 
 ### História 3: Como prestador de serviço, gostaria de anunciar meus serviços no meu perfil.
@@ -89,7 +89,7 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 - [ ] Criar estrutura de avaliações e comentários de trabalhos anteriores do prestador. (Michel)
 
 ### História 5: Como cliente, gostaria de filtrar os serviços disponíveis baseado em vários critérios.
-- [ ] Implementar a lógica de busca de serviços. (Bruna)
+- [x] Implementar a lógica de busca de serviços. (Bruna)
 - [ ] Implementar filtros por categoria de serviço. (Michel)
 - [ ] Implementar filtros por localização do prestador de serviço. (Renato)
 - [ ] Implementar filtros por avaliação do prestador de serviço. (Renato)
