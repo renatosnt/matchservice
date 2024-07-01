@@ -29,7 +29,6 @@ export class Service implements IService {
     private schedule: Scheduling[],
   ) {}
 
-
   public getSchedule(): Scheduling[] {
     return this.schedule;
   }
