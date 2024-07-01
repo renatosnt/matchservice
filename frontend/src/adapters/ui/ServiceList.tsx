@@ -1,13 +1,17 @@
+import SearchIcon from "@mui/icons-material/Search";
 import {
   AppBar,
+  Box,
   Button,
   Card,
   CardContent,
   CardMedia,
   Container,
   Grid,
+  InputBase,
   Toolbar,
   Typography,
+  alpha,
 } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import Header from "./Header";
@@ -17,25 +21,25 @@ const services = [
   {
     id: 1,
     image: "https://via.placeholder.com/150",
-    title: "Serviço",
-    description: "Descrição do Serviço",
+    title: " Teste de Serviço",
+    description: "Bruna Teste de descrição",
   },
   {
     id: 2,
     image: "https://via.placeholder.com/150",
-    title: "Serviço",
-    description: "Descrição do Serviço",
+    title: "Almoxarife Serviço",
+    description: "O melhor almoxarife",
   },
   {
     id: 3,
     image: "https://via.placeholder.com/150",
-    title: "Serviço",
+    title: "Fotografo",
     description: "Descrição do Serviço",
   },
   {
     id: 4,
     image: "https://via.placeholder.com/150",
-    title: "Serviço",
+    title: "Faxineira",
     description: "Descrição do Serviço",
   },
   {
@@ -92,6 +96,23 @@ export const ServiceList = () => {
     setSelectedService(null);
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredServices = services.filter((service) => {
+    const titleMatch = service.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const descriptionMatch = service.description
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return titleMatch || descriptionMatch;
+  });
+
   return (
     <Container>
       <AppBar
@@ -106,6 +127,42 @@ export const ServiceList = () => {
       >
         <Toolbar>
           <Grid container justifyContent="right" alignItems="center">
+            <Grid item xs>
+              <Box
+                sx={{
+                  position: "relative",
+                  borderRadius: "20px",
+                  backgroundColor: alpha("#fff", 0.15),
+                  "&:hover": {
+                    backgroundColor: alpha("#fff", 0.25),
+                  },
+                  marginLeft: 0,
+                  width: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    paddingLeft: "20px",
+                    height: "40px",
+                    position: "absolute",
+                    pointerEvents: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <SearchIcon />
+                </Box>
+                <InputBase
+                  placeholder="Procurar por serviço"
+                  inputProps={{ "aria-label": "search" }}
+                  fullWidth
+                  sx={{ paddingLeft: "50px" }}
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </Box>
+            </Grid>
             <Grid item>
               <Button
                 variant="contained"
@@ -124,7 +181,7 @@ export const ServiceList = () => {
         </Toolbar>
       </AppBar>
       <Grid container spacing={4} sx={{ mt: 12 }}>
-        {services.map((service) => (
+        {filteredServices.map((service) => (
           <Grid item key={service.id} xs={12} sm={6} md={3}>
             <Card onClick={() => handleClickOpen(service)}>
               <CardMedia

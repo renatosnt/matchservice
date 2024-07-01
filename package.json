@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/x-data-grid": "^7.8.0",
+    "@mui/x-data-grid-generator": "^7.8.0",
     "@prisma/client": "^5.16.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
