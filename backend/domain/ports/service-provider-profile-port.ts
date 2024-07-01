@@ -2,7 +2,11 @@ import { ServiceProviderProfile } from "../entities/service-provider-profile.ent
 import { UUID } from "crypto";
 
 export interface IServiceProviderProfilePort {
-  getById(id: UUID): ServiceProviderProfile;
-  getByServiceProviderId(serviceProviderId: UUID): ServiceProviderProfile;
-  save(serviceProviderProfile: ServiceProviderProfile): void;
+  getById(id: UUID): Promise<ServiceProviderProfile>;
+  getByServiceProviderId(
+    serviceProviderId: UUID,
+  ): Promise<ServiceProviderProfile>;
+  save(
+    serviceProviderProfile: ServiceProviderProfile,
+  ): Promise<ServiceProviderProfile>;
 }
