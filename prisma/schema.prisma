@@ -38,7 +38,7 @@ model ServiceProviderProfile {
   specialty       String
   averageRating   Decimal
   services        Service[]
-  history         Scheduling[]
+  schedule       Scheduling[]
 }
 
 model Service {

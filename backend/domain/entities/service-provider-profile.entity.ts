@@ -11,7 +11,7 @@ export interface IServiceProviderProfile {
   averageRating: number;
 
   getServices(): Service[];
-  getHistory(): Scheduling[];
+  getSchedule(): Scheduling[];
 
   addService(service: Service): ServiceProviderProfile;
 }
@@ -25,7 +25,7 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
     public specialty: string,
     public averageRating: number,
     private services: Service[],
-    private history: Scheduling[],
+    private schedule: Scheduling[],
   ) {}
 
   public addService(service: Service): ServiceProviderProfile {
@@ -37,7 +37,7 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
     return this.services;
   }
 
-  public getHistory(): Scheduling[] {
-    return this.history;
+  public getSchedule(): Scheduling[] {
+    return this.schedule;
   }
 }
