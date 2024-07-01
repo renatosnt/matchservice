@@ -51,14 +51,14 @@ model Service {
 }
 
 model Scheduling {
-  id                       String                  @id @unique @db.Uuid
-  service                  Service                 @relation(fields: [serviceId], references: [id])
-  serviceId                String                  @db.Uuid
+  id                       String                 @id @unique @db.Uuid
+  service                  Service                @relation(fields: [serviceId], references: [id])
+  serviceId                String                 @db.Uuid
   scheduledDate            DateTime
   isCompleted              Boolean
   isCanceled               Boolean
-  customer                 User                    @relation(fields: [customerId], references: [id])
-  customerId               String                  @db.Uuid
+  customer                 User                   @relation(fields: [customerId], references: [id])
+  customerId               String                 @db.Uuid
   rating                   Float
   serviceProviderProfile   ServiceProviderProfile @relation(fields: [serviceProviderProfileId], references: [id])
   serviceProviderProfileId String                 @db.Uuid
