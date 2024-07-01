@@ -1,13 +1,13 @@
-import React, { useState } from "react";
 import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
   Container,
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
   Typography,
-  Button,
 } from "@mui/material";
+import { SetStateAction, useState } from "react";
 import { ServiceModal } from "./ServiceModal";
 const services = [
   {
@@ -62,9 +62,23 @@ const services = [
 
 export const ServiceList = () => {
   const [open, setOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedService, setSelectedService] = useState<{
+    id: number;
+    image: string;
+    title: string;
+    description: string;
+    provider?: string;
+  } | null>(null);
 
-  const handleClickOpen = (service) => {
+  const handleClickOpen = (
+    service: SetStateAction<{
+      id: number;
+      image: string;
+      title: string;
+      description: string;
+      provider?: string;
+    } | null>,
+  ) => {
     setSelectedService(service);
     setOpen(true);
   };
@@ -110,6 +124,9 @@ export const ServiceList = () => {
         open={open}
         handleClose={handleClose}
         service={selectedService}
+        handleConfirm={function (): void {
+          throw new Error("Function not implemented.");
+        }}
       />
     </Container>
   );

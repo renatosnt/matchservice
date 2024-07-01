@@ -1,13 +1,19 @@
-import React from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Typography,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Typography,
 } from "@mui/material";
 
-export const ConfirmModal = ({ open, handleClose, handleConfirm }) => {
+import { ServiceModalProps } from "../../application/ServiceModalProps";
+
+export const ConfirmModal = ({
+  open,
+  handleClose,
+  service,
+  handleConfirm,
+}: ServiceModalProps) => {
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogContent>

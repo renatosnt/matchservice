@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Grid,
-  CardMedia,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import ptBR from "date-fns/locale/pt-BR";
-import { ConfirmModal } from "./ConfirmModal";
+import {
+  Box,
+  Button,
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { ServiceModalProps } from "../../application/ServiceModalProps";
 import BasicDateCalendar from "./Calendar";
-export const ServiceModal = ({ open, handleClose, service }) => {
+import { ConfirmModal } from "./ConfirmModal";
+export const ServiceModal = ({
+  open,
+  handleClose,
+  service,
+}: ServiceModalProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [confirmOpen, setConfirmOpen] = useState(false);
   const handleConfirmClose = () => {
@@ -100,6 +102,7 @@ export const ServiceModal = ({ open, handleClose, service }) => {
         open={confirmOpen}
         handleClose={handleConfirmClose}
         handleConfirm={handleConfirm}
+        service={service}
       />
     </>
   );
