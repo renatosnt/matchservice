@@ -1,15 +1,17 @@
 import {
+  AppBar,
   Button,
   Card,
   CardContent,
   CardMedia,
   Container,
   Grid,
+  Toolbar,
   Typography,
 } from "@mui/material";
 import { SetStateAction, useState } from "react";
-import { ServiceModal } from "./ServiceModal";
 import Header from "./Header";
+import { ServiceModal } from "./ServiceModal";
 const services = [
   {
     id: 1,
@@ -91,15 +93,21 @@ export const ServiceList = () => {
 
   return (
     <Container>
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ float: "right", margin: "20px 0" }}
-      >
-        Anunciar Serviço
-      </Button>
-      <Header />
-      <Grid container spacing={4}>
+      <AppBar position="static" color="transparent" elevation={0}>
+        <Toolbar>
+          <Grid container justifyContent="right" alignItems="center">
+            <Grid item>
+              <Button variant="contained" color="primary">
+                Anunciar Serviço
+              </Button>
+            </Grid>
+            <Grid item>
+              <Header />
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+      <Grid container spacing={4} sx={{ mt: 12 }}>
         {services.map((service) => (
           <Grid item key={service.id} xs={12} sm={6} md={3}>
             <Card onClick={() => handleClickOpen(service)}>
