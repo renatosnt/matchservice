@@ -31,7 +31,7 @@ model ServiceProviderProfile {
   userId          String       @unique @db.Uuid
   telephoneNumber String
   specialty       String
-  averageRating   Decimal
+  averageRating   Float
   services        Service[]
   schedule        Scheduling[]
 }
@@ -59,7 +59,7 @@ model Scheduling {
   isCanceled               Boolean
   customer                 User                    @relation(fields: [customerId], references: [id])
   customerId               String                  @db.Uuid
-  rating                   Decimal
-  serviceProviderProfile   ServiceProviderProfile? @relation(fields: [serviceProviderProfileId], references: [id])
-  serviceProviderProfileId String?                 @db.Uuid
+  rating                   Float
+  serviceProviderProfile   ServiceProviderProfile @relation(fields: [serviceProviderProfileId], references: [id])
+  serviceProviderProfileId String                 @db.Uuid
 }

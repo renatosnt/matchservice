@@ -10,7 +10,8 @@ export interface IService {
   locationState: string;
   locationCity: string;
   createdAt: Date;
-  creatorProfile: ServiceProviderProfile;
+  creatorProfileId: string;
+  creatorProfile?: ServiceProviderProfile;
   getSchedule(): Scheduling[];
   addSchedule(schedule: Scheduling): Service;
 }
@@ -25,16 +26,17 @@ export class Service implements IService {
     public locationState: string,
     public locationCity: string,
     public createdAt: Date,
-    public creatorProfile: ServiceProviderProfile,
-    private schedule: Scheduling[],
+    public creatorProfileId: string,
+    public creatorProfile?: ServiceProviderProfile,
+    private schedule?: Scheduling[],
   ) {}
 
   public getSchedule(): Scheduling[] {
-    return this.schedule;
+    return this.schedule!;
   }
 
   public addSchedule(schedule: Scheduling): Service {
-    this.schedule.push(schedule);
+    this.schedule!.push(schedule);
     return this;
   }
 }
