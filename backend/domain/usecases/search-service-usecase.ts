@@ -12,14 +12,12 @@ export class searchServiceUsecase {
     title?: string,
     description?: string,
     category?: string,
-    active?: boolean,
     creatorProfileId?: string,
   ): Promise<Service[] | null> {
     return this.serviceRepository.search(
       title,
       description,
       category,
-      active,
       creatorProfileId,
     );
   }

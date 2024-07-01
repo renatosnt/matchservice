@@ -10,7 +10,6 @@ export interface IService {
   locationState: string;
   locationCity: string;
   createdAt: Date;
-  active: boolean;
   creatorProfile: ServiceProviderProfile;
   getAvailableDates(): Date[];
   getSchedules(): Scheduling[];
@@ -27,7 +26,6 @@ export class Service implements IService {
     public locationState: string,
     public locationCity: string,
     public createdAt: Date,
-    public active: boolean,
     public creatorProfile: ServiceProviderProfile,
     private availableDates: Date[],
     private schedules: Scheduling[],

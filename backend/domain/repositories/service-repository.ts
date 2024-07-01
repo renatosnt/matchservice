@@ -9,7 +9,6 @@ export interface IServiceRepository {
     title?: string,
     description?: string,
     category?: string,
-    active?: boolean,
     creatorProfileId?: string,
   ): Service[];
   save(service: Service): Service;

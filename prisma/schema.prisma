@@ -38,7 +38,7 @@ model ServiceProviderProfile {
   specialty       String
   averageRating   Decimal
   services        Service[]
-  schedule       Scheduling[]
+  schedule        Scheduling[]
 }
 
 model Service {
@@ -49,9 +49,7 @@ model Service {
   category         String
   locationState    String
   locationCity     String
-  // email String || não é necessário já que o usuário possui e-mail no perfil (?)
   createdAt        DateTime               @default(now())
-  active           Boolean                @default(true)
   availableDates   DateTime[]
   creatorProfile   ServiceProviderProfile @relation(fields: [creatorProfileId], references: [id])
   schedules        Scheduling[]
