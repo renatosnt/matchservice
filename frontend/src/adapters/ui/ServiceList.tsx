@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import { ServiceModal } from "./ServiceModal";
+import Header from "./Header";
 const services = [
   {
     id: 1,
@@ -97,6 +98,7 @@ export const ServiceList = () => {
       >
         Anunciar Serviço
       </Button>
+      <Header />
       <Grid container spacing={4}>
         {services.map((service) => (
           <Grid item key={service.id} xs={12} sm={6} md={3}>
