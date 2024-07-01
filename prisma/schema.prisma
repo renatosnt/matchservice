@@ -45,7 +45,6 @@ model Service {
   locationState    String
   locationCity     String
   createdAt        DateTime               @default(now())
-  availableDates   DateTime[]
   creatorProfile   ServiceProviderProfile @relation(fields: [creatorProfileId], references: [id])
   schedule         Scheduling[]
   creatorProfileId String                 @db.Uuid
