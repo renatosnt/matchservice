@@ -7,7 +7,8 @@ export interface IService {
   description: string;
   viewCount: number;
   category: string;
-  location: Location;
+  locationState: string;
+  locationCity: string;
   createdAt: Date;
   active: boolean;
   creatorProfile: ServiceProviderProfile;
@@ -23,7 +24,8 @@ export class Service implements IService {
     public description: string,
     public viewCount: number,
     public category: string,
-    public location: Location,
+    public locationState: string,
+    public locationCity: string,
     public createdAt: Date,
     public active: boolean,
     public creatorProfile: ServiceProviderProfile,
