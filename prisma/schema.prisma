@@ -13,18 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserType {
-  Customer
-  ServiceProvider
-}
-
 model User {
   id                     String                  @id @unique @db.Uuid
   username               String                  @unique
   realName               String
   email                  String                  @unique
   passwordHash           String
-  type                   UserType
+  type                   String
   createdAt              DateTime                @default(now())
   scheduledServices      Scheduling[]
   serviceProviderProfile ServiceProviderProfile?

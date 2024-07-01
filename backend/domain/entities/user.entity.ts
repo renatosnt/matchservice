@@ -1,6 +1,5 @@
 import { Scheduling } from "./scheduling.entity";
 import { ServiceProviderProfile } from "./service-provider-profile.entity";
-import { UserType } from "./user-type.enum";
 
 export interface IUser {
   id: string;
@@ -8,10 +7,10 @@ export interface IUser {
   realName: string;
   email: string;
   passwordHash: string;
-  type: UserType;
+  type: string;
   createdAt: Date;
   serviceProviderProfile?: ServiceProviderProfile;
-  getScheduledServices(): Scheduling[];
+  getScheduledServices(): Scheduling[] | undefined;
 }
 
 export class User implements IUser {
@@ -21,13 +20,13 @@ export class User implements IUser {
     public realName: string,
     public email: string,
     public passwordHash: string,
-    public type: UserType,
+    public type: string,
     public createdAt: Date,
-    private scheduledServices: Scheduling[],
     public serviceProviderProfile?: ServiceProviderProfile,
+    private scheduledServices?: Scheduling[],
   ) {}
 
-  public getScheduledServices(): Scheduling[] {
+  public getScheduledServices(): Scheduling[] | undefined {
     return this.scheduledServices;
   }
 }
