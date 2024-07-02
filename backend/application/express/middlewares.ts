@@ -1,4 +1,4 @@
-import { RequestHandler, Request } from "express";
+import { RequestHandler, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
@@ -11,7 +11,11 @@ export interface CustomRequest extends Request {
   userData: string | JwtPayload;
 }
 
-export const sessionMiddleware: RequestHandler = (req, res, next) => {
+export const sessionMiddleware: RequestHandler = (
+  req: Request,
+  res: Response,
+  next,
+) => {
   const token = req.headers["authorization"];
 
   if (token === undefined) {
@@ -31,7 +35,11 @@ export const sessionMiddleware: RequestHandler = (req, res, next) => {
   });
 };
 
-export const ContentTypeMiddleware: RequestHandler = (req, res, next) => {
+export const ContentTypeMiddleware: RequestHandler = (
+  req: Request,
+  res: Response,
+  next,
+) => {
   if (req.headers["content-type"] !== "application/json") {
     return res
       .status(415)

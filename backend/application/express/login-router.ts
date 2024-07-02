@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { UserAdapter } from "../../adapters/user-adapter";
 import { UserDatabase } from "../../intrastructure/user-database";
 import jwt from "jsonwebtoken";
@@ -18,7 +18,7 @@ interface UserLoginData {
 export const router = express.Router();
 const userAdapter = new UserAdapter(new UserDatabase());
 
-router.post("/", ContentTypeMiddleware, async (req, res) => {
+router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
   const body: UserLoginData = req.body;
 
   try {
@@ -49,7 +49,11 @@ router.post("/", ContentTypeMiddleware, async (req, res) => {
   }
 });
 
-router.get("/test", ContentTypeMiddleware, async (req, res) => {
-  const userData = (req as CustomRequest).userData;
-  res.status(200).json(userData);
-});
+router.get(
+  "/test",
+  ContentTypeMiddleware,
+  async (req: Request, res: Response) => {
+    const userData = (req as CustomRequest).userData;
+    res.status(200).json(userData);
+  },
+);
