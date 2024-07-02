@@ -3,6 +3,12 @@ import { ServiceProviderProfile } from "../domain/entities/service-provider-prof
 import { IServiceProviderProfilePort } from "../domain/ports/service-provider-profile-port";
 import { PrismaClient } from "@prisma/client";
 import { PrismaServiceProviderProfileMapper } from "./mappings/service-provider-profile-mapping";
+import { PrismaUserMapper } from "./mappings/user-mapping";
+import { User } from "../domain/entities/user.entity";
+import { Service } from "../domain/entities/service.entity";
+import { PrismaServiceMapper } from "./mappings/service-mapping";
+import { Scheduling } from "../domain/entities/scheduling.entity";
+import { PrismaSchedulingMapper } from "./mappings/scheduling-mapping";
 
 export class ServiceProviderProfileDatabase
   implements IServiceProviderProfilePort
@@ -27,6 +33,30 @@ export class ServiceProviderProfileDatabase
       where: { userId: id },
     });
     return PrismaServiceProviderProfileMapper.toDomain(result!);
+  }
+
+  public async getUserByProfileId(id: UUID): Promise<User> {
+    const result = await this.prismaClient.serviceProviderProfile.findFirst({
+      where: { id: id },
+      select: { user: true },
+    });
+    return PrismaUserMapper.toDomain(result!.user);
+  }
+
+  public async getServicesByProfileId(id: UUID): Promise<Service[]> {
+    const result = await this.prismaClient.serviceProviderProfile.findFirst({
+      where: { id: id },
+      select: { services: true },
+    });
+    return result!.services.map((i) => PrismaServiceMapper.toDomain(i));
+  }
+
+  public async getScheduleByProfileId(id: UUID): Promise<Scheduling[]> {
+    const result = await this.prismaClient.serviceProviderProfile.findFirst({
+      where: { id: id },
+      select: { schedule: true },
+    });
+    return result!.schedule.map((i) => PrismaSchedulingMapper.toDomain(i));
   }
 
   public async save(

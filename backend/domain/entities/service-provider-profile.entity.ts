@@ -10,8 +10,9 @@ export interface IServiceProviderProfile {
   averageRating: number;
 
   user?: User;
-  getServices(): Service[];
-  getSchedule(): Scheduling[];
+  getServices(): Service[] | undefined;
+  setServices(services: Service[]): void;
+  getSchedule(): Scheduling[] | undefined;
 
   addService(service: Service): ServiceProviderProfile;
 }
@@ -29,15 +30,21 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
   ) {}
 
   public addService(service: Service): ServiceProviderProfile {
-    this.services!.push(service);
+    if (this.services === undefined)
+      throw new Error("The service array is uninitialized.");
+    this.services.push(service);
     return this;
   }
 
-  public getServices(): Service[] {
-    return this.services!;
+  public setServices(services: Service[]): void {
+    this.services = services;
   }
 
-  public getSchedule(): Scheduling[] {
-    return this.schedule!;
+  public getServices(): Service[] | undefined {
+    return this.services;
+  }
+
+  public getSchedule(): Scheduling[] | undefined {
+    return this.schedule;
   }
 }
