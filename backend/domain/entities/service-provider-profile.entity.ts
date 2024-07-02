@@ -1,50 +1,47 @@
-import { Scheduling } from "./scheduling.entity";
-import { Service } from "./service.entity";
+import { UUID } from "crypto";
 import { User } from "./user.entity";
 
 export interface IServiceProviderProfile {
-  id: string;
-  userId: string;
+  id: UUID;
+  userId: UUID;
   telephoneNumber: string;
   specialty: string;
   averageRating: number;
 
-  user?: User;
-  getServices(): Service[] | undefined;
-  setServices(services: Service[]): void;
-  getSchedule(): Scheduling[] | undefined;
+  getServices(): UUID[];
+  setServices(services: UUID[]): void;
+  getSchedule(): UUID[];
 
-  addService(service: Service): ServiceProviderProfile;
+  addService(serviceId: UUID): IServiceProviderProfile;
 }
 
 export class ServiceProviderProfile implements IServiceProviderProfile {
   constructor(
-    public readonly id: string,
-    public userId: string,
+    public readonly id: UUID,
+    public userId: UUID,
     public telephoneNumber: string,
     public specialty: string,
     public averageRating: number,
-    public user?: User,
-    private services?: Service[],
-    private schedule?: Scheduling[],
+    private services: UUID[],
+    private schedule: UUID[],
   ) {}
 
-  public addService(service: Service): ServiceProviderProfile {
+  public addService(serviceId: UUID): ServiceProviderProfile {
     if (this.services === undefined)
       throw new Error("The service array is uninitialized.");
-    this.services.push(service);
+    this.services.push(serviceId);
     return this;
   }
 
-  public setServices(services: Service[]): void {
+  public setServices(services: UUID[]): void {
     this.services = services;
   }
 
-  public getServices(): Service[] | undefined {
+  public getServices(): UUID[] {
     return this.services;
   }
 
-  public getSchedule(): Scheduling[] | undefined {
+  public getSchedule(): UUID[] {
     return this.schedule;
   }
 }

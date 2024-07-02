@@ -1,16 +1,19 @@
 import { ServiceProviderProfile as PrismaServiceProviderProfile } from "@prisma/client";
 import { ServiceProviderProfile } from "../../domain/entities/service-provider-profile.entity";
+import { UUID } from "crypto";
 
 export class PrismaServiceProviderProfileMapper {
   static toDomain(
     prismaServiceProviderProfile: PrismaServiceProviderProfile,
   ): ServiceProviderProfile {
     return new ServiceProviderProfile(
-      prismaServiceProviderProfile.id,
-      prismaServiceProviderProfile.userId,
+      prismaServiceProviderProfile.id as UUID,
+      prismaServiceProviderProfile.userId as UUID,
       prismaServiceProviderProfile.telephoneNumber,
       prismaServiceProviderProfile.specialty,
       prismaServiceProviderProfile.averageRating,
+      prismaServiceProviderProfile.services as UUID[],
+      prismaServiceProviderProfile.schedule as UUID[]
     );
   }
 
@@ -23,6 +26,8 @@ export class PrismaServiceProviderProfileMapper {
       telephoneNumber: serviceproviderprofile.telephoneNumber,
       specialty: serviceproviderprofile.specialty,
       averageRating: serviceproviderprofile.averageRating,
+      services: serviceproviderprofile.getServices(),
+      schedule: serviceproviderprofile.getSchedule()
     };
   }
 }

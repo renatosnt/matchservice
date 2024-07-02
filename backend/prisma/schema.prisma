@@ -14,52 +14,47 @@ datasource db {
 }
 
 model User {
-  id                     String                  @id @unique @db.Uuid
-  username               String                  @unique
-  realName               String
-  email                  String                  @unique
-  passwordHash           String
-  type                   String
-  createdAt              DateTime                @default(now())
-  scheduledServices      Scheduling[]
-  serviceProviderProfile ServiceProviderProfile?
+  id                       String   @id @unique @db.Uuid
+  username                 String   @unique
+  realName                 String
+  email                    String   @unique
+  passwordHash             String
+  type                     String
+  createdAt                DateTime @default(now())
+  scheduledServices        String[] @db.Uuid
+  serviceProviderProfileId String?  @db.Uuid
 }
 
 model ServiceProviderProfile {
-  id              String       @id @unique @db.Uuid
-  user            User         @relation(fields: [userId], references: [id])
-  userId          String       @unique @db.Uuid
+  id              String   @id @unique @db.Uuid
+  userId          String   @unique @db.Uuid
   telephoneNumber String
   specialty       String
   averageRating   Float
-  services        Service[]
-  schedule        Scheduling[]
+  services        String[] @db.Uuid
+  schedule        String[] @db.Uuid
 }
 
 model Service {
-  id               String                 @id @unique @db.Uuid
+  id               String   @id @unique @db.Uuid
   title            String
   description      String
   viewCount        Int
   category         String
   locationState    String
   locationCity     String
-  createdAt        DateTime               @default(now())
-  creatorProfile   ServiceProviderProfile @relation(fields: [creatorProfileId], references: [id])
-  schedule         Scheduling[]
-  creatorProfileId String                 @db.Uuid
+  createdAt        DateTime @default(now())
+  schedule         String[] @db.Uuid
+  creatorProfileId String   @db.Uuid
 }
 
 model Scheduling {
-  id                       String                 @id @unique @db.Uuid
-  service                  Service                @relation(fields: [serviceId], references: [id])
-  serviceId                String                 @db.Uuid
+  id                       String   @id @unique @db.Uuid
+  serviceId                String   @db.Uuid
   scheduledDate            DateTime
   isCompleted              Boolean
   isCanceled               Boolean
-  customer                 User                   @relation(fields: [customerId], references: [id])
-  customerId               String                 @db.Uuid
+  customerId               String   @db.Uuid
   rating                   Float
-  serviceProviderProfile   ServiceProviderProfile @relation(fields: [serviceProviderProfileId], references: [id])
-  serviceProviderProfileId String                 @db.Uuid
+  serviceProviderProfileId String   @db.Uuid
 }

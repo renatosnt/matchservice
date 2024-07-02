@@ -1,17 +1,18 @@
 import { Scheduling as PrismaScheduling } from "@prisma/client";
 import { Scheduling } from "../../domain/entities/scheduling.entity";
+import { UUID } from "crypto";
 
 export class PrismaSchedulingMapper {
   static toDomain(prismaScheduling: PrismaScheduling): Scheduling {
     return new Scheduling(
-      prismaScheduling.id,
-      prismaScheduling.serviceId,
+      prismaScheduling.id as UUID,
+      prismaScheduling.serviceId as UUID,
       prismaScheduling.scheduledDate,
       prismaScheduling.isCompleted,
       prismaScheduling.isCanceled,
-      prismaScheduling.customerId,
       prismaScheduling.rating,
       prismaScheduling.serviceProviderProfileId,
+      prismaScheduling.customerId as UUID, 
     );
   }
 

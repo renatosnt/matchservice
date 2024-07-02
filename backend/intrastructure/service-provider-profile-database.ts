@@ -3,12 +3,6 @@ import { ServiceProviderProfile } from "../domain/entities/service-provider-prof
 import { IServiceProviderProfilePort } from "../domain/ports/service-provider-profile-port";
 import { PrismaClient } from "@prisma/client";
 import { PrismaServiceProviderProfileMapper } from "./mappings/service-provider-profile-mapping";
-import { PrismaUserMapper } from "./mappings/user-mapping";
-import { User } from "../domain/entities/user.entity";
-import { Service } from "../domain/entities/service.entity";
-import { PrismaServiceMapper } from "./mappings/service-mapping";
-import { Scheduling } from "../domain/entities/scheduling.entity";
-import { PrismaSchedulingMapper } from "./mappings/scheduling-mapping";
 
 export class ServiceProviderProfileDatabase
   implements IServiceProviderProfilePort
@@ -41,18 +35,18 @@ export class ServiceProviderProfileDatabase
     return PrismaServiceProviderProfileMapper.toDomain(result);
   }
 
-  public async getUserByProfileId(id: UUID): Promise<User> {
+  public async getUserIdByProfileId(id: UUID): Promise<UUID> {
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
-      select: { user: true },
+      select: { userId: true },
     });
 
     if (result === null) throw new Error("No user found by this ID.");
 
-    return PrismaUserMapper.toDomain(result.user);
+    return result.userId as UUID;
   }
 
-  public async getServicesByProfileId(id: UUID): Promise<Service[]> {
+  public async getServicesByProfileId(id: UUID): Promise<UUID[]> {
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
       select: { services: true },
@@ -60,10 +54,10 @@ export class ServiceProviderProfileDatabase
 
     if (result === null) throw new Error("No service found by this ID.");
 
-    return result.services.map((i) => PrismaServiceMapper.toDomain(i));
+    return result.services as UUID[];
   }
 
-  public async getScheduleByProfileId(id: UUID): Promise<Scheduling[]> {
+  public async getScheduleByProfileId(id: UUID): Promise<UUID[]> {
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
       select: { schedule: true },
@@ -71,7 +65,7 @@ export class ServiceProviderProfileDatabase
 
     if (result === null) throw new Error("No schedule found by this ID.");
 
-    return result.schedule.map((i) => PrismaSchedulingMapper.toDomain(i));
+    return result.schedule as UUID[];
   }
 
   public async save(

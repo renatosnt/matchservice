@@ -1,33 +1,25 @@
-import { ServiceProviderProfile } from "./service-provider-profile.entity";
-import { Service } from "./service.entity";
-import { User } from "./user.entity";
+import { UUID } from "crypto";
 
 export interface IScheduling {
-  id: string;
-  serviceId: string;
+  id: UUID;
+  serviceId: UUID;
   scheduledDate: Date;
   isCompleted: boolean;
   isCanceled: boolean;
-  customerId: string;
   rating: number;
   serviceProviderProfileId: string;
-  customer?: User;
-  service?: Service;
-  serviceProviderProfile?: ServiceProviderProfile;
+  customerId: UUID;
 }
 
 export class Scheduling implements IScheduling {
   constructor(
-    public readonly id: string,
-    public serviceId: string,
+    public readonly id: UUID,
+    public serviceId: UUID,
     public scheduledDate: Date,
     public isCompleted: boolean,
     public isCanceled: boolean,
-    public customerId: string,
     public rating: number,
     public serviceProviderProfileId: string,
-    public customer?: User,
-    public service?: Service,
-    public serviceProviderProfile?: ServiceProviderProfile,
+    public customerId: UUID,
   ) {}
 }

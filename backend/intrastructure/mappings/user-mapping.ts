@@ -1,20 +1,27 @@
 import { User as PrismaUser } from "@prisma/client";
 import { User } from "../../domain/entities/user.entity";
+import { UUID } from "crypto";
 
 export class PrismaUserMapper {
   static toDomain(prismaUser: PrismaUser): User {
     return new User(
-      prismaUser.id,
+      prismaUser.id as UUID,
       prismaUser.username,
       prismaUser.realName,
       prismaUser.email,
       prismaUser.passwordHash,
       prismaUser.type,
-      prismaUser.createdAt,
+      prismaUser.serviceProviderProfileId as UUID,
+      prismaUser.scheduledServices as UUID[]
     );
   }
 
   static toPrisma(user: User): PrismaUser {
+
+    if (user.createdAt === undefined) {
+      throw new Error("Service creation date should be specified.")
+    }
+
     return {
       id: user.id,
       username: user.username,
@@ -23,6 +30,8 @@ export class PrismaUserMapper {
       passwordHash: user.passwordHash,
       type: user.type,
       createdAt: user.createdAt,
+      serviceProviderProfileId: user.serviceProviderProfileId,
+      scheduledServices: user.getScheduledServices()
     };
   }
 }

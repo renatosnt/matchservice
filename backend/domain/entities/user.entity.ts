@@ -1,32 +1,31 @@
-import { Scheduling } from "./scheduling.entity";
-import { ServiceProviderProfile } from "./service-provider-profile.entity";
+import { UUID } from "crypto";
 
 export interface IUser {
-  id: string;
+  id: UUID;
   username: string;
   realName: string;
   email: string;
   passwordHash: string;
   type: string;
-  createdAt: Date;
-  serviceProviderProfile?: ServiceProviderProfile;
-  getScheduledServices(): Scheduling[] | undefined;
+  createdAt?: Date;
+  serviceProviderProfileId?: UUID;
+  getScheduledServices(): UUID[];
 }
 
 export class User implements IUser {
   constructor(
-    public readonly id: string,
+    public readonly id: UUID,
     public username: string,
     public realName: string,
     public email: string,
     public passwordHash: string,
     public type: string,
-    public createdAt: Date,
-    public serviceProviderProfile?: ServiceProviderProfile,
-    private scheduledServices?: Scheduling[],
+    public serviceProviderProfileId: UUID,
+    private scheduledServices: UUID[],
+    public createdAt?: Date,
   ) {}
 
-  public getScheduledServices(): Scheduling[] | undefined {
+  public getScheduledServices(): UUID[] {
     return this.scheduledServices;
   }
 }
