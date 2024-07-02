@@ -1,13 +1,22 @@
 import express from "express";
+import { UserAdapter } from "../../adapters/user-adapter";
+import { UserDatabase } from "../../intrastructure/user-database";
+import { randomUUID, UUID } from "crypto";
+import { User } from "../../domain/entities/user.entity";
 
 export const router = express.Router();
 
-router.get("/:userId", (req, res) => {
-  res.send("should return a user");
+const userAdapter = new UserAdapter(new UserDatabase());
+
+router.get("/:userId", async (req, res) => {
+  const result = await userAdapter.getById(req.params.userId as UUID);
+  res.send(result);
 });
 
-router.post("/register", (req, res) => {
-  res.send("should register a new user");
+router.post("/register", async (req, res) => {
+  const newUser = new User(randomUUID(), "nekoraw3", "Michel", "a@a.com", "aaa", 'Customer', [])
+  const result = await userAdapter.save(newUser);
+  res.send(result);
 });
 
 router.post("/schedule_service/:serviceId", (req, res) => {
