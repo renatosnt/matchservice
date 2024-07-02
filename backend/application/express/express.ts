@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
-import { router as loginRouter } from "./login-router";
-import { router as userRouter } from "./user-router";
-import { router as scheduleRouter } from "./schedule-router";
-import { router as profileRouter } from "./profile-router";
-import { router as serviceRouter } from "./service-router";
+import { router as loginRouter } from "./routes/login-router";
+import { router as userRouter } from "./routes/user-router";
+import { router as scheduleRouter } from "./routes/schedule-router";
+import { router as profileRouter } from "./routes/profile-router";
+import { router as serviceRouter } from "./routes/service-router";
 import { docs } from "./swagger";
 
 export const app = express();

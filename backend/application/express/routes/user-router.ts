@@ -1,14 +1,14 @@
 import express, { Request, Response } from "express";
 import { randomUUID, UUID } from "crypto";
 import bcrypt from "bcrypt";
-import { UserDatabase } from "../../intrastructure/user-database";
-import { UserAdapter } from "../../adapters/user-adapter";
-import { User } from "../../domain/entities/user.entity";
+import { UserDatabase } from "../../../intrastructure/user-database";
+import { UserAdapter } from "../../../adapters/user-adapter";
+import { User } from "../../../domain/entities/user.entity";
 import {
   ContentTypeMiddleware,
   CustomRequest,
   sessionMiddleware,
-} from "./middlewares";
+} from "../middlewares";
 
 export const router = express.Router();
 const userAdapter = new UserAdapter(new UserDatabase());

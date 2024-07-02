@@ -1,13 +1,13 @@
 import express, { Request, Response } from "express";
-import { UserAdapter } from "../../adapters/user-adapter";
-import { UserDatabase } from "../../intrastructure/user-database";
+import { UserAdapter } from "../../../adapters/user-adapter";
+import { UserDatabase } from "../../../intrastructure/user-database";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import {
   CustomRequest,
   ContentTypeMiddleware,
   sessionMiddleware,
-} from "./middlewares";
+} from "../middlewares";
 dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
