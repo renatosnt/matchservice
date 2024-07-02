@@ -25,6 +25,8 @@ const userAdapter = new UserAdapter(new UserDatabase());
  *     responses:
  *       200:
  *         description: Returns the user
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: Internal Server Error
  *
@@ -54,8 +56,6 @@ router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
  *         schema:
  *           type: UUID
  *         description: The user ID.
- *     security:
- *       - JWT: []
  *     responses:
  *       200:
  *         description: Returns the user
@@ -109,8 +109,6 @@ router.get("/:userId", async (req: Request, res: Response) => {
  *               - email
  *               - password
  *               - type
- *     security:
- *       - JWT: []
  *     responses:
  *       200:
  *         description: Returns the user
@@ -202,6 +200,8 @@ router.post("/schedule_service/:serviceId", (req: Request, res: Response) => {
  *     responses:
  *       200:
  *         description: Returns the user
+ *       403:
+ *         description: Forbidden
  *       422:
  *         description: Data validation error
  *       500:
