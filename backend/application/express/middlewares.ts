@@ -9,10 +9,10 @@ if (SECRET_KEY === undefined)
   throw new Error("SECRET_KEY environment variable is not set.");
 
 export interface UserJWT extends JwtPayload {
-  id: UUID,
-  type: string,
-  username: string,
-  realName: string,
+  id: UUID;
+  type: string;
+  username: string;
+  realName: string;
 }
 
 export interface CustomRequest extends Request {

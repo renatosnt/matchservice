@@ -19,7 +19,9 @@ router.get("/search", (req: Request, res: Response) => {
 });
 
 router.post("/create", (req: Request, res: Response) => {
-  res.send("should create a service and add it to the corresponding service provider profile");
+  res.send(
+    "should create a service and add it to the corresponding service provider profile",
+  );
 });
 
 router.patch("/:serviceId", (req: Request, res: Response) => {
