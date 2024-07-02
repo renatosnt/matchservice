@@ -15,14 +15,20 @@ export class SchedulingDatabase implements ISchedulingPort {
     const result = await this.prismaClient.scheduling.findFirst({
       where: { id: id },
     });
-    return PrismaSchedulingMapper.toDomain(result!);
+
+    if (result === null) throw new Error("No scheduling found by this ID.");
+
+    return PrismaSchedulingMapper.toDomain(result);
   }
 
   public async deleteById(id: UUID): Promise<Scheduling> {
     const result = await this.prismaClient.scheduling.delete({
       where: { id: id },
     });
-    return PrismaSchedulingMapper.toDomain(result!);
+
+    if (result === null) throw new Error("No scheduling found by this ID.");
+
+    return PrismaSchedulingMapper.toDomain(result);
   }
 
   public async getByServiceProviderProfileId(
@@ -31,14 +37,20 @@ export class SchedulingDatabase implements ISchedulingPort {
     const result = await this.prismaClient.scheduling.findMany({
       where: { serviceProviderProfileId: serviceProviderId },
     });
-    return result!.map((i) => PrismaSchedulingMapper.toDomain(i));
+
+    if (result === null) throw new Error("No scheduling found by this ID.");
+
+    return result.map((i) => PrismaSchedulingMapper.toDomain(i));
   }
 
   public async getByCustomerId(customerId: UUID): Promise<Scheduling[]> {
     const result = await this.prismaClient.scheduling.findMany({
       where: { customerId },
     });
-    return result!.map((i) => PrismaSchedulingMapper.toDomain(i));
+
+    if (result === null) throw new Error("No scheduling found by this ID.");
+
+    return result.map((i) => PrismaSchedulingMapper.toDomain(i));
   }
 
   public async save(scheduling: Scheduling): Promise<Scheduling> {

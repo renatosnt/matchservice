@@ -12,7 +12,7 @@ export interface IService {
   createdAt: Date;
   creatorProfileId: string;
   creatorProfile?: ServiceProviderProfile;
-  getSchedule(): Scheduling[];
+  getSchedule(): Scheduling[] | undefined;
   addSchedule(schedule: Scheduling): Service;
 }
 
@@ -31,12 +31,14 @@ export class Service implements IService {
     private schedule?: Scheduling[],
   ) {}
 
-  public getSchedule(): Scheduling[] {
-    return this.schedule!;
+  public getSchedule(): Scheduling[] | undefined {
+    return this.schedule;
   }
 
   public addSchedule(schedule: Scheduling): Service {
-    this.schedule!.push(schedule);
+    if (this.schedule === undefined)
+      throw new Error("The schedule array is uninitialized.");
+    this.schedule.push(schedule);
     return this;
   }
 }

@@ -17,21 +17,30 @@ export class UserDatabase implements IUserPort {
     const result = await this.prismaClient.user.findFirst({
       where: { id: id },
     });
-    return PrismaUserMapper.toDomain(result!);
+
+    if (result === null) throw new Error("No user found by this ID.");
+
+    return PrismaUserMapper.toDomain(result);
   }
 
   public async getUserServicesById(id: UUID): Promise<Service[]> {
     const result = await this.prismaClient.service.findMany({
       where: { creatorProfileId: id },
     });
-    return result!.map((i) => PrismaServiceMapper.toDomain(i));
+
+    if (result === null) throw new Error("No service found by this ID.");
+
+    return result.map((i) => PrismaServiceMapper.toDomain(i));
   }
 
   public async getByUsername(username: string): Promise<User> {
     const result = await this.prismaClient.user.findFirst({
       where: { username: username },
     });
-    return PrismaUserMapper.toDomain(result!);
+
+    if (result === null) throw new Error("No user found by this ID.");
+
+    return PrismaUserMapper.toDomain(result);
   }
 
   public async save(user: User): Promise<User> {

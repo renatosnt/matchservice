@@ -23,7 +23,10 @@ export class ServiceProviderProfileDatabase
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
     });
-    return PrismaServiceProviderProfileMapper.toDomain(result!);
+
+    if (result === null) throw new Error("No profile found by this ID.");
+
+    return PrismaServiceProviderProfileMapper.toDomain(result);
   }
 
   public async getByServiceProviderId(
@@ -32,7 +35,10 @@ export class ServiceProviderProfileDatabase
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { userId: id },
     });
-    return PrismaServiceProviderProfileMapper.toDomain(result!);
+
+    if (result === null) throw new Error("No profile found by this ID.");
+
+    return PrismaServiceProviderProfileMapper.toDomain(result);
   }
 
   public async getUserByProfileId(id: UUID): Promise<User> {
@@ -40,7 +46,10 @@ export class ServiceProviderProfileDatabase
       where: { id: id },
       select: { user: true },
     });
-    return PrismaUserMapper.toDomain(result!.user);
+
+    if (result === null) throw new Error("No user found by this ID.");
+
+    return PrismaUserMapper.toDomain(result.user);
   }
 
   public async getServicesByProfileId(id: UUID): Promise<Service[]> {
@@ -48,7 +57,10 @@ export class ServiceProviderProfileDatabase
       where: { id: id },
       select: { services: true },
     });
-    return result!.services.map((i) => PrismaServiceMapper.toDomain(i));
+
+    if (result === null) throw new Error("No service found by this ID.");
+
+    return result.services.map((i) => PrismaServiceMapper.toDomain(i));
   }
 
   public async getScheduleByProfileId(id: UUID): Promise<Scheduling[]> {
@@ -56,7 +68,10 @@ export class ServiceProviderProfileDatabase
       where: { id: id },
       select: { schedule: true },
     });
-    return result!.schedule.map((i) => PrismaSchedulingMapper.toDomain(i));
+
+    if (result === null) throw new Error("No schedule found by this ID.");
+
+    return result.schedule.map((i) => PrismaSchedulingMapper.toDomain(i));
   }
 
   public async save(
