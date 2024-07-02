@@ -22,6 +22,10 @@ export class UserAdapter implements IUserPort {
     return await this.userRepository.getByUsername(username);
   }
 
+  async getByEmail(username: string): Promise<User> {
+    return await this.userRepository.getByEmail(username);
+  }
+
   async save(user: User): Promise<User> {
     return await this.userRepository.save(user);
   }

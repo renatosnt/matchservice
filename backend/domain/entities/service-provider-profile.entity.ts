@@ -1,5 +1,4 @@
 import { UUID } from "crypto";
-import { User } from "./user.entity";
 
 export interface IServiceProviderProfile {
   id: UUID;

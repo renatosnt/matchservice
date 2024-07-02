@@ -43,8 +43,17 @@ export class UserDatabase implements IUserPort {
     return PrismaUserMapper.toDomain(result);
   }
 
-  public async save(user: User): Promise<User> {
+  public async getByEmail(email: string): Promise<User> {
+    const result = await this.prismaClient.user.findFirst({
+      where: { email: email },
+    });
 
+    if (result === null) throw new Error("No user found by this Email.");
+
+    return PrismaUserMapper.toDomain(result);
+  }
+
+  public async save(user: User): Promise<User> {
     const input = {
       id: user.id,
       username: user.username,
@@ -54,8 +63,8 @@ export class UserDatabase implements IUserPort {
       type: user.type,
       createdAt: user.createdAt,
       scheduledServices: user.getScheduledServices(),
-      serviceProviderProfileId: user.serviceProviderProfileId
-    }
+      serviceProviderProfileId: user.serviceProviderProfileId,
+    };
 
     const result = await this.prismaClient.user.upsert({
       where: { id: user.id },

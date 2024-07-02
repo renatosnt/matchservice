@@ -6,5 +6,6 @@ export interface IUserPort {
   getById(id: UUID): Promise<User>;
   getUserServicesById(id: UUID): Promise<Service[]>;
   getByUsername(username: string): Promise<User>;
+  getByEmail(username: string): Promise<User>;
   save(user: User): Promise<User>;
 }

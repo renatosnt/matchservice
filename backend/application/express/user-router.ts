@@ -1,9 +1,10 @@
 import express from "express";
 import { randomUUID, UUID } from "crypto";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 import { UserDatabase } from "../../intrastructure/user-database";
-import { UserAdapter } from "../../adapters/user-adapter"
+import { UserAdapter } from "../../adapters/user-adapter";
 import { User } from "../../domain/entities/user.entity";
+import { ContentTypeMiddleware } from "./middlewares";
 
 export const router = express.Router();
 const userAdapter = new UserAdapter(new UserDatabase());
@@ -22,7 +23,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", ContentTypeMiddleware, async (req, res) => {
   try {
     const { username, realName, email, password, type } = req.body;
 
@@ -38,7 +39,6 @@ router.post("/register", async (req, res) => {
       type,
       [],
       null,
-      new Date()
     );
     const savedUser = await userAdapter.save(newUser);
     res.status(201).json(savedUser);
@@ -51,7 +51,7 @@ router.post("/schedule_service/:serviceId", (req, res) => {
   res.send("should assign a schedule for the user and add");
 });
 
-router.patch("/:userId", async (req, res) => {
+router.patch("/:userId", ContentTypeMiddleware, async (req, res) => {
   try {
     const userId = req.params.userId as UUID;
     const user = await userAdapter.getById(userId);

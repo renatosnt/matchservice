@@ -13,7 +13,7 @@ export class PrismaServiceProviderProfileMapper {
       prismaServiceProviderProfile.specialty,
       prismaServiceProviderProfile.averageRating,
       prismaServiceProviderProfile.services as UUID[],
-      prismaServiceProviderProfile.schedule as UUID[]
+      prismaServiceProviderProfile.schedule as UUID[],
     );
   }
 
@@ -27,7 +27,7 @@ export class PrismaServiceProviderProfileMapper {
       specialty: serviceproviderprofile.specialty,
       averageRating: serviceproviderprofile.averageRating,
       services: serviceproviderprofile.getServices(),
-      schedule: serviceproviderprofile.getSchedule()
+      schedule: serviceproviderprofile.getSchedule(),
     };
   }
 }

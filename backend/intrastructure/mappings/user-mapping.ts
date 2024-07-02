@@ -12,14 +12,13 @@ export class PrismaUserMapper {
       prismaUser.passwordHash,
       prismaUser.type,
       prismaUser.scheduledServices as UUID[],
-      prismaUser.serviceProviderProfileId as UUID | null
+      prismaUser.serviceProviderProfileId as UUID | null,
     );
   }
 
   static toPrisma(user: User): PrismaUser {
-
     if (user.createdAt === undefined) {
-      throw new Error("Service creation date should be specified.")
+      throw new Error("Service creation date should be specified.");
     }
 
     return {
@@ -31,7 +30,7 @@ export class PrismaUserMapper {
       type: user.type,
       createdAt: user.createdAt,
       serviceProviderProfileId: user.serviceProviderProfileId as UUID | null,
-      scheduledServices: user.getScheduledServices()
+      scheduledServices: user.getScheduledServices(),
     };
   }
 }

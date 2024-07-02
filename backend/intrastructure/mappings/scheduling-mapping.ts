@@ -12,7 +12,7 @@ export class PrismaSchedulingMapper {
       prismaScheduling.isCanceled,
       prismaScheduling.rating,
       prismaScheduling.serviceProviderProfileId,
-      prismaScheduling.customerId as UUID, 
+      prismaScheduling.customerId as UUID,
     );
   }
 

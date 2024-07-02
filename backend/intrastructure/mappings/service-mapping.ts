@@ -14,14 +14,13 @@ export class PrismaServiceMapper {
       prismaService.locationCity,
       prismaService.creatorProfileId as UUID,
       prismaService.schedule as UUID[],
-      prismaService.createdAt
+      prismaService.createdAt,
     );
   }
 
   static toPrisma(service: Service): PrismaService {
-
     if (service.createdAt === undefined) {
-      throw new Error("Service creation date should be specified.")
+      throw new Error("Service creation date should be specified.");
     }
 
     return {
