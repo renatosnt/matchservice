@@ -68,7 +68,7 @@ router.get("/:userId", async (req: Request, res: Response) => {
     const userId = req.params.userId as UUID;
     const user = await userAdapter.getById(userId);
 
-    const responseWithoutPassword = {...user}
+    const responseWithoutPassword = { ...user };
     delete (responseWithoutPassword as any).passwordHash;
     res.status(200).json(responseWithoutPassword);
   } catch (error: any) {

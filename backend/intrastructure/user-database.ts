@@ -5,6 +5,9 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaUserMapper } from "./mappings/user-mapping";
 import { Service } from "../domain/entities/service.entity";
 import { PrismaServiceMapper } from "./mappings/service-mapping";
+import { validateParameterIsNotUndefined } from "./mappings/undefined-validation";
+import { validateUUID } from "./mappings/uuid-validation";
+import { validateEmail } from "./mappings/email-validation";
 
 export class UserDatabase implements IUserPort {
   private readonly prismaClient: PrismaClient;
@@ -14,6 +17,9 @@ export class UserDatabase implements IUserPort {
   }
 
   public async getById(id: UUID): Promise<User> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.user.findFirst({
       where: { id: id },
     });
@@ -24,6 +30,9 @@ export class UserDatabase implements IUserPort {
   }
 
   public async getUserServicesById(id: UUID): Promise<Service[]> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.service.findMany({
       where: { creatorProfileId: id },
     });
@@ -34,6 +43,8 @@ export class UserDatabase implements IUserPort {
   }
 
   public async getByUsername(username: string): Promise<User> {
+    validateParameterIsNotUndefined(username);
+
     const result = await this.prismaClient.user.findFirst({
       where: { username: username },
     });
@@ -44,6 +55,9 @@ export class UserDatabase implements IUserPort {
   }
 
   public async getByEmail(email: string): Promise<User> {
+    validateParameterIsNotUndefined(email);
+    validateEmail(email);
+
     const result = await this.prismaClient.user.findFirst({
       where: { email: email },
     });
@@ -54,6 +68,8 @@ export class UserDatabase implements IUserPort {
   }
 
   public async save(user: User): Promise<User> {
+    validateParameterIsNotUndefined(user);
+
     const input = {
       id: user.id,
       username: user.username,

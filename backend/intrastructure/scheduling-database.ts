@@ -3,6 +3,8 @@ import { Scheduling } from "../domain/entities/scheduling.entity";
 import { ISchedulingPort } from "../domain/ports/scheduling-port";
 import { PrismaClient } from "@prisma/client";
 import { PrismaSchedulingMapper } from "./mappings/scheduling-mapping";
+import { validateParameterIsNotUndefined } from "./mappings/undefined-validation";
+import { validateUUID } from "./mappings/uuid-validation";
 
 export class SchedulingDatabase implements ISchedulingPort {
   private readonly prismaClient: PrismaClient;
@@ -12,6 +14,9 @@ export class SchedulingDatabase implements ISchedulingPort {
   }
 
   public async getById(id: UUID): Promise<Scheduling> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.scheduling.findFirst({
       where: { id: id },
     });
@@ -22,6 +27,9 @@ export class SchedulingDatabase implements ISchedulingPort {
   }
 
   public async deleteById(id: UUID): Promise<Scheduling> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.scheduling.delete({
       where: { id: id },
     });
@@ -34,6 +42,9 @@ export class SchedulingDatabase implements ISchedulingPort {
   public async getByServiceProviderProfileId(
     serviceProviderId: UUID,
   ): Promise<Scheduling[]> {
+    validateParameterIsNotUndefined(serviceProviderId);
+    validateUUID(serviceProviderId);
+
     const result = await this.prismaClient.scheduling.findMany({
       where: { serviceProviderProfileId: serviceProviderId },
     });
@@ -44,6 +55,9 @@ export class SchedulingDatabase implements ISchedulingPort {
   }
 
   public async getByCustomerId(customerId: UUID): Promise<Scheduling[]> {
+    validateParameterIsNotUndefined(customerId);
+    validateUUID(customerId);
+
     const result = await this.prismaClient.scheduling.findMany({
       where: { customerId },
     });
@@ -54,6 +68,8 @@ export class SchedulingDatabase implements ISchedulingPort {
   }
 
   public async save(scheduling: Scheduling): Promise<Scheduling> {
+    validateParameterIsNotUndefined(scheduling);
+
     const result = await this.prismaClient.scheduling.upsert({
       where: { id: scheduling.id },
       update: PrismaSchedulingMapper.toPrisma(scheduling),

@@ -3,6 +3,8 @@ import { ServiceProviderProfile } from "../domain/entities/service-provider-prof
 import { IServiceProviderProfilePort } from "../domain/ports/service-provider-profile-port";
 import { PrismaClient } from "@prisma/client";
 import { PrismaServiceProviderProfileMapper } from "./mappings/service-provider-profile-mapping";
+import { validateParameterIsNotUndefined } from "./mappings/undefined-validation";
+import { validateUUID } from "./mappings/uuid-validation";
 
 export class ServiceProviderProfileDatabase
   implements IServiceProviderProfilePort
@@ -14,6 +16,9 @@ export class ServiceProviderProfileDatabase
   }
 
   public async getById(id: UUID): Promise<ServiceProviderProfile> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
     });
@@ -26,6 +31,9 @@ export class ServiceProviderProfileDatabase
   public async getByServiceProviderId(
     id: UUID,
   ): Promise<ServiceProviderProfile> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { userId: id },
     });
@@ -36,6 +44,9 @@ export class ServiceProviderProfileDatabase
   }
 
   public async getUserIdByProfileId(id: UUID): Promise<UUID> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
       select: { userId: true },
@@ -47,6 +58,9 @@ export class ServiceProviderProfileDatabase
   }
 
   public async getServicesByProfileId(id: UUID): Promise<UUID[]> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
       select: { services: true },
@@ -58,6 +72,9 @@ export class ServiceProviderProfileDatabase
   }
 
   public async getScheduleByProfileId(id: UUID): Promise<UUID[]> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.serviceProviderProfile.findFirst({
       where: { id: id },
       select: { schedule: true },

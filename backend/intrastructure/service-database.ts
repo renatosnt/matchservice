@@ -5,6 +5,8 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaServiceMapper } from "./mappings/service-mapping";
 import { Scheduling } from "../domain/entities/scheduling.entity";
 import { PrismaSchedulingMapper } from "./mappings/scheduling-mapping";
+import { validateParameterIsNotUndefined } from "./mappings/undefined-validation";
+import { validateUUID } from "./mappings/uuid-validation";
 
 export class ServiceDatabase implements IServicePort {
   private readonly prismaClient: PrismaClient;
@@ -14,6 +16,9 @@ export class ServiceDatabase implements IServicePort {
   }
 
   public async getById(id: UUID): Promise<Service> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.service.findFirst({
       where: { id: id },
     });
@@ -24,6 +29,9 @@ export class ServiceDatabase implements IServicePort {
   }
 
   public async deleteById(id: UUID): Promise<Service> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.service.delete({
       where: { id: id },
     });
@@ -36,6 +44,9 @@ export class ServiceDatabase implements IServicePort {
   public async getByServiceProviderId(
     serviceProviderId: UUID,
   ): Promise<Service[]> {
+    validateParameterIsNotUndefined(serviceProviderId);
+    validateUUID(serviceProviderId);
+
     const result = await this.prismaClient.service.findMany({
       where: { creatorProfileId: serviceProviderId },
     });
@@ -46,6 +57,9 @@ export class ServiceDatabase implements IServicePort {
   }
 
   public async getServiceSchedulingById(id: UUID): Promise<Scheduling[]> {
+    validateParameterIsNotUndefined(id);
+    validateUUID(id);
+
     const result = await this.prismaClient.scheduling.findMany({
       where: { serviceId: id },
     });
@@ -73,6 +87,8 @@ export class ServiceDatabase implements IServicePort {
   }
 
   public async save(service: Service): Promise<Service> {
+    validateParameterIsNotUndefined(service);
+
     const result = await this.prismaClient.service.upsert({
       where: { id: service.id },
       update: PrismaServiceMapper.toPrisma(service),
