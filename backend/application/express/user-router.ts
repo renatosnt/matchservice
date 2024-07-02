@@ -125,7 +125,7 @@ router.post(
     try {
       const { username, realName, email, password, type } = req.body;
 
-      if (type !== "Customer" || type !== "ServiceProvider") {
+      if (type !== "Customer" && type !== "ServiceProvider") {
         res
           .status(422)
           .json({ message: "Type should be one of Customer, ServiceProvider" });
@@ -221,7 +221,7 @@ router.patch(
       if (email) user.email = email;
       if (passwordHash) user.passwordHash = passwordHash;
       if (type) {
-        if (type !== "Customer" || type !== "ServiceProvider") {
+        if (type !== "Customer" && type !== "ServiceProvider") {
           res.status(422).json({
             message: "Type should be one of Customer, ServiceProvider",
           });
