@@ -12,7 +12,6 @@ const userAdapter = new UserAdapter(new UserDatabase());
 router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
   try {
     const userData = (req as CustomRequest).userData;
-    console.log(userData);
     await userAdapter.getById(userData.id);
 
     res.status(200).json(userData);

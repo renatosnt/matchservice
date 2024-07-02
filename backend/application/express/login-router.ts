@@ -25,8 +25,6 @@ router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
     const databaseUser = await userAdapter.getByEmail(body.email);
 
     if (body.password !== databaseUser.passwordHash) {
-      console.log(body);
-      console.log(databaseUser.passwordHash);
       res.status(401).json({ message: `Wrong username or password.` });
       return;
     }
