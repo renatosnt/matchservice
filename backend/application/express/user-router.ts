@@ -4,10 +4,22 @@ import bcrypt from "bcrypt";
 import { UserDatabase } from "../../intrastructure/user-database";
 import { UserAdapter } from "../../adapters/user-adapter";
 import { User } from "../../domain/entities/user.entity";
-import { ContentTypeMiddleware, sessionMiddleware } from "./middlewares";
+import { ContentTypeMiddleware, CustomRequest, sessionMiddleware } from "./middlewares";
 
 export const router = express.Router();
 const userAdapter = new UserAdapter(new UserDatabase());
+
+router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
+  try {
+    const userData = (req as CustomRequest).userData;
+    console.log(userData);
+    await userAdapter.getById(userData.id);
+
+    res.status(200).json(userData);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 router.get("/:userId", async (req: Request, res: Response) => {
   try {
@@ -22,6 +34,7 @@ router.get("/:userId", async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 router.post(
   "/register",

@@ -1,14 +1,22 @@
 import { RequestHandler, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
+import { UUID } from "crypto";
 dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
 if (SECRET_KEY === undefined)
   throw new Error("SECRET_KEY environment variable is not set.");
 
+export interface UserJWT extends JwtPayload {
+  id: UUID,
+  type: string,
+  username: string,
+  realName: string,
+}
+
 export interface CustomRequest extends Request {
-  userData: string | JwtPayload;
+  userData: UserJWT;
 }
 
 export const sessionMiddleware: RequestHandler = (
@@ -30,7 +38,7 @@ export const sessionMiddleware: RequestHandler = (
       res.status(403).end();
       return;
     }
-    (req as CustomRequest).userData = userData!;
+    (req as CustomRequest).userData = userData! as UserJWT;
     next();
   });
 };

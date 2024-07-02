@@ -3,7 +3,7 @@ import { UserAdapter } from "../../adapters/user-adapter";
 import { UserDatabase } from "../../intrastructure/user-database";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { CustomRequest, ContentTypeMiddleware } from "./middlewares";
+import { CustomRequest, ContentTypeMiddleware, sessionMiddleware } from "./middlewares";
 dotenv.config();
 
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -51,7 +51,7 @@ router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
 
 router.get(
   "/test",
-  ContentTypeMiddleware,
+  sessionMiddleware,
   async (req: Request, res: Response) => {
     const userData = (req as CustomRequest).userData;
     res.status(200).json(userData);
