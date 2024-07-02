@@ -16,55 +16,118 @@ import {
 import { SetStateAction, useState } from "react";
 import Header from "./Header";
 import { ServiceModal } from "./ServiceModal";
-
 const services = [
   {
     id: 1,
-    image: "https://via.placeholder.com/150",
-    title: " Teste de Serviço",
-    description: "Bruna Teste de descrição",
+    image: "https://picsum.photos/300?random=1",
+    title: "Serviço de Limpeza",
+    description:
+      "Profissionais qualificados para realizar a limpeza de residências e escritórios.",
+    provider: "Ana Paula Silva",
   },
   {
     id: 2,
-    image: "https://via.placeholder.com/150",
-    title: "Almoxarife Serviço",
-    description: "O melhor almoxarife",
+    image: "https://picsum.photos/300?random=2",
+    title: "Almoxarife",
+    description: "Gerenciamento de estoques e organização de almoxarifados.",
+    provider: "Carlos Alberto Pereira",
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/150",
-    title: "Fotografo",
-    description: "Descrição do Serviço",
+    image: "https://picsum.photos/300?random=3",
+    title: "Fotógrafo",
+    description:
+      "Serviços de fotografia para eventos, ensaios fotográficos e comerciais.",
+    provider: "Mariana Rocha",
   },
   {
     id: 4,
-    image: "https://via.placeholder.com/150",
-    title: "Faxineira",
-    description: "Descrição do Serviço",
+    image: "https://picsum.photos/300?random=4",
+    title: "Babá",
+    description: "Cuidados infantis profissionais para bebês e crianças.",
+    provider: "Juliana Costa",
   },
   {
     id: 5,
-    image: "https://via.placeholder.com/150",
-    title: "Serviço",
-    description: "Descrição do Serviço",
+    image: "https://picsum.photos/300?random=5",
+    title: "Personal Trainer",
+    description:
+      "Acompanhamento personalizado para treinos e atividades físicas.",
+    provider: "Roberto Martins",
   },
   {
     id: 6,
-    image: "https://via.placeholder.com/150",
-    title: "Serviço",
-    description: "Descrição do Serviço",
+    image: "https://picsum.photos/300?random=6",
+    title: "Jardineiro",
+    description: "Serviços de jardinagem para manutenção e criação de jardins.",
+    provider: "Pedro Santos",
   },
   {
     id: 7,
-    image: "https://via.placeholder.com/150",
-    title: "Serviço",
-    description: "Descrição do Serviço",
+    image: "https://picsum.photos/300?random=7",
+    title: "Pintor",
+    description: "Pintura residencial e comercial com acabamento profissional.",
+    provider: "Ricardo Lima",
   },
   {
     id: 8,
-    image: "https://via.placeholder.com/150",
-    title: "Serviço",
-    description: "Descrição do Serviço",
+    image: "https://picsum.photos/300?random=8",
+    title: "Eletricista",
+    description:
+      "Instalações e reparos elétricos realizados por profissionais certificados.",
+    provider: "Fernando Alves",
+  },
+  {
+    id: 9,
+    image: "https://picsum.photos/300?random=9",
+    title: "Encanador",
+    description: "Serviços de encanamento para instalações e consertos.",
+    provider: "André Souza",
+  },
+  {
+    id: 10,
+    image: "https://picsum.photos/300?random=10",
+    title: "Mecânico",
+    description: "Reparos e manutenção de veículos com garantia de qualidade.",
+    provider: "João Mendes",
+  },
+  {
+    id: 11,
+    image: "https://picsum.photos/300?random=11",
+    title: "Cabeleireiro",
+    description: "Cortes de cabelo, penteados e tratamentos capilares.",
+    provider: "Isabela Ferreira",
+  },
+  {
+    id: 12,
+    image: "https://picsum.photos/300?random=12",
+    title: "Manicure",
+    description:
+      "Serviços de manicure e pedicure para cuidados e estética das unhas.",
+    provider: "Tatiana Oliveira",
+  },
+  {
+    id: 13,
+    image: "https://picsum.photos/300?random=13",
+    title: "Chef de Cozinha",
+    description:
+      "Preparação de refeições personalizadas e eventos gastronômicos.",
+    provider: "Gustavo Ramos",
+  },
+  {
+    id: 14,
+    image: "https://picsum.photos/300?random=14",
+    title: "Técnico de Informática",
+    description: "Suporte técnico e manutenção de computadores e redes.",
+    provider: "Lucas Figueiredo",
+  },
+  {
+    id: 15,
+    image: "https://picsum.photos/300?random=15",
+    title: "Designer Gráfico",
+    description:
+      "Criação de artes visuais, logotipos e materiais publicitários.",
+    provider: "Daniela Vieira",
   },
 ];
 
@@ -148,16 +211,18 @@ export const ServiceList = () => {
                     paddingRight: "10px",
                   }}
                 >
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    sx={{
-                      fontWeight: "bold",
-                    }}
-                  >
-                    <span style={{ color: "#333333" }}>Match</span>
-                    <span style={{ color: "#0575E6" }}>Service</span>
-                  </Typography>
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    <Typography
+                      variant="h5"
+                      component="div"
+                      sx={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <span style={{ color: "#333333" }}>Match</span>
+                      <span style={{ color: "#0575E6" }}>Service</span>
+                    </Typography>
+                  </a>
                 </Box>
                 <Box
                   sx={{
