@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import {
   Box,
@@ -8,36 +9,53 @@ import {
   DialogContent,
   Grid,
   Typography,
-  CardContent,
-  Card,
+  TextField,
 } from "@mui/material";
-import { useState } from "react";
 import { ServiceModalProps } from "../../application/ServiceModalProps";
 import BasicDateCalendar from "./Calendar";
-import { ConfirmModal } from "./ConfirmModal";
 import WorkIcon from "@mui/icons-material/Work";
 import PersonIcon from "@mui/icons-material/Person";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-export const ServiceModal = ({
+
+export const EditServiceModal = ({
   open,
   handleClose,
   service,
 }: ServiceModalProps) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const handleConfirmClose = () => {
-    setConfirmOpen(false);
+  const [title, setTitle] = useState(service?.title || "");
+  const [description, setDescription] = useState(service?.description || "");
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState(service?.image || "");
+
+  useEffect(() => {
+    if (service) {
+      setTitle(service.title);
+      setDescription(service.description);
+      setImagePreview(service.image);
+    }
+  }, [service]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleConfirmOpen = () => {
-    setConfirmOpen(true);
-  };
-
-  const handleConfirm = () => {
-    alert("Agendado");
-    setConfirmOpen(false);
+  const handleSave = () => {
+    // Aqui você pode adicionar a lógica para salvar as alterações
+    console.log("Título:", title);
+    console.log("Descrição:", description);
+    if (image) {
+      console.log("Imagem:", URL.createObjectURL(image));
+    }
     handleClose();
   };
+
   return (
     <>
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
@@ -49,10 +67,27 @@ export const ServiceModal = ({
                   component="img"
                   alt={service.title}
                   height="140"
-                  image={service.image}
+                  image={imagePreview}
                   title={service.title}
                   style={{ borderRadius: "8px" }}
                 />
+                <input
+                  accept="image/*"
+                  type="file"
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  id="upload-button"
+                />
+                <label htmlFor="upload-button">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component="span"
+                    style={{ marginTop: "10px" }}
+                  >
+                    Upload Nova Imagem
+                  </Button>
+                </label>
               </Grid>
               <Grid item xs={12} sm={8} container alignItems="center">
                 <Grid item xs={8} container direction="column">
@@ -61,9 +96,13 @@ export const ServiceModal = ({
                       <WorkIcon style={{ color: "black" }} />
                     </Grid>
                     <Grid item>
-                      <Typography variant="h6" component="p">
-                        {service.title}
-                      </Typography>
+                      <TextField
+                        fullWidth
+                        label="Título do Serviço"
+                        variant="outlined"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
                     </Grid>
                   </Grid>
                   <Grid
@@ -114,9 +153,14 @@ export const ServiceModal = ({
                   <Typography variant="h6" component="h3">
                     Descrição:
                   </Typography>
-                  <Typography variant="body2" component="p">
-                    {service.description}
-                  </Typography>
+                  <TextField
+                    fullWidth
+                    multiline
+                    minRows={6}
+                    variant="outlined"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={12} md={6}>
@@ -142,36 +186,14 @@ export const ServiceModal = ({
           </DialogContent>
         )}
         <DialogActions>
-          <Box padding={2}>
-            <Button
-              onClick={handleClose}
-              color="error"
-              sx={{
-                marginRight: "1rem",
-              }}
-            >
-              Fechar
-            </Button>
-            <Button
-              onClick={handleConfirmOpen}
-              color="success"
-              variant="contained"
-              sx={{
-                marginRight: "1rem",
-              }}
-            >
-              Agendar
-            </Button>
-          </Box>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleSave} color="primary">
+            Salvar
+          </Button>
         </DialogActions>
       </Dialog>
-      <ConfirmModal
-        open={confirmOpen}
-        handleClose={handleConfirmClose}
-        handleConfirm={handleConfirm}
-        service={service}
-        text="Deseja agendar este serviço?"
-      />
     </>
   );
 };
