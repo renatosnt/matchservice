@@ -44,10 +44,23 @@ export class UserDatabase implements IUserPort {
   }
 
   public async save(user: User): Promise<User> {
+
+    const input = {
+      id: user.id,
+      username: user.username,
+      realName: user.realName,
+      email: user.email,
+      passwordHash: user.passwordHash,
+      type: user.type,
+      createdAt: user.createdAt,
+      scheduledServices: user.getScheduledServices(),
+      serviceProviderProfileId: user.serviceProviderProfileId
+    }
+
     const result = await this.prismaClient.user.upsert({
       where: { id: user.id },
-      update: PrismaUserMapper.toPrisma(user),
-      create: PrismaUserMapper.toPrisma(user),
+      update: input,
+      create: input,
     });
     return PrismaUserMapper.toDomain(result);
   }
