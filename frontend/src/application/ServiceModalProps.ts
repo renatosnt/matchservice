@@ -11,4 +11,5 @@ export interface ServiceModalProps {
   handleClose: () => void;
   service: Service | null;
   handleConfirm: () => void;
+  text?: string;
 }
