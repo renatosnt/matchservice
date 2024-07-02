@@ -26,6 +26,26 @@ const Home: React.FC = () => {
         }}
       >
         <Toolbar>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <a href="/" style={{ textDecoration: "none" }}>
+              <Typography
+                variant="h5"
+                component="div"
+                sx={{
+                  fontWeight: "bold",
+                }}
+              >
+                <span style={{ color: "#333333" }}>Match</span>
+                <span style={{ color: "#0575E6" }}>Service</span>
+              </Typography>
+            </a>
+          </Box>
           <Grid container justifyContent="center">
             <Button
               component={Link}
@@ -64,6 +84,7 @@ const Home: React.FC = () => {
                 fontWeight: "bold",
                 fontSize: 16,
                 color: "gray",
+                marginRight: 2,
               }}
             >
               Cadastrar

@@ -61,6 +61,26 @@ export const Login = () => {
             gap: 2,
           }}
         >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <a href="/" style={{ textDecoration: "none" }}>
+              <Typography
+                variant="h3"
+                component="div"
+                sx={{
+                  fontWeight: "bold",
+                }}
+              >
+                <span style={{ color: "#333333" }}>Match</span>
+                <span style={{ color: "#0575E6" }}>Service</span>
+              </Typography>
+            </a>
+          </Box>
           <Typography variant="h5" align="center" gutterBottom>
             Bem-vindo novamente!
           </Typography>
