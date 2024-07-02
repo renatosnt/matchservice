@@ -11,8 +11,8 @@ export class PrismaUserMapper {
       prismaUser.email,
       prismaUser.passwordHash,
       prismaUser.type,
-      prismaUser.serviceProviderProfileId as UUID,
-      prismaUser.scheduledServices as UUID[]
+      prismaUser.scheduledServices as UUID[],
+      prismaUser.serviceProviderProfileId as UUID | null
     );
   }
 
@@ -30,7 +30,7 @@ export class PrismaUserMapper {
       passwordHash: user.passwordHash,
       type: user.type,
       createdAt: user.createdAt,
-      serviceProviderProfileId: user.serviceProviderProfileId,
+      serviceProviderProfileId: user.serviceProviderProfileId as UUID | null,
       scheduledServices: user.getScheduledServices()
     };
   }

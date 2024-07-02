@@ -8,7 +8,7 @@ export interface IUser {
   passwordHash: string;
   type: string;
   createdAt?: Date;
-  serviceProviderProfileId?: UUID;
+  serviceProviderProfileId?: UUID | null;
   getScheduledServices(): UUID[];
 }
 
@@ -20,8 +20,8 @@ export class User implements IUser {
     public email: string,
     public passwordHash: string,
     public type: string,
-    public serviceProviderProfileId: UUID,
     private scheduledServices: UUID[],
+    public serviceProviderProfileId?: UUID | null,
     public createdAt?: Date,
   ) {}
 
