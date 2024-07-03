@@ -178,5 +178,5 @@ A arquitetura hexagonal do sistema backend consiste em:
 - [ ] Exibir, em cada serviço, seus dias disponíveis. (Bruna)
 - [ ] Viabilizar a alteração da data de disponibilidade de um serviço, por parte do prestador de serviço. (Bruna)
 
-### História 8: Como cliente, gostaria de poder agendar serviços de prestadores
+### História 9: Como cliente, gostaria de poder agendar serviços de prestadores
 - [x] Criar rotas para criação, edição e recuperação de dados de agendamentos (Gabriel)
