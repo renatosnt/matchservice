@@ -60,7 +60,7 @@ export const ServiceModal = ({
                   component="img"
                   alt={service.title}
                   height="140"
-                  image={service.image}
+                  image="https://via.placeholder.com/350"
                   title={service.title}
                   style={{ borderRadius: "8px" }}
                 />

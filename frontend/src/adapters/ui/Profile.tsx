@@ -22,7 +22,7 @@ import { makeStyles } from "@mui/styles";
 import { ScheduleModal } from "./ScheduleModal";
 import { EditServiceModal } from "./EditServiceModal";
 import { NewServiceModal } from "./NewServiceModal";
-import { searchServices } from "../api/api"; // Import the API call
+import { getAllServices } from "../api/api"; // Import the API call
 import { Service } from "../../application/ServiceModalProps";
 import { EditProfileModal } from "./EditProfileModal";
 
@@ -81,23 +81,24 @@ export default function Profile() {
     // Get user data from localStorage
     const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user).data;
-      console.log(parsedUser);
+      const parsedUser = JSON.parse(user);
       setUserData({
-        name: parsedUser.realName || parsedUser.username,
-        profession: parsedUser.profession || "Profissão não informada",
-        profileId: parsedUser.profileId,
+        name: parsedUser.data.realName || parsedUser.data.username,
+        profession: parsedUser.data.profession || "Profissão não informada",
+        profileId: parsedUser.profileData.id,
       });
       // Fetch user services
-      fetchUserServices(parsedUser.profileId);
+      fetchUserServices(parsedUser.profileData.id);
     }
   }, []);
 
   const fetchUserServices = async (profileId: string) => {
     try {
-      const services = await searchServices({ profileId });
-      setUserServices(services);
-      console.log(services);
+      const services = await getAllServices();
+      const userServices = services.filter(
+        (service: Service) => service.creatorProfileId === profileId,
+      );
+      setUserServices(userServices);
     } catch (error) {
       console.error("Failed to fetch user services:", error);
     }
@@ -123,7 +124,7 @@ export default function Profile() {
               justifyContent: "center",
             }}
           >
-            <a href="/" style={{ textDecoration: "none" }}>
+            <a href="/services" style={{ textDecoration: "none" }}>
               <Typography
                 variant="h5"
                 component="div"
@@ -213,7 +214,7 @@ export default function Profile() {
                   color="primary"
                   fullWidth
                   sx={{ marginTop: 2 }}
-                  onClick={() => setScheduleModalOpen(true)}
+                  onClick={() => setEditProfileModalOpen(true)}
                 >
                   Editar Perfil
                 </Button>
@@ -240,7 +241,7 @@ export default function Profile() {
                   <CardMedia
                     component="img"
                     height="140"
-                    image={service.image}
+                    image="https://via.placeholder.com/350"
                     alt={service.title}
                   />
                   <CardContent>

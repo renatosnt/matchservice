@@ -39,6 +39,17 @@ const categories = [
   "Design",
 ];
 
+const cities = [
+  "São Paulo",
+  "Rio de Janeiro",
+  "Belo Horizonte",
+  "Curitiba",
+  "Porto Alegre",
+  "Salvador",
+  "Brasília",
+  "Fortaleza",
+];
+
 export const ServiceList = () => {
   const [open, setOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<{
@@ -48,6 +59,7 @@ export const ServiceList = () => {
     description: string;
     provider?: string;
     category?: string;
+    locationCity?: string;
   } | null>(null);
   const [userType, setUserType] = useState<string | null>(null);
   const [services, setServices] = useState<any[]>([]);
@@ -63,6 +75,7 @@ export const ServiceList = () => {
       try {
         const data = await getAllServices();
         setServices(data);
+        console.log(data);
       } catch (error) {
         console.error("Failed to fetch services:", error);
       }
@@ -79,6 +92,7 @@ export const ServiceList = () => {
       description: string;
       provider?: string;
       category?: string;
+      locationCity?: string;
     } | null>,
   ) => {
     setSelectedService(service);
@@ -92,6 +106,7 @@ export const ServiceList = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -99,6 +114,10 @@ export const ServiceList = () => {
 
   const handleCategoryChange = (event: SelectChangeEvent<string>) => {
     setSelectedCategory(event.target.value as string);
+  };
+
+  const handleCityChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCity(event.target.value as string);
   };
 
   const filteredServices = services.filter((service) => {
@@ -111,8 +130,11 @@ export const ServiceList = () => {
     const categoryMatch = selectedCategory
       ? service.category === selectedCategory
       : true;
+    const cityMatch = selectedCity
+      ? service.locationCity === selectedCity
+      : true;
 
-    return (titleMatch || descriptionMatch) && categoryMatch;
+    return (titleMatch || descriptionMatch) && categoryMatch && cityMatch;
   });
 
   return (
@@ -198,6 +220,7 @@ export const ServiceList = () => {
                     borderRadius: 20,
                     marginTop: 4,
                     marginBottom: 4,
+                    marginRight: 2,
                   }}
                 >
                   <InputLabel>Categoria</InputLabel>
@@ -211,6 +234,27 @@ export const ServiceList = () => {
                     {categories.map((category) => (
                       <MenuItem key={category} value={category}>
                         {category}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl
+                  variant="outlined"
+                  sx={{
+                    minWidth: 200,
+                    borderRadius: 20,
+                    marginTop: 4,
+                    marginBottom: 4,
+                  }}
+                >
+                  <InputLabel>Cidade</InputLabel>
+                  <Select value={selectedCity} onChange={handleCityChange}>
+                    <MenuItem value="">
+                      <em>Todas</em>
+                    </MenuItem>
+                    {cities.map((city) => (
+                      <MenuItem key={city} value={city}>
+                        {city}
                       </MenuItem>
                     ))}
                   </Select>
@@ -248,7 +292,7 @@ export const ServiceList = () => {
                 component="img"
                 alt={service.title}
                 height="140"
-                image={service.image}
+                image="https://via.placeholder.com/350"
                 title={service.title}
               />
               <CardContent>

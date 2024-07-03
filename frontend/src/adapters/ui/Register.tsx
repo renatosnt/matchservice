@@ -122,14 +122,22 @@ export const Register = () => {
       const loginResponse = await loginUser({ userEmail: email, password });
 
       console.log(loginResponse);
+      let profileData = null;
       if (type === "ServiceProvider") {
         const token = loginResponse.data.token;
         console.log({ telephoneNumber, specialty }, token);
-        await createProfile({ telephoneNumber, specialty }, token);
+        profileData = await createProfile(
+          { telephoneNumber, specialty },
+          token,
+        );
+        console.log(profileData);
       }
 
       toast.success("Registration successful!");
-      localStorage.setItem("user", JSON.stringify(loginResponse));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ ...loginResponse, profileData }),
+      );
       setTimeout(() => {
         navigate("/services");
       }, 2000);
