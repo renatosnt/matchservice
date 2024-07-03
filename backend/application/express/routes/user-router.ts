@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { UUID, randomUUID } from "crypto";
 import express, { Request, Response } from "express";
-import { UserAdapter } from "../../../adapters/user-adapter";
 import { User } from "../../../domain/entities/user.entity";
+import { UserAdapter } from "../../../adapters/user-adapter";
 import { UserDatabase } from "../../../intrastructure/user-database";
 import {
   ContentTypeMiddleware,
@@ -65,14 +65,14 @@ router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
  */
 router.get("/:userId", async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId as UUID;
-    const user = await userAdapter.getById(userId);
+    const userId: UUID = req.params.userId as UUID;
+    const user: User = await userAdapter.getById(userId);
 
     const responseWithoutPassword = { ...user };
     delete (responseWithoutPassword as any).passwordHash;
     res.status(200).json(responseWithoutPassword);
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ error: "User not found"});
   }
 });
 
@@ -121,7 +121,7 @@ router.get("/:userId", async (req: Request, res: Response) => {
  *
  */
 router.post(
-  "/register",
+  "/",
   ContentTypeMiddleware,
   async (req: Request, res: Response) => {
     try {
@@ -226,10 +226,11 @@ router.patch(
   "/:userId",
   [ContentTypeMiddleware, sessionMiddleware],
   async (req: Request, res: Response) => {
+    const userId = req.params.userId as UUID;
     try {
-      const userId = req.params.userId as UUID;
       const user = await userAdapter.getById(userId);
       const { username, realName, email, passwordHash, type } = req.body;
+      
       if (username) user.username = username;
       if (realName) user.realName = realName;
       if (email) user.email = email;
@@ -243,6 +244,7 @@ router.patch(
         }
         user.type = type;
       }
+
       const updatedUser = await userAdapter.save(user);
       res.status(200).json(updatedUser);
     } catch (error: any) {
