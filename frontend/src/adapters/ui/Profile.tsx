@@ -176,7 +176,6 @@ export default function Profile() {
               <Box display="flex" flexDirection="column" alignItems="center">
                 <Avatar
                   alt="João"
-                  src="https://thispersondoesnotexist.com/"
                   sx={{
                     width: 150,
                     height: 150,

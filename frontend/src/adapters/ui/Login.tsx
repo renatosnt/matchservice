@@ -41,11 +41,16 @@ export const Login = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await loginUser({ userEmail: email, password });
-    if (response.status === 201) {
-      navigate("/services");
-    } else {
-      setError("Wrong username or password.");
+    try {
+      const response = await loginUser({ userEmail: email, password });
+      if (response) {
+        localStorage.setItem("user", JSON.stringify(response));
+        navigate("/services");
+      } else {
+        setError("Wrong username or password.");
+      }
+    } catch (error: any) {
+      setError("An error occurred. Please try again.");
     }
   };
 
