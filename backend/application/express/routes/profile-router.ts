@@ -158,7 +158,7 @@ router.get(
  *               specialty:
  *                 type: string
  *     responses:
- *       200:
+ *       201:
  *         description: Returns the updated profile
  *       500:
  *         description: Internal Server Error
@@ -218,7 +218,7 @@ router.patch(
  *               - telephoneNumber
  *               - specialty
  *     responses:
- *       200:
+ *       201:
  *         description: Returns the new profile
  *       500:
  *         description: Internal Server Error
