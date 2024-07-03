@@ -25,6 +25,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Limpar a mensagem de erro após um tempo
     if (error) {
       const timeoutId = setTimeout(() => setError(""), 3000);
       return () => clearTimeout(timeoutId);
@@ -40,17 +41,11 @@ export const Login = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const response = await loginUser({ userEmail: email, password });
-      if (response && response.message === "Logged in successfully.") {
-        navigate("/services");
-      } else {
-        setError("Usuário ou senha incorretos.");
-      }
-    } catch (error) {
-      setError(
-        "Ocorreu um erro ao tentar fazer login. Por favor, tente novamente.",
-      );
+    const response = await loginUser({ userEmail: email, password });
+    if (response.status === 201) {
+      navigate("/services");
+    } else {
+      setError("Wrong username or password.");
     }
   };
 
