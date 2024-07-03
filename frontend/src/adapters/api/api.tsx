@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import instance from "./Instance";
 
-export const loginUser = async ({ userEmail, password }) =>
+export const loginUser = async ({ userEmail, password }: any) =>
   instance
     .post("/login", {
       email: userEmail,
@@ -10,21 +10,28 @@ export const loginUser = async ({ userEmail, password }) =>
     .catch((err) => err.response.data);
 
 export const registerUser = async ({
-  userName,
-  userEmail,
+  username,
+  realName,
+  email,
   password,
-  userType = "Customer", // Valor padrão para o tipo de usuário
+  type = "Customer",
+}: {
+  username: string;
+  realName: string;
+  email: string;
+  password: string;
+  type?: string;
 }) => {
-  const saltRounds = 10;
-  const passwordHash = await bcrypt.hash(password, saltRounds);
-
-  return instance
-    .post("/register", {
-      username: userName,
-      realName: userName,
-      email: userEmail,
-      password: passwordHash,
-      type: userType,
-    })
-    .catch((err) => err.response.data);
+  try {
+    const response = await instance.post("/user/register", {
+      username,
+      realName,
+      email,
+      password,
+      type,
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Registration failed");
+  }
 };
