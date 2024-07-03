@@ -159,18 +159,6 @@ export default function Profile() {
               </Box>
             </Grid>
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{
-                  borderRadius: 20,
-                }}
-                onClick={() => setNewServiceModalOpen(true)}
-              >
-                Anunciar Serviço
-              </Button>
-            </Grid>
-            <Grid item>
               <Header />
             </Grid>
           </Grid>

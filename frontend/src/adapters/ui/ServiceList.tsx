@@ -18,7 +18,7 @@ import {
   InputLabel,
   SelectChangeEvent,
 } from "@mui/material";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState, useEffect } from "react";
 import Header from "./Header";
 import { ServiceModal } from "./ServiceModal";
 
@@ -178,6 +178,15 @@ export const ServiceList = () => {
     provider?: string;
     category?: string;
   } | null>(null);
+  const [userType, setUserType] = useState<string | null>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setUserType(parsedUser.type);
+    }
+  }, []);
 
   const handleClickOpen = (
     service: SetStateAction<{
@@ -326,15 +335,18 @@ export const ServiceList = () => {
               </Box>
             </Grid>
             <Grid item>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{
-                  borderRadius: 20,
-                }}
-              >
-                Anunciar Serviço
-              </Button>
+              {userType === "ServiceProvider" && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    borderRadius: 20,
+                  }}
+                  href="/account"
+                >
+                  Anunciar Serviço
+                </Button>
+              )}
             </Grid>
             <Grid item>
               <Header />

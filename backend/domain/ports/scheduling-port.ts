@@ -6,5 +6,6 @@ export interface ISchedulingPort {
   deleteById(id: UUID): Promise<Scheduling>;
   getByServiceProviderProfileId(serviceProviderId: UUID): Promise<Scheduling[]>;
   getByCustomerId(customerId: UUID): Promise<Scheduling[]>;
+  getByServiceId(serviceId: UUID): Promise<Scheduling[]>;
   save(scheduling: Scheduling): Promise<Scheduling>;
 }

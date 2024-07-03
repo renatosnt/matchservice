@@ -8,10 +8,17 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/api";
 import BackgroundImageRegister from "./BackgroundImageRegister";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -19,21 +26,76 @@ export const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [type, setType] = useState("Customer");
+  const [error, setError] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await registerUser({
-      username,
-      realName: fullName,
-      email,
-      password,
-      type,
+    setError(null);
+    setValidationErrors({
+      fullName: "",
+      username: "",
+      email: "",
+      password: "",
     });
-    console.log(response);
+
+    // Validation logic
+    const errors = { fullName: "", username: "", email: "", password: "" };
+    let isValid = true;
+
+    if (!fullName) {
+      errors.fullName = "Nome Completo não pode estar vazio";
+      isValid = false;
+    }
+    if (username.includes(" ")) {
+      errors.username = "Username não deve conter espaços";
+      isValid = false;
+    }
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      errors.email = "Email inválido";
+      isValid = false;
+    }
+    if (!password) {
+      errors.password = "Senha não pode estar vazia";
+      isValid = false;
+    }
+
+    setValidationErrors(errors);
+
+    if (!isValid) {
+      return;
+    }
+
+    try {
+      const response = await registerUser({
+        username,
+        realName: fullName,
+        email,
+        password,
+        type,
+      });
+      toast.success("Registration successful!");
+      localStorage.setItem("user", JSON.stringify(response));
+      setTimeout(() => {
+        navigate("/services");
+      }, 2000);
+      console.log(response);
+    } catch (err: any) {
+      setError(err.message);
+      toast.error(err.message);
+    }
   };
 
   return (
     <Grid container sx={{ height: "100vh", overflowY: "auto" }}>
+      <ToastContainer />
       <BackgroundImageRegister />
       <Grid
         item
@@ -90,6 +152,12 @@ export const Register = () => {
             Cadastre-se para começar
           </Typography>
 
+          {error && (
+            <Typography variant="body2" align="center" color="error">
+              {error}
+            </Typography>
+          )}
+
           <TextField
             label="Nome Completo"
             value={fullName}
@@ -104,6 +172,25 @@ export const Register = () => {
               ),
             }}
             sx={{ background: "white" }}
+            error={!!validationErrors.fullName}
+            helperText={validationErrors.fullName}
+          />
+          <TextField
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            fullWidth
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <PersonIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ background: "white" }}
+            error={!!validationErrors.username}
+            helperText={validationErrors.username}
           />
           <TextField
             label="E-mail"
@@ -120,6 +207,8 @@ export const Register = () => {
               ),
             }}
             sx={{ background: "white" }}
+            error={!!validationErrors.email}
+            helperText={validationErrors.email}
           />
 
           <TextField
@@ -137,7 +226,22 @@ export const Register = () => {
                 </InputAdornment>
               ),
             }}
+            error={!!validationErrors.password}
+            helperText={validationErrors.password}
           />
+
+          <FormControl fullWidth size="small" sx={{ background: "white" }}>
+            <InputLabel id="account-type-label">Tipo de Conta</InputLabel>
+            <Select
+              labelId="account-type-label"
+              value={type}
+              label="Tipo de Conta"
+              onChange={(e) => setType(e.target.value as string)}
+            >
+              <MenuItem value="Customer">Cliente</MenuItem>
+              <MenuItem value="ServiceProvider">Prestador de Serviço</MenuItem>
+            </Select>
+          </FormControl>
 
           <Button
             type="submit"
