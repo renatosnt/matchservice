@@ -10,6 +10,7 @@ export interface IUser {
   createdAt?: Date;
   serviceProviderProfileId?: UUID | null;
   getScheduledServices(): UUID[];
+  addSchedule(scheduleId: UUID): void;
 }
 
 export class User implements IUser {
@@ -27,5 +28,9 @@ export class User implements IUser {
 
   public getScheduledServices(): UUID[] {
     return this.scheduledServices;
+  }
+
+  public addSchedule(scheduleId: UUID) {
+    this.scheduledServices.push(scheduleId);
   }
 }

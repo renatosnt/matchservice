@@ -70,18 +70,16 @@ export class ServiceDatabase implements IServicePort {
   }
 
   public async getUniqueCategories(): Promise<string[]> {
-
     const categories = await this.prismaClient.service.findMany({
-      select: {category: true}
+      select: { category: true },
     });
 
     if (categories === null) throw new Error("No categories found.");
-    
-    const result = [... new Set(categories)]
+
+    const result = [...new Set(categories)];
 
     return result.map((x) => x.category);
   }
-
 
   public async search(
     title?: string,
