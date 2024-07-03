@@ -7,6 +7,7 @@ export interface IServicePort {
   deleteById(id: UUID): Promise<Service>;
   getServiceSchedulingById(id: UUID): Promise<Scheduling[]>;
   getByServiceProviderId(serviceProviderId: UUID): Promise<Service[]>;
+  getUniqueCategories(): Promise<string[]>;
   search(
     title?: string,
     description?: string,

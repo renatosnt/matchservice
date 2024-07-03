@@ -18,6 +18,10 @@ router.get("/search", (req: Request, res: Response) => {
   res.send("should search for a service");
 });
 
+router.get("/categories", (req: Request, res: Response) => {
+  res.send("should return all unique categories in the service table");
+});
+
 router.post("/create", (req: Request, res: Response) => {
   res.send(
     "should create a service and add it to the corresponding service provider profile",

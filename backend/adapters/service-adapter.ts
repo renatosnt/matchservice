@@ -28,6 +28,10 @@ export class ServiceAdapter implements IServicePort {
     );
   }
 
+  public async getUniqueCategories(): Promise<string[]> {
+    return await this.serviceRepository.getUniqueCategories();
+  }
+
   async search(
     title?: string,
     description?: string,
