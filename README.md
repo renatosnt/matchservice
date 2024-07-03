@@ -50,13 +50,13 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 
 ## Arquitetura Hexagonal
 
-A arquitetura hexagonal do sistema consiste em:
+A arquitetura hexagonal do sistema backend consiste em:
 
-- Domínio: O diretório domain contém as entidades do sistema, que representam os conceitos do domínio do negócio. São as classes User, Service, Scheduling, ServiceProviderProfile.
-- Portas: O diretório domain/ports contém as interfaces de comunicação que definem como as entidades podem ser acessadas e manipuladas. São as interfaces IUserPort, IServicePort, ISchedulingPort, IServiceProviderProfilePort.
-- Adaptadores: O diretório adapters contém as implementações concretas das interfaces de comunicação. São as classes UserAdapter, ServiceAdapter, SchedulingAdapter, ServiceProviderProfileAdapter
-- Aplicação: O diretório application contém a lógica de aplicação do sistema, que é responsável por gerenciar as requisições e respostas do sistema. É aqui que está implementado a API do Express para comunicação externa.
-- Infraestrutura: O diretório infrastructure contém as implementações concretas das tecnologias específicas do sistema, como bancos de dados, APIs, etc. É aqui que a implementação da conexão com o Prisma e o PostgreSQL foi feita.
+- Domínio: O diretório backend/domain contém as entidades do sistema, que representam os conceitos do domínio do negócio. São as classes User, Service, Scheduling, ServiceProviderProfile.
+- Portas: O diretório backend/domain/ports contém as interfaces de comunicação que definem como as entidades podem ser acessadas e manipuladas. São as interfaces IUserPort, IServicePort, ISchedulingPort, IServiceProviderProfilePort.
+- Adaptadores: O diretório backend/adapters contém as implementações concretas das interfaces de comunicação. São as classes UserAdapter, ServiceAdapter, SchedulingAdapter, ServiceProviderProfileAdapter
+- Aplicação: O diretório backend/application contém a lógica de aplicação do sistema, que é responsável por gerenciar as requisições e respostas do sistema. É aqui que está implementado a API do Express para comunicação externa.
+- Infraestrutura: O diretório backend/infrastructure contém as implementações concretas das tecnologias específicas do sistema, como bancos de dados, APIs, etc. É aqui que a implementação da conexão com o Prisma e o PostgreSQL foi feita.
 
 
 ## Backlog do Produto
