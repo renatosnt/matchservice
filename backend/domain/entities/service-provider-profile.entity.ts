@@ -13,6 +13,7 @@ export interface IServiceProviderProfile {
   getSchedule(): UUID[];
   calculateAndSetAverageRating(schedules: Scheduling[]): number;
   addService(serviceId: UUID): IServiceProviderProfile;
+  addSchedule(scheduleId: UUID): void;
 }
 
 export class ServiceProviderProfile implements IServiceProviderProfile {
@@ -33,16 +34,19 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
     return this;
   }
 
-  public calculateAndSetAverageRating(schedules: Scheduling[]){
-    let res = 0
-    let count = 0
+  public calculateAndSetAverageRating(schedules: Scheduling[]) {
+    if (schedules.length === 0) return 0;
+
+    let res = 0;
+    let count = 0;
     for (let index = 0; index < schedules.length; index++) {
-      if (!schedules[index].isCompleted)
-        continue;
+      if (!schedules[index].isCompleted) continue;
       res += schedules[index].rating;
       count++;
     }
-    const result = res / count
+    if (count === 0) return 0;
+
+    const result = res / count;
     this.averageRating = result;
     return result;
   }
@@ -57,5 +61,9 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
 
   public getSchedule(): UUID[] {
     return this.schedule;
+  }
+
+  public addSchedule(scheduleId: UUID) {
+    this.schedule.push(scheduleId);
   }
 }

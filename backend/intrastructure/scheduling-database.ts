@@ -67,6 +67,19 @@ export class SchedulingDatabase implements ISchedulingPort {
     return result.map((i) => PrismaSchedulingMapper.toDomain(i));
   }
 
+  public async getByServiceId(serviceId: UUID): Promise<Scheduling[]> {
+    validateParameterIsNotUndefined(serviceId);
+    validateUUID(serviceId);
+
+    const result = await this.prismaClient.scheduling.findMany({
+      where: { serviceId },
+    });
+
+    if (result === null) throw new Error("No scheduling found by this ID.");
+
+    return result.map((i) => PrismaSchedulingMapper.toDomain(i));
+  }
+
   public async save(scheduling: Scheduling): Promise<Scheduling> {
     validateParameterIsNotUndefined(scheduling);
 

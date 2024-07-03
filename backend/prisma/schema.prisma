@@ -39,7 +39,7 @@ model Service {
   id               String   @id @unique @db.Uuid
   title            String
   description      String
-  viewCount        Int
+  viewCount        Int      @default(0)
   category         String
   locationState    String
   locationCity     String
