@@ -157,8 +157,12 @@ router.post(
   },
 );
 
-router.post("/schedule_service/:serviceId", (req: Request, res: Response) => {
+router.post("/schedule_service/:serviceId", sessionMiddleware, (req: Request, res: Response) => {
   res.send("should assign a schedule for the user and add");
+});
+
+router.post("/:scheduleId/rate", sessionMiddleware, (req: Request, res: Response) => {
+  res.send("should rate a schedule from 1-5");
 });
 
 /**

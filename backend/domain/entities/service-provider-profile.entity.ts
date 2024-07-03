@@ -1,4 +1,5 @@
 import { UUID } from "crypto";
+import { Scheduling } from "./scheduling.entity";
 
 export interface IServiceProviderProfile {
   id: UUID;
@@ -10,7 +11,7 @@ export interface IServiceProviderProfile {
   getServices(): UUID[];
   setServices(services: UUID[]): void;
   getSchedule(): UUID[];
-
+  calculateAndSetAverageRating(schedules: Scheduling[]): number;
   addService(serviceId: UUID): IServiceProviderProfile;
 }
 
@@ -30,6 +31,20 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
       throw new Error("The service array is uninitialized.");
     this.services.push(serviceId);
     return this;
+  }
+
+  public calculateAndSetAverageRating(schedules: Scheduling[]){
+    let res = 0
+    let count = 0
+    for (let index = 0; index < schedules.length; index++) {
+      if (!schedules[index].isCompleted)
+        continue;
+      res += schedules[index].rating;
+      count++;
+    }
+    const result = res / count
+    this.averageRating = result;
+    return result;
   }
 
   public setServices(services: UUID[]): void {

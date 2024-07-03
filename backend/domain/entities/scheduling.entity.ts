@@ -22,4 +22,12 @@ export class Scheduling implements IScheduling {
     public serviceProviderProfileId: string,
     public customerId: UUID,
   ) {}
+
+  public setRating(value: number){
+
+    if (value < 0 || value >= 5)
+      throw new Error("Rating should be in the range (0, 5]")
+
+    this.rating = value;
+  }
 }
