@@ -43,11 +43,16 @@ const cities = [
   "Fortaleza",
 ];
 
-export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
+export const NewServiceModal = ({
+  open,
+  handleClose,
+  onSave,
+}: ServiceModalProps & { onSave: () => void }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [locationCity, setLocationCity] = useState("");
+  const [basePrice, setBasePrice] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const handleSave = async () => {
@@ -64,6 +69,7 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
           category,
           locationState: "SP",
           locationCity,
+          basePrice,
         };
 
         // Call the createService function with the token
@@ -74,7 +80,11 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
         setDescription("");
         setCategory("");
         setLocationCity("");
+        setBasePrice("");
         handleClose();
+
+        // Call the onSave function to trigger a re-render
+        onSave();
       } else {
         setError("User not found");
       }
@@ -141,6 +151,17 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
                   ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Preço Base"
+                variant="outlined"
+                type="number"
+                value={basePrice}
+                onChange={(e) => setBasePrice(e.target.value)}
+                margin="normal"
+              />
             </Grid>
             {error && (
               <Grid item xs={12}>

@@ -6,6 +6,7 @@ import Home from "../adapters/ui/Home";
 import { Register } from "../adapters/ui/Register";
 import Profile from "../adapters/ui/Profile";
 import ProtectedRoute from "./ProtectedRoute";
+import CustomerProfile from "../adapters/ui/CustomerProfile";
 
 const AppRouter = () => {
   return (
@@ -26,6 +27,14 @@ const AppRouter = () => {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <CustomerProfile />
           </ProtectedRoute>
         }
       />

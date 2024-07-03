@@ -22,7 +22,7 @@ import { makeStyles } from "@mui/styles";
 import { ScheduleModal } from "./ScheduleModal";
 import { EditServiceModal } from "./EditServiceModal";
 import { NewServiceModal } from "./NewServiceModal";
-import { getAllServices } from "../api/api"; // Import the API call
+import { getAllServices } from "../api/api";
 import { Service } from "../../application/ServiceModalProps";
 import { EditProfileModal } from "./EditProfileModal";
 
@@ -63,7 +63,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Profile() {
+export default function ServiceProviderProfile() {
   const classes = useStyles();
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [newServiceModalOpen, setNewServiceModalOpen] = useState(false);
@@ -91,6 +91,10 @@ export default function Profile() {
       fetchUserServices(parsedUser.profileData.id);
     }
   }, []);
+  const handleNewServiceModalSave = () => {
+    // Re-fetch the services after saving a new service
+    fetchUserServices(userData.profileId);
+  };
 
   const fetchUserServices = async (profileId: string) => {
     try {
@@ -215,6 +219,7 @@ export default function Profile() {
                   fullWidth
                   sx={{ marginTop: 2 }}
                   onClick={() => setEditProfileModalOpen(true)}
+                  disabled
                 >
                   Editar Perfil
                 </Button>
@@ -287,6 +292,7 @@ export default function Profile() {
           throw new Error("Function not implemented.");
         }}
         service={null}
+        onSave={handleNewServiceModalSave}
       />
       <EditServiceModal
         open={editServiceModalOpen}

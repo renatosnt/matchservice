@@ -2,7 +2,7 @@ import instance from "./Instance";
 import { Service } from "../../application/ServiceModalProps";
 
 export const loginUser = async ({ token, userEmail, password, type }: any) =>
-  instance
+  await instance
     .post("/login", {
       email: userEmail,
       password,
@@ -11,6 +11,14 @@ export const loginUser = async ({ token, userEmail, password, type }: any) =>
     })
     .catch((err) => err.response.data);
 
+export const getUserById = async (userId: string) => {
+  try {
+    const response = await instance.get(`/user/${userId}`);
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
 export const registerUser = async ({
   username,
   realName,

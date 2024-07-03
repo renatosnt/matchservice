@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import {
   Box,
@@ -13,6 +13,15 @@ import { ConfirmModal } from "./ConfirmModal";
 
 export const ScheduleModal = ({ open, handleClose }: ServiceModalProps) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [userType, setUserType] = useState<string | null>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user).data;
+      setUserType(parsedUser.type);
+    }
+  }, []);
   const handleConfirmClose = () => {
     setConfirmOpen(false);
   };
@@ -117,8 +126,12 @@ export const ScheduleModal = ({ open, handleClose }: ServiceModalProps) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogContent>
-        {renderAppointments(appointmentsWithYou, "Agendado com você:")}
-        {renderAppointments(appointmentsByYou, "Você agendou com:")}
+        {userType === "ServiceProvider"
+          ? renderAppointments(appointmentsWithYou, "Agendado com você:")
+          : null}
+        {userType === "Customer"
+          ? renderAppointments(appointmentsByYou, "Você agendou com:")
+          : null}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">

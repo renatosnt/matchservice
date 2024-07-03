@@ -7,11 +7,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [userType, setUserType] = useState<string | null>(null);
+
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
@@ -28,6 +30,14 @@ export default function AccountMenu() {
     handleClose();
     navigate("/");
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user).data;
+      setUserType(parsedUser.type);
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -80,7 +90,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose} component={Link} to="/account">
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to={userType == "Customer" ? "/profile" : "/account"}
+        >
           <Avatar /> Meu Perfil
         </MenuItem>
         <Divider />

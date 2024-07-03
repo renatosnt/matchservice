@@ -17,6 +17,7 @@ import BasicDateCalendar from "./Calendar";
 import { ConfirmModal } from "./ConfirmModal";
 import WorkIcon from "@mui/icons-material/Work";
 import PersonIcon from "@mui/icons-material/Person";
+import { getProfileById, getUserById } from "../api/api"; // Import the API calls
 
 export const ServiceModal = ({
   open,
@@ -26,14 +27,34 @@ export const ServiceModal = ({
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [userType, setUserType] = useState<string | null>(null);
+  const [providerName, setProviderName] = useState("");
+  const [location, setLocation] = useState("");
+  const [basePrice, setBasePrice] = useState("");
 
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user);
+      const parsedUser = JSON.parse(user).data;
       setUserType(parsedUser.type);
     }
-  }, []);
+
+    if (service && service.creatorProfileId) {
+      fetchProviderDetails(service.creatorProfileId);
+    }
+  }, [service]);
+
+  const fetchProviderDetails = async (profileId: string) => {
+    try {
+      const profile = await getProfileById(profileId);
+      const user = await getUserById(profile.userId); // Assuming profile contains userId
+      console.log(profile);
+      setProviderName(user.realName);
+      setLocation(`${profile.locationCity}`);
+      setBasePrice(profile.basePrice);
+    } catch (error) {
+      console.error("Failed to fetch provider details:", error);
+    }
+  };
 
   const handleConfirmClose = () => {
     setConfirmOpen(false);
@@ -88,7 +109,31 @@ export const ServiceModal = ({
                     </Grid>
                     <Grid item>
                       <Typography variant="h6" component="p">
-                        {service.provider}
+                        {providerName}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    spacing={1}
+                    alignItems="center"
+                    style={{ marginTop: "8px" }}
+                  >
+                    <Grid item>
+                      <Typography variant="body1" component="p">
+                        Localização: {service.locationCity}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    spacing={1}
+                    alignItems="center"
+                    style={{ marginTop: "8px" }}
+                  >
+                    <Grid item>
+                      <Typography variant="body1" component="p">
+                        Preço Base: R$ {basePrice}
                       </Typography>
                     </Grid>
                   </Grid>
