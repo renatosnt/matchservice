@@ -75,7 +75,7 @@ router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
       expiresIn: "7d",
     });
     res.set("x-access-token", token);
-    res.status(201).json({ message: "Logged in successfully." });
+    res.status(201).json({ userData });
     res.end();
   } catch (error: any) {
     res.status(500).json({ message: error.message });

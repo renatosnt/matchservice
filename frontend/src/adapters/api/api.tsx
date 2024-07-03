@@ -146,3 +146,65 @@ export const updateService = async (
     );
   }
 };
+
+// Function to get profile by ID
+export const getProfileById = async (profileId: string) => {
+  try {
+    const response = await instance.get(`/profile/${profileId}`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Failed to fetch profile");
+  }
+};
+
+// Function to get average rating of a profile by ID
+export const getProfileRating = async (profileId: string) => {
+  try {
+    const response = await instance.get(`/profile/${profileId}/rating`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || "Failed to fetch rating");
+  }
+};
+
+// Function to get the entire schedule of a profile by ID
+export const getProfileSchedule = async (profileId: string) => {
+  try {
+    const response = await instance.get(`/profile/${profileId}/schedule`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch schedule",
+    );
+  }
+};
+
+// Function to update a profile by ID
+export const updateProfileById = async (
+  profileId: string,
+  profileData: { telephoneNumber?: string; specialty?: string },
+) => {
+  try {
+    const response = await instance.patch(`/profile/${profileId}`, profileData);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to update profile",
+    );
+  }
+};
+
+// Function to create a new profile
+export const createProfile = async (profileData: {
+  telephoneNumber: string;
+  specialty: string;
+}) => {
+  try {
+    const response = await instance.post(`/profile/create`, profileData);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to create profile",
+    );
+  }
+};

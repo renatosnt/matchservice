@@ -43,8 +43,9 @@ export const Login = () => {
     event.preventDefault();
     try {
       const response = await loginUser({ userEmail: email, password });
+      console.log(response);
       if (response) {
-        localStorage.setItem("user", JSON.stringify(response));
+        localStorage.setItem("user", JSON.stringify(response.data.userData));
         navigate("/services");
       } else {
         setError("Wrong username or password.");
