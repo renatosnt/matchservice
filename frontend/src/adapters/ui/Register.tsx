@@ -8,6 +8,10 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -225,6 +229,19 @@ export const Register = () => {
             error={!!validationErrors.password}
             helperText={validationErrors.password}
           />
+
+          <FormControl fullWidth size="small" sx={{ background: "white" }}>
+            <InputLabel id="account-type-label">Tipo de Conta</InputLabel>
+            <Select
+              labelId="account-type-label"
+              value={type}
+              label="Tipo de Conta"
+              onChange={(e) => setType(e.target.value as string)}
+            >
+              <MenuItem value="Customer">Cliente</MenuItem>
+              <MenuItem value="ServiceProvider">Prestador de Serviço</MenuItem>
+            </Select>
+          </FormControl>
 
           <Button
             type="submit"
