@@ -10,11 +10,15 @@ export interface IService {
   locationCity: string;
   creatorProfileId: UUID;
   createdAt?: Date;
+  basePrice?: string;
+  pictureLinks?: string[];
   getSchedule(): UUID[];
   addSchedule(scheduleId: UUID): Service;
 }
 
 export class Service implements IService {
+  public basePrice?: string;
+  public pictureLinks?: string[];
   constructor(
     public readonly id: UUID,
     public title: string,
@@ -26,7 +30,10 @@ export class Service implements IService {
     public creatorProfileId: UUID,
     private schedule: UUID[],
     public createdAt?: Date,
-  ) {}
+  ) {
+    this.basePrice = "0";
+    this.pictureLinks = [];
+  }
 
   public getSchedule(): UUID[] {
     return this.schedule;
