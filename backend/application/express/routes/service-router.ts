@@ -8,8 +8,9 @@ export const router = express.Router();
 const serviceAdapter = new ServiceAdapter(new ServiceDatabase());
 
 router.get("/:serviceId", async (req: Request, res: Response) => {
+  const serviceId: UUID = req.params.serviceId as UUID;
+
   try {
-    const serviceId: UUID = req.params.serviceId as UUID;
     const service: Service = await serviceAdapter.getById(serviceId);
     res.status(200).json(service);
   } catch (error: any) {
@@ -19,16 +20,18 @@ router.get("/:serviceId", async (req: Request, res: Response) => {
 
 router.get("/:serviceId/schedule", async (req: Request, res: Response) => {
   const serviceId: UUID = req.params.serviceId as unknown as UUID;
+
   try {
     const scheduling = await serviceAdapter.getServiceSchedulingById(serviceId);
     res.json(scheduling);
-  } catch (error) {
+  } catch (error: any) {
     res.status(404).json({ error: "Service not found" });
   }
 });
 
 router.delete("/:serviceId", async (req: Request, res: Response) => {
   const serviceId: UUID = req.params.serviceId as UUID;
+
   try {
     const deletedService: Service = await serviceAdapter.deleteById(serviceId);
     res.json(deletedService);
@@ -39,6 +42,7 @@ router.delete("/:serviceId", async (req: Request, res: Response) => {
 
 router.get("/search", async (req: Request, res: Response) => {
   const { title, description, category, creatorProfileId } = req.body;
+
   try {
     const services: Service[] = await serviceAdapter.search(
       title as string,
@@ -107,7 +111,7 @@ router.patch("/:serviceId", async (req: Request, res: Response) => {
 
     const updatedService: Service = await serviceAdapter.save(existingService);
     res.json(updatedService);
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error && error.message === "Service not found") {
       res.status(404).json({ error: "Service not found" });
     } else {

@@ -64,8 +64,9 @@ router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
  *
  */
 router.get("/:userId", async (req: Request, res: Response) => {
+  const userId: UUID = req.params.userId as UUID;
+  
   try {
-    const userId: UUID = req.params.userId as UUID;
     const user: User = await userAdapter.getById(userId);
 
     const responseWithoutPassword = { ...user };
@@ -227,6 +228,7 @@ router.patch(
   [ContentTypeMiddleware, sessionMiddleware],
   async (req: Request, res: Response) => {
     const userId = req.params.userId as UUID;
+
     try {
       const user = await userAdapter.getById(userId);
       const { username, realName, email, passwordHash, type } = req.body;
