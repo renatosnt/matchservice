@@ -5,15 +5,30 @@ import { ServiceList } from "../adapters/ui/ServiceList";
 import Home from "../adapters/ui/Home";
 import { Register } from "../adapters/ui/Register";
 import Profile from "../adapters/ui/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/services" element={<ServiceList />} />
+      <Route
+        path="/services"
+        element={
+          <ProtectedRoute>
+            <ServiceList />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/register" element={<Register />} />
-      <Route path="/account" element={<Profile />} />
+      <Route
+        path="/account"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

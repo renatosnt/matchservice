@@ -332,6 +332,7 @@ export const ServiceList = () => {
                 sx={{
                   borderRadius: 20,
                 }}
+                href="/account"
               >
                 Anunciar Serviço
               </Button>

@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import instance from "./Instance";
 
 export const loginUser = async ({ userEmail, password }: any) =>

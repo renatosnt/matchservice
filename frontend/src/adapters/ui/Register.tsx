@@ -78,6 +78,7 @@ export const Register = () => {
         type,
       });
       toast.success("Registration successful!");
+      localStorage.setItem("user", JSON.stringify(response));
       setTimeout(() => {
         navigate("/services");
       }, 2000);
