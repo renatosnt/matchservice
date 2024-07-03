@@ -23,6 +23,29 @@ const serviceProviderProfileAdapter = new ServiceProviderProfileAdapter(
   new ServiceProviderProfileDatabase(),
 );
 
+/**
+ * @openapi
+ * /schedule/mark_as_complete/{scheduleId}:
+ *   patch:
+ *     tags:
+ *       - schedule
+ *     summary: Marks a schedule as complete.
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: scheduleId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The schedule ID.
+ *     responses:
+ *       201:
+ *         description: Returns the updated schedule
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.patch(
   "/mark_as_complete/:scheduleId",
   sessionMiddleware,
@@ -42,6 +65,29 @@ router.patch(
   },
 );
 
+/**
+ * @openapi
+ * /schedule/mark_as_canceled/{scheduleId}:
+ *   patch:
+ *     tags:
+ *       - schedule
+ *     summary: Marks a schedule as canceled.
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: scheduleId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The schedule ID.
+ *     responses:
+ *       201:
+ *         description: Returns the updated schedule
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.patch(
   "/mark_as_canceled/:scheduleId",
   sessionMiddleware,
@@ -61,11 +107,43 @@ router.patch(
   },
 );
 
+/**
+ * @openapi
+ * /schedule/rate/{scheduleId}:
+ *   patch:
+ *     tags:
+ *       - schedule
+ *     summary: Evalulates a scheduled service from 1 - 5.
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: scheduleId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The schedule ID.
+ *     requestBody:
+ *       description: The rating from 1-5.
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               rating:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Returns the updated schedule with the rating rounded down
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.patch(
-  "/rate/:rating",
+  "/rate/:scheduleId",
   [ContentTypeMiddleware, sessionMiddleware],
   async (req: Request, res: Response) => {
-    const scheduleId: UUID = req.params.rating as UUID;
+    const scheduleId: UUID = req.params.scheduleId as UUID;
     const userData = (req as CustomRequest).userData;
     let { rating } = req.body;
 
@@ -76,7 +154,6 @@ router.patch(
       const existingSchedule = await schedulingAdapter.getById(scheduleId);
 
       rating = parseInt(rating);
-
       existingSchedule.setRating(rating);
 
       const updatedSchedule = await schedulingAdapter.save(existingSchedule);
@@ -87,6 +164,27 @@ router.patch(
   },
 );
 
+/**
+ * @openapi
+ * /schedule/{scheduleId}:
+ *   get:
+ *     tags:
+ *       - schedule
+ *     summary: Gets a schedule by it's ID.
+ *     parameters:
+ *       - in: path
+ *         name: scheduleId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The schedule ID.
+ *     responses:
+ *       200:
+ *         description: Returns the schedule if found
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.get("/:scheduleId", async (req: Request, res: Response) => {
   try {
     const scheduleId = req.params.scheduleId as UUID;
@@ -97,6 +195,39 @@ router.get("/:scheduleId", async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @openapi
+ * /schedule/{scheduleId}:
+ *   patch:
+ *     tags:
+ *       - schedule
+ *     summary: Updates the scheduled date of a scheduling.
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: scheduleId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The schedule ID.
+ *     requestBody:
+ *       description: The new date in format YYYY-MM-DD
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               scheduledDate:
+ *                 type: string
+ *                 example: "2024-10-16"
+ *     responses:
+ *       201:
+ *         description: Returns the updated schedule
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.patch(
   "/:scheduleId",
   [ContentTypeMiddleware, sessionMiddleware],
@@ -121,6 +252,39 @@ router.patch(
   },
 );
 
+/**
+ * @openapi
+ * /schedule/create/{serviceId}:
+ *   post:
+ *     tags:
+ *       - schedule
+ *     summary: Creates a new scheduling for a service
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: serviceId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The service ID.
+ *     requestBody:
+ *       description: The date in format YYYY-MM-DD
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               scheduledDate:
+ *                 type: string
+ *                 example: "2024-10-16"
+ *     responses:
+ *       201:
+ *         description: Returns the new scheduling
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.post(
   "/create/:serviceId",
   [ContentTypeMiddleware, sessionMiddleware],
