@@ -16,7 +16,7 @@ if (SECRET_KEY === undefined)
 
 interface UserLoginData {
   email: string;
-  password_hash: string;
+  password: string;
 }
 
 export const router = express.Router();
@@ -39,7 +39,7 @@ const userAdapter = new UserAdapter(new UserDatabase());
  *               email:
  *                 type: string
  *                 format: email
- *               password_hash:
+ *               password:
  *                 type: string
  *             required:
  *               - email
@@ -59,7 +59,7 @@ router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
   try {
     const databaseUser = await userAdapter.getByEmail(body.email);
 
-    if (body.password_hash !== databaseUser.passwordHash) {
+    if (body.password !== databaseUser.password) {
       res.status(401).json({ message: `Wrong username or password.` });
       return;
     }

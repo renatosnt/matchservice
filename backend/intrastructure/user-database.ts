@@ -75,7 +75,7 @@ export class UserDatabase implements IUserPort {
       username: user.username,
       realName: user.realName,
       email: user.email,
-      passwordHash: user.passwordHash,
+      password: user.password,
       type: user.type,
       createdAt: user.createdAt,
       scheduledServices: user.getScheduledServices(),

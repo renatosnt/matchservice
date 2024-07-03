@@ -70,10 +70,10 @@ router.get("/:userId", async (req: Request, res: Response) => {
     const user: User = await userAdapter.getById(userId);
 
     const responseWithoutPassword = { ...user };
-    delete (responseWithoutPassword as any).passwordHash;
+    delete (responseWithoutPassword as any).password;
     res.status(200).json(responseWithoutPassword);
   } catch (error: any) {
-    res.status(404).json({ error: "User not found"});
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -122,7 +122,7 @@ router.get("/:userId", async (req: Request, res: Response) => {
  *
  */
 router.post(
-  "/",
+  "/register",
   ContentTypeMiddleware,
   async (req: Request, res: Response) => {
     try {
@@ -135,16 +135,12 @@ router.post(
         return;
       }
 
-      const saltRounds = 10;
-      const passwordHash = await bcrypt.hash(password, saltRounds);
-      // idealmente o hashing deveria acontecer no front e passar o password_hash pro back
-
       const newUser = new User(
         randomUUID(),
         username,
         realName,
         email,
-        passwordHash,
+        password,
         type,
         [],
         null,
@@ -202,7 +198,7 @@ router.post(
  *               email:
  *                 type: string
  *                 format: email
- *               passwordHash:
+ *               password:
  *                 type: string
  *               type:
  *                 type: string
@@ -231,12 +227,12 @@ router.patch(
 
     try {
       const user = await userAdapter.getById(userId);
-      const { username, realName, email, passwordHash, type } = req.body;
+      const { username, realName, email, password, type } = req.body;
       
       if (username) user.username = username;
       if (realName) user.realName = realName;
       if (email) user.email = email;
-      if (passwordHash) user.passwordHash = passwordHash;
+      if (password) user.password = password;
       if (type) {
         if (type !== "Customer" && type !== "ServiceProvider") {
           res.status(422).json({

@@ -5,7 +5,7 @@ export interface IUser {
   username: string;
   realName: string;
   email: string;
-  passwordHash: string;
+  password: string;
   type: string;
   createdAt?: Date;
   serviceProviderProfileId?: UUID | null;
@@ -18,7 +18,7 @@ export class User implements IUser {
     public username: string,
     public realName: string,
     public email: string,
-    public passwordHash: string,
+    public password: string,
     public type: string,
     private scheduledServices: UUID[],
     public serviceProviderProfileId?: UUID | null,

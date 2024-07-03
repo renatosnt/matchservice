@@ -18,7 +18,7 @@ model User {
   username                 String   @unique
   realName                 String
   email                    String   @unique
-  passwordHash             String
+  password                 String
   type                     String
   createdAt                DateTime @default(now())
   scheduledServices        String[] @db.Uuid
