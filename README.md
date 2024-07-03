@@ -136,6 +136,7 @@ A arquitetura hexagonal do sistema backend consiste em:
 ### História 1: Como usuário, gostaria de criar e acessar uma conta no sistema.
 - [x] Criar e estruturar a base de dados para armazenar usuários (Michel)
 - [x] Implementar a lógica de autenticação e criação de contas (Michel)
+- [x] Criar rotas para a adição, edição e remoção de usuários. (Michel / Gabriel)
 - [x] Criar a interface de login e cadastro (Bruna)
 - [x] Integrar o cadastro com o back-end e implementar os diferentes tipos de cadastros para Cliente e Prestador de Serviço (Renato)
 - [x] Integrar o login com o back-end (Bruna)
@@ -146,7 +147,7 @@ A arquitetura hexagonal do sistema backend consiste em:
 - [x] Integrar a interface de listagem com a API de serviços (Renato)
 
 ### História 3: Como prestador de serviço, gostaria de anunciar meus serviços no meu perfil.
-- [x] Criar rotas para a adição, edição e remoção de serviços. (Michel)
+- [x] Criar rotas para a adição, edição e remoção de serviços. (Michel / Gabriel)
 - [x] Incluir campos no banco de dados como nome, descrição, preço e fotos. (Gabriel)
 - [x] Criar e integrar com a API a interface para anunciar serviços (Renato)
 - [x] Adicionar modal com a confirmação de que as alterações foram salvas. (Renato)
@@ -166,7 +167,7 @@ A arquitetura hexagonal do sistema backend consiste em:
 - [ ] Exibir nas interfaces de um serviço e de perfil de um prestador, informações de contato claras para comunicação direta. (Gabriel)
 
 ### História 7: Como prestador de serviço, gostaria de deletar serviços do meu perfil.
-- [x] Implementar rota de DELETE para serviços na API. (Michel)
+- [x] Implementar rota de DELETE para serviços na API. (Michel / Gabriel)
 - [x] Implementar validação da rota de DELETE (apenas o prestador de serviço criador de serviço X deve poder deletá-lo). (Michel)
 - [ ] Criar um botão de delete, que deve ser exibido a um prestador de serviço, para cada um de seus serviços, quando acessar seu próprio perfil. (Gabriel)
 - [ ] Implementar modal de confirmação de remoção do serviço. (Gabriel)
@@ -176,3 +177,6 @@ A arquitetura hexagonal do sistema backend consiste em:
 - [ ] Fornecer, no momento de criação de um serviço, a possibilidade de estabelecer datas de disponibilidade de serviço. (Bruna)
 - [ ] Exibir, em cada serviço, seus dias disponíveis. (Bruna)
 - [ ] Viabilizar a alteração da data de disponibilidade de um serviço, por parte do prestador de serviço. (Bruna)
+
+### História 8: Como cliente, gostaria de poder agendar serviços de prestadores
+- [x] Criar rotas para criação, edição e recuperação de dados de agendamentos (Gabriel)
