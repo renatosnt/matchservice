@@ -43,7 +43,7 @@ export const Login = () => {
     event.preventDefault();
     try {
       const response = await loginUser({ userEmail: email, password });
-      if (response) {
+      if (response.status === 201) {
         localStorage.setItem("user", JSON.stringify(response));
         navigate("/services");
       } else {
