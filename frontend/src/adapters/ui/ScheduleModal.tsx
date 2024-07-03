@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import {
   Box,
@@ -9,8 +9,22 @@ import {
   Typography,
 } from "@mui/material";
 import { ServiceModalProps } from "../../application/ServiceModalProps";
+import { ConfirmModal } from "./ConfirmModal";
 
 export const ScheduleModal = ({ open, handleClose }: ServiceModalProps) => {
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const handleConfirmClose = () => {
+    setConfirmOpen(false);
+  };
+
+  const handleConfirmOpen = () => {
+    setConfirmOpen(true);
+  };
+  const handleConfirm = () => {
+    alert("Obrigado pela sua avaliação!");
+    setConfirmOpen(false);
+    handleClose();
+  };
   const appointmentsWithYou = [
     {
       id: 1,
@@ -78,12 +92,24 @@ export const ScheduleModal = ({ open, handleClose }: ServiceModalProps) => {
               >
                 Cancelar
               </Button>
-              <Button variant="contained" color="success" size="small">
+              <Button
+                variant="contained"
+                color="success"
+                size="small"
+                onClick={() => handleConfirmOpen()}
+              >
                 Concluir
               </Button>
             </Box>
           </Box>
         ))}
+        <ConfirmModal
+          open={confirmOpen}
+          handleClose={handleConfirmClose}
+          handleConfirm={handleConfirm}
+          text="Como foi sua experiência?"
+          rate={true}
+        />
       </Box>
     </>
   );
@@ -91,9 +117,6 @@ export const ScheduleModal = ({ open, handleClose }: ServiceModalProps) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogContent>
-        <Typography variant="h5" component="div" gutterBottom>
-          Agenda
-        </Typography>
         {renderAppointments(appointmentsWithYou, "Agendado com você:")}
         {renderAppointments(appointmentsByYou, "Você agendou com:")}
       </DialogContent>

@@ -12,10 +12,16 @@ import {
   Toolbar,
   Typography,
   alpha,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  SelectChangeEvent,
 } from "@mui/material";
 import { SetStateAction, useState } from "react";
 import Header from "./Header";
 import { ServiceModal } from "./ServiceModal";
+
 const services = [
   {
     id: 1,
@@ -24,6 +30,7 @@ const services = [
     description:
       "Profissionais qualificados para realizar a limpeza de residências e escritórios.",
     provider: "Ana Paula Silva",
+    category: "Limpeza",
   },
   {
     id: 2,
@@ -31,6 +38,7 @@ const services = [
     title: "Almoxarife",
     description: "Gerenciamento de estoques e organização de almoxarifados.",
     provider: "Carlos Alberto Pereira",
+    category: "Logística",
   },
   {
     id: 3,
@@ -39,6 +47,7 @@ const services = [
     description:
       "Serviços de fotografia para eventos, ensaios fotográficos e comerciais.",
     provider: "Mariana Rocha",
+    category: "Fotografia",
   },
   {
     id: 4,
@@ -46,6 +55,7 @@ const services = [
     title: "Babá",
     description: "Cuidados infantis profissionais para bebês e crianças.",
     provider: "Juliana Costa",
+    category: "Cuidados Infantis",
   },
   {
     id: 5,
@@ -54,6 +64,7 @@ const services = [
     description:
       "Acompanhamento personalizado para treinos e atividades físicas.",
     provider: "Roberto Martins",
+    category: "Fitness",
   },
   {
     id: 6,
@@ -61,6 +72,7 @@ const services = [
     title: "Jardineiro",
     description: "Serviços de jardinagem para manutenção e criação de jardins.",
     provider: "Pedro Santos",
+    category: "Jardinagem",
   },
   {
     id: 7,
@@ -68,6 +80,7 @@ const services = [
     title: "Pintor",
     description: "Pintura residencial e comercial com acabamento profissional.",
     provider: "Ricardo Lima",
+    category: "Construção",
   },
   {
     id: 8,
@@ -76,6 +89,7 @@ const services = [
     description:
       "Instalações e reparos elétricos realizados por profissionais certificados.",
     provider: "Fernando Alves",
+    category: "Manutenção",
   },
   {
     id: 9,
@@ -83,6 +97,7 @@ const services = [
     title: "Encanador",
     description: "Serviços de encanamento para instalações e consertos.",
     provider: "André Souza",
+    category: "Manutenção",
   },
   {
     id: 10,
@@ -90,6 +105,7 @@ const services = [
     title: "Mecânico",
     description: "Reparos e manutenção de veículos com garantia de qualidade.",
     provider: "João Mendes",
+    category: "Automotivo",
   },
   {
     id: 11,
@@ -97,6 +113,7 @@ const services = [
     title: "Cabeleireiro",
     description: "Cortes de cabelo, penteados e tratamentos capilares.",
     provider: "Isabela Ferreira",
+    category: "Beleza",
   },
   {
     id: 12,
@@ -105,6 +122,7 @@ const services = [
     description:
       "Serviços de manicure e pedicure para cuidados e estética das unhas.",
     provider: "Tatiana Oliveira",
+    category: "Beleza",
   },
   {
     id: 13,
@@ -113,6 +131,7 @@ const services = [
     description:
       "Preparação de refeições personalizadas e eventos gastronômicos.",
     provider: "Gustavo Ramos",
+    category: "Gastronomia",
   },
   {
     id: 14,
@@ -120,6 +139,7 @@ const services = [
     title: "Técnico de Informática",
     description: "Suporte técnico e manutenção de computadores e redes.",
     provider: "Lucas Figueiredo",
+    category: "Tecnologia",
   },
   {
     id: 15,
@@ -128,7 +148,24 @@ const services = [
     description:
       "Criação de artes visuais, logotipos e materiais publicitários.",
     provider: "Daniela Vieira",
+    category: "Design",
   },
+];
+
+const categories = [
+  "Limpeza",
+  "Logística",
+  "Fotografia",
+  "Cuidados Infantis",
+  "Fitness",
+  "Jardinagem",
+  "Construção",
+  "Manutenção",
+  "Automotivo",
+  "Beleza",
+  "Gastronomia",
+  "Tecnologia",
+  "Design",
 ];
 
 export const ServiceList = () => {
@@ -139,6 +176,7 @@ export const ServiceList = () => {
     title: string;
     description: string;
     provider?: string;
+    category?: string;
   } | null>(null);
 
   const handleClickOpen = (
@@ -148,6 +186,7 @@ export const ServiceList = () => {
       title: string;
       description: string;
       provider?: string;
+      category?: string;
     } | null>,
   ) => {
     setSelectedService(service);
@@ -160,9 +199,14 @@ export const ServiceList = () => {
   };
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleCategoryChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCategory(event.target.value as string);
   };
 
   const filteredServices = services.filter((service) => {
@@ -172,8 +216,11 @@ export const ServiceList = () => {
     const descriptionMatch = service.description
       ?.toLowerCase()
       .includes(searchTerm.toLowerCase());
+    const categoryMatch = selectedCategory
+      ? service.category === selectedCategory
+      : true;
 
-    return titleMatch || descriptionMatch;
+    return (titleMatch || descriptionMatch) && categoryMatch;
   });
 
   return (
@@ -247,11 +294,35 @@ export const ServiceList = () => {
                     backgroundColor: "white",
                     borderRadius: "4px",
                     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                    marginRight: "8rem",
+                    marginRight: "2rem",
                   }}
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
+                <FormControl
+                  variant="outlined"
+                  sx={{
+                    minWidth: 200,
+                    borderRadius: 20,
+                    marginTop: 4,
+                    marginBottom: 4,
+                  }}
+                >
+                  <InputLabel>Categoria</InputLabel>
+                  <Select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                  >
+                    <MenuItem value="">
+                      <em>Todas</em>
+                    </MenuItem>
+                    {categories.map((category) => (
+                      <MenuItem key={category} value={category}>
+                        {category}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Box>
             </Grid>
             <Grid item>

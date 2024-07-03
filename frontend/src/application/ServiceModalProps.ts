@@ -9,7 +9,8 @@ export interface Service {
 export interface ServiceModalProps {
   open: boolean;
   handleClose: () => void;
-  service: Service | null;
+  service?: Service | null;
   handleConfirm: () => void;
   text?: string;
+  rate?: boolean;
 }
