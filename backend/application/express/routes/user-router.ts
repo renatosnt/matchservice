@@ -1,9 +1,9 @@
-import express, { Request, Response } from "express";
-import { randomUUID, UUID } from "crypto";
 import bcrypt from "bcrypt";
-import { UserDatabase } from "../../../intrastructure/user-database";
+import { UUID, randomUUID } from "crypto";
+import express, { Request, Response } from "express";
 import { UserAdapter } from "../../../adapters/user-adapter";
 import { User } from "../../../domain/entities/user.entity";
+import { UserDatabase } from "../../../intrastructure/user-database";
 import {
   ContentTypeMiddleware,
   CustomRequest,
@@ -157,13 +157,21 @@ router.post(
   },
 );
 
-router.post("/schedule_service/:serviceId", sessionMiddleware, (req: Request, res: Response) => {
-  res.send("should assign a schedule for the user and add");
-});
+router.post(
+  "/schedule_service/:serviceId",
+  sessionMiddleware,
+  (req: Request, res: Response) => {
+    res.send("should assign a schedule for the user and add");
+  },
+);
 
-router.post("/:scheduleId/rate", sessionMiddleware, (req: Request, res: Response) => {
-  res.send("should rate a schedule from 1-5");
-});
+router.post(
+  "/:scheduleId/rate",
+  sessionMiddleware,
+  (req: Request, res: Response) => {
+    res.send("should rate a schedule from 1-5");
+  },
+);
 
 /**
  * @openapi

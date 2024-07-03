@@ -7,7 +7,9 @@ router.get("/:serviceProviderId", (req: Request, res: Response) => {
 });
 
 router.get("/:serviceProviderId/rating", (req: Request, res: Response) => {
-  res.send("should calculate and return the average rating of all completed schedules of this service provider");
+  res.send(
+    "should calculate and return the average rating of all completed schedules of this service provider",
+  );
 });
 
 router.get("/:serviceProviderId/schedule", (req: Request, res: Response) => {

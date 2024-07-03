@@ -10,16 +10,26 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { registerUser } from "../api/api";
 import BackgroundImageRegister from "./BackgroundImageRegister";
 
 export const Register = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [type, setType] = useState("Customer");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // ... registration logic
+    const response = await registerUser({
+      username,
+      realName: fullName,
+      email,
+      password,
+      type,
+    });
+    console.log(response);
   };
 
   return (
