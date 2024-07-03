@@ -24,6 +24,7 @@ import { EditServiceModal } from "./EditServiceModal";
 import { NewServiceModal } from "./NewServiceModal";
 import { searchServices } from "../api/api"; // Import the API call
 import { Service } from "../../application/ServiceModalProps";
+import { EditProfileModal } from "./EditProfileModal";
 
 const useStyles = makeStyles({
   container: {
@@ -67,6 +68,7 @@ export default function Profile() {
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [newServiceModalOpen, setNewServiceModalOpen] = useState(false);
   const [editServiceModalOpen, setEditServiceModalOpen] = useState(false);
+  const [editProfileModalOpen, setEditProfileModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [userServices, setUserServices] = useState<Service[]>([]);
   const [userData, setUserData] = useState({
@@ -79,7 +81,8 @@ export default function Profile() {
     // Get user data from localStorage
     const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user);
+      const parsedUser = JSON.parse(user).data;
+      console.log(parsedUser);
       setUserData({
         name: parsedUser.realName || parsedUser.username,
         profession: parsedUser.profession || "Profissão não informada",
@@ -94,6 +97,7 @@ export default function Profile() {
     try {
       const services = await searchServices({ profileId });
       setUserServices(services);
+      console.log(services);
     } catch (error) {
       console.error("Failed to fetch user services:", error);
     }
@@ -204,6 +208,15 @@ export default function Profile() {
                 >
                   Agenda
                 </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ marginTop: 2 }}
+                  onClick={() => setScheduleModalOpen(true)}
+                >
+                  Editar Perfil
+                </Button>
               </Box>
             </Grid>
             <Grid item xs={12} sm={8}>
@@ -277,6 +290,14 @@ export default function Profile() {
       <EditServiceModal
         open={editServiceModalOpen}
         handleClose={() => setEditServiceModalOpen(false)}
+        service={selectedService}
+        handleConfirm={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
+      <EditProfileModal
+        open={editProfileModalOpen}
+        handleClose={() => setEditProfileModalOpen(false)}
         service={selectedService}
         handleConfirm={function (): void {
           throw new Error("Function not implemented.");

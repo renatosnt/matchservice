@@ -45,7 +45,7 @@ export const Login = () => {
       const response = await loginUser({ userEmail: email, password });
       console.log(response);
       if (response.status === 201) {
-        localStorage.setItem("user", JSON.stringify(response.data.userData));
+        localStorage.setItem("user", JSON.stringify(response.data));
         navigate("/services");
       } else {
         setError("Wrong username or password.");

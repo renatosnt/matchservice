@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../api/api";
+import { registerUser, createProfile, loginUser } from "../api/api";
 import BackgroundImageRegister from "./BackgroundImageRegister";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,14 +26,34 @@ export const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [type, setType] = useState("Customer");
+  const [telephoneNumber, setTelephoneNumber] = useState("");
+  const [specialty, setSpecialty] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState({
     fullName: "",
     username: "",
     email: "",
     password: "",
+    telephoneNumber: "",
+    specialty: "",
   });
   const navigate = useNavigate();
+
+  const specialties = [
+    "Limpeza",
+    "Logística",
+    "Fotografia",
+    "Cuidados Infantis",
+    "Fitness",
+    "Jardinagem",
+    "Construção",
+    "Manutenção",
+    "Automotivo",
+    "Beleza",
+    "Gastronomia",
+    "Tecnologia",
+    "Design",
+  ];
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -43,10 +63,19 @@ export const Register = () => {
       username: "",
       email: "",
       password: "",
+      telephoneNumber: "",
+      specialty: "",
     });
 
     // Validation logic
-    const errors = { fullName: "", username: "", email: "", password: "" };
+    const errors = {
+      fullName: "",
+      username: "",
+      email: "",
+      password: "",
+      telephoneNumber: "",
+      specialty: "",
+    };
     let isValid = true;
 
     if (!fullName) {
@@ -66,6 +95,14 @@ export const Register = () => {
       errors.password = "Senha não pode estar vazia";
       isValid = false;
     }
+    if (!telephoneNumber) {
+      errors.telephoneNumber = "Número de telefone não pode estar vazio";
+      isValid = false;
+    }
+    if (type === "ServiceProvider" && !specialty) {
+      errors.specialty = "Especialidade não pode estar vazia";
+      isValid = false;
+    }
 
     setValidationErrors(errors);
 
@@ -74,19 +111,28 @@ export const Register = () => {
     }
 
     try {
-      const response = await registerUser({
+      const registerResponse = await registerUser({
         username,
         realName: fullName,
         email,
         password,
         type,
       });
+
+      const loginResponse = await loginUser({ userEmail: email, password });
+
+      console.log(loginResponse);
+      if (type === "ServiceProvider") {
+        const token = loginResponse.data.token;
+        console.log({ telephoneNumber, specialty }, token);
+        await createProfile({ telephoneNumber, specialty }, token);
+      }
+
       toast.success("Registration successful!");
-      localStorage.setItem("user", JSON.stringify(response));
+      localStorage.setItem("user", JSON.stringify(loginResponse));
       setTimeout(() => {
         navigate("/services");
       }, 2000);
-      console.log(response);
     } catch (err: any) {
       setError(err.message);
       toast.error(err.message);
@@ -230,6 +276,17 @@ export const Register = () => {
             helperText={validationErrors.password}
           />
 
+          <TextField
+            label="Número de Telefone"
+            value={telephoneNumber}
+            onChange={(e) => setTelephoneNumber(e.target.value)}
+            fullWidth
+            size="small"
+            sx={{ background: "white" }}
+            error={!!validationErrors.telephoneNumber}
+            helperText={validationErrors.telephoneNumber}
+          />
+
           <FormControl fullWidth size="small" sx={{ background: "white" }}>
             <InputLabel id="account-type-label">Tipo de Conta</InputLabel>
             <Select
@@ -242,6 +299,23 @@ export const Register = () => {
               <MenuItem value="ServiceProvider">Prestador de Serviço</MenuItem>
             </Select>
           </FormControl>
+          {type === "ServiceProvider" && (
+            <FormControl fullWidth size="small" sx={{ background: "white" }}>
+              <InputLabel id="specialty-label">Especialidade</InputLabel>
+              <Select
+                labelId="specialty-label"
+                value={specialty}
+                label="Especialidade"
+                onChange={(e) => setSpecialty(e.target.value as string)}
+              >
+                {specialties.map((spec) => (
+                  <MenuItem key={spec} value={spec}>
+                    {spec}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
 
           <Button
             type="submit"

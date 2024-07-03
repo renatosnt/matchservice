@@ -114,9 +114,13 @@ export const deleteService = async (serviceId: string) => {
 };
 
 // Function to create a new service
-export const createService = async (Service: Service) => {
+export const createService = async (serviceData: any, token: string) => {
   try {
-    const response = await instance.post("/service/create", Service);
+    const response = await instance.post("/service/create", serviceData, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(
@@ -188,12 +192,19 @@ export const updateProfileById = async (
 };
 
 // Function to create a new profile
-export const createProfile = async (profileData: {
-  telephoneNumber: string;
-  specialty: string;
-}) => {
+export const createProfile = async (
+  profileData: {
+    telephoneNumber: string;
+    specialty: string;
+  },
+  token: string,
+) => {
   try {
-    const response = await instance.post(`/profile/create`, profileData);
+    const response = await instance.post("/profile/create", profileData, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     return response.data;
   } catch (error: any) {
     throw new Error(

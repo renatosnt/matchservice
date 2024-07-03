@@ -55,7 +55,7 @@ export const ServiceList = () => {
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user);
+      const parsedUser = JSON.parse(user).data;
       setUserType(parsedUser.type);
     }
 

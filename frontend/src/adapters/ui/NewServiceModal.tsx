@@ -9,10 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  Service,
-  ServiceModalProps,
-} from "../../application/ServiceModalProps";
+import { ServiceModalProps } from "../../application/ServiceModalProps";
 import { createService } from "../api/api"; // Import the createService function
 
 export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
@@ -23,7 +20,7 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
   const handleSave = async () => {
     setError(null);
     try {
-      // Get the user from local storage to use their ID
+      // Get the user from local storage to use their ID and token
       const user = localStorage.getItem("user");
       if (user) {
         const parsedUser = JSON.parse(user);
@@ -32,12 +29,13 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
           title,
           description,
           category: "Other",
-          locationSate: "SP",
+          locationState: "SP",
           locationCity: "São Paulo",
-        } as any;
+        };
 
-        // Call the createService function
-        await createService(newService);
+        // Call the createService function with the token
+        console.log(parsedUser);
+        await createService(newService, parsedUser.data.token);
 
         // Clear the form and close the modal
         setTitle("");
