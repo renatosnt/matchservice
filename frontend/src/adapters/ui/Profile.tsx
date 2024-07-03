@@ -1,5 +1,5 @@
 import Header from "./Header";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -22,7 +22,9 @@ import { makeStyles } from "@mui/styles";
 import { ScheduleModal } from "./ScheduleModal";
 import { EditServiceModal } from "./EditServiceModal";
 import { NewServiceModal } from "./NewServiceModal";
-import { ServiceModalProps } from "../../application/ServiceModalProps";
+import { searchServices } from "../api/api"; // Import the API call
+import { Service } from "../../application/ServiceModalProps";
+
 const useStyles = makeStyles({
   container: {
     display: "flex",
@@ -59,45 +61,44 @@ const useStyles = makeStyles({
     height: "200px",
   },
 });
+
 export default function Profile() {
   const classes = useStyles();
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [newServiceModalOpen, setNewServiceModalOpen] = useState(false);
   const [editServiceModalOpen, setEditServiceModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState({
-    id: 1,
-    title: "Consultoria Agronômica",
-    description:
-      "Serviço de consultoria especializada em agronomia para otimização de cultivos e aumento de produtividade.",
-    image: "https://picsum.photos/700?random=1",
-    provider: "João",
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [userServices, setUserServices] = useState<Service[]>([]);
+  const [userData, setUserData] = useState({
+    name: "",
+    profession: "",
+    profileId: "",
   });
-  const services = [
-    {
-      id: 1,
-      title: "Consultoria Agronômica",
-      description:
-        "Serviço de consultoria especializada em agronomia para otimização de cultivos e aumento de produtividade.",
-      image: "https://picsum.photos/700?random=1",
-      provider: "João",
-    },
-    {
-      id: 2,
-      title: "Análise de Solo",
-      description:
-        "Análise detalhada das propriedades químicas e físicas do solo para recomendações de adubação e correção.",
-      image: "https://picsum.photos/700?random=2",
-      provider: "João",
-    },
-    {
-      id: 3,
-      title: "Desenvolvimento de Fertilizantes",
-      description:
-        "Desenvolvimento de fórmulas personalizadas de fertilizantes para atender às necessidades específicas de diferentes culturas.",
-      image: "https://picsum.photos/700?random=3",
-      provider: "João",
-    },
-  ];
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setUserData({
+        name: parsedUser.realName || parsedUser.username,
+        profession: parsedUser.profession || "Profissão não informada",
+        profileId: parsedUser.profileId,
+      });
+      // Fetch user services
+      fetchUserServices(parsedUser.profileId);
+    }
+  }, []);
+
+  const fetchUserServices = async (profileId: string) => {
+    try {
+      const services = await searchServices({ profileId });
+      setUserServices(services);
+    } catch (error) {
+      console.error("Failed to fetch user services:", error);
+    }
+  };
+
   return (
     <div>
       <AppBar
@@ -175,7 +176,7 @@ export default function Profile() {
             <Grid item xs={12} sm={4} mt={4}>
               <Box display="flex" flexDirection="column" alignItems="center">
                 <Avatar
-                  alt="João"
+                  alt={userData.name}
                   sx={{
                     width: 150,
                     height: 150,
@@ -185,13 +186,13 @@ export default function Profile() {
                 <Box display="flex" alignItems="center" mb={1}>
                   <PersonIcon />
                   <Typography variant="h6" ml={1}>
-                    João
+                    {userData.name}
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center">
                   <WorkIcon />
                   <Typography variant="subtitle1" ml={1}>
-                    Fotografia
+                    {userData.profession}
                   </Typography>
                 </Box>
                 <Button
@@ -221,7 +222,7 @@ export default function Profile() {
                   Novo Serviço
                 </Button>
               </Box>
-              {services.map((service) => (
+              {userServices.map((service) => (
                 <Card key={service.id} sx={{ marginBottom: 2 }}>
                   <CardMedia
                     component="img"

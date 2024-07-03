@@ -9,39 +9,45 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ServiceModalProps } from "../../application/ServiceModalProps";
+import {
+  Service,
+  ServiceModalProps,
+} from "../../application/ServiceModalProps";
+import { createService } from "../api/api"; // Import the createService function
 
 export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const handleSave = async () => {
+    setError(null);
+    try {
+      // Get the user from local storage to use their ID
+      const user = localStorage.getItem("user");
+      if (user) {
+        const parsedUser = JSON.parse(user);
 
-  const handleSave = () => {
-    if (image) {
-      const newService = {
-        id: Date.now(), // Exemplo de ID único
-        title,
-        description,
-        image: URL.createObjectURL(image),
-        provider: "João", // Pode ser substituído pelo valor dinâmico do provedor
-      };
-      console.log("Novo Serviço:", newService);
-      handleClose();
-    } else {
-      alert("Por favor, envie uma imagem para o serviço.");
+        const newService = {
+          title,
+          description,
+          category: "Other",
+          locationSate: "SP",
+          locationCity: "São Paulo",
+        } as any;
+
+        // Call the createService function
+        await createService(newService);
+
+        // Clear the form and close the modal
+        setTitle("");
+        setDescription("");
+        handleClose();
+      } else {
+        setError("User not found");
+      }
+    } catch (error: any) {
+      setError(error.message || "Failed to create service");
     }
   };
 
@@ -61,29 +67,6 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <input
-                accept="image/*"
-                type="file"
-                onChange={handleImageChange}
-                style={{ display: "none" }}
-                id="upload-button"
-              />
-              <label htmlFor="upload-button">
-                <Button variant="contained" color="primary" component="span">
-                  Upload da Imagem
-                </Button>
-              </label>
-              {imagePreview && (
-                <Box mt={2} textAlign="center">
-                  <img
-                    src={imagePreview}
-                    alt="Pré-visualização da Imagem"
-                    style={{ maxHeight: "200px" }}
-                  />
-                </Box>
-              )}
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 fullWidth
                 multiline
@@ -95,6 +78,11 @@ export const NewServiceModal = ({ open, handleClose }: ServiceModalProps) => {
                 margin="normal"
               />
             </Grid>
+            {error && (
+              <Grid item xs={12}>
+                <Typography color="error">{error}</Typography>
+              </Grid>
+            )}
           </Grid>
         </DialogContent>
         <DialogActions>

@@ -24,35 +24,18 @@ export const EditServiceModal = ({
   const [title, setTitle] = useState(service?.title || "");
   const [description, setDescription] = useState(service?.description || "");
   const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState(service?.image || "");
 
   useEffect(() => {
     if (service) {
       setTitle(service.title);
       setDescription(service.description);
-      setImagePreview(service.image);
     }
   }, [service]);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleSave = () => {
     // Aqui você pode adicionar a lógica para salvar as alterações
     console.log("Título:", title);
     console.log("Descrição:", description);
-    if (image) {
-      console.log("Imagem:", URL.createObjectURL(image));
-    }
     handleClose();
   };
 
@@ -67,27 +50,10 @@ export const EditServiceModal = ({
                   component="img"
                   alt={service.title}
                   height="140"
-                  image={imagePreview}
+                  image="https://via.placeholder.com/350"
                   title={service.title}
                   style={{ borderRadius: "8px" }}
                 />
-                <input
-                  accept="image/*"
-                  type="file"
-                  onChange={handleImageChange}
-                  style={{ display: "none" }}
-                  id="upload-button"
-                />
-                <label htmlFor="upload-button">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component="span"
-                    style={{ marginTop: "10px" }}
-                  >
-                    Upload Nova Imagem
-                  </Button>
-                </label>
               </Grid>
               <Grid item xs={12} sm={8} container alignItems="center">
                 <Grid item xs={8} container direction="column">

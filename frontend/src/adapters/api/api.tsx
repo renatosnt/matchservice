@@ -1,4 +1,5 @@
 import instance from "./Instance";
+import { Service } from "../../application/ServiceModalProps";
 
 export const loginUser = async ({ userEmail, password }: any) =>
   instance
@@ -40,14 +41,6 @@ interface SearchParams {
   description?: string;
   category?: string;
   profileId?: string;
-}
-
-interface ServiceData {
-  title: string;
-  description: string;
-  category: string;
-  locationState: string;
-  locationCity: string;
 }
 
 // Function to get all services
@@ -121,9 +114,9 @@ export const deleteService = async (serviceId: string) => {
 };
 
 // Function to create a new service
-export const createService = async (serviceData: ServiceData) => {
+export const createService = async (Service: Service) => {
   try {
-    const response = await instance.post("/service/create", serviceData);
+    const response = await instance.post("/service/create", Service);
     return response.data;
   } catch (error: any) {
     throw new Error(
@@ -135,10 +128,10 @@ export const createService = async (serviceData: ServiceData) => {
 // Function to update a service by ID
 export const updateService = async (
   serviceId: string,
-  serviceData: Partial<ServiceData>,
+  Service: Partial<Service>,
 ) => {
   try {
-    const response = await instance.patch(`/service/${serviceId}`, serviceData);
+    const response = await instance.patch(`/service/${serviceId}`, Service);
     return response.data;
   } catch (error: any) {
     throw new Error(
