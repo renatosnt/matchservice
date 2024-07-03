@@ -1,13 +1,13 @@
+import { PrismaClient } from "@prisma/client";
 import { UUID } from "crypto";
+import { Service } from "../domain/entities/service.entity";
 import { User } from "../domain/entities/user.entity";
 import { IUserPort } from "../domain/ports/user-port";
-import { PrismaClient } from "@prisma/client";
-import { PrismaUserMapper } from "./mappings/user-mapping";
-import { Service } from "../domain/entities/service.entity";
+import { validateEmail } from "./mappings/email-validation";
 import { PrismaServiceMapper } from "./mappings/service-mapping";
 import { validateParameterIsNotUndefined } from "./mappings/undefined-validation";
+import { PrismaUserMapper } from "./mappings/user-mapping";
 import { validateUUID } from "./mappings/uuid-validation";
-import { validateEmail } from "./mappings/email-validation";
 
 export class UserDatabase implements IUserPort {
   private readonly prismaClient: PrismaClient;

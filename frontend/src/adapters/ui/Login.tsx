@@ -3,6 +3,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
+  Alert,
   Box,
   Button,
   Grid,
@@ -11,13 +12,24 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../api/api";
 import BackgroundImage from "./BackgroundImage";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      const timeoutId = setTimeout(() => setError(""), 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [error]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -28,7 +40,18 @@ export const Login = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    // ...authentication logic
+    try {
+      const response = await loginUser({ userEmail: email, password });
+      if (response && response.message === "Logged in successfully.") {
+        navigate("/services");
+      } else {
+        setError("Usuário ou senha incorretos.");
+      }
+    } catch (error) {
+      setError(
+        "Ocorreu um erro ao tentar fazer login. Por favor, tente novamente.",
+      );
+    }
   };
 
   return (
@@ -129,6 +152,11 @@ export const Login = () => {
               ),
             }}
           />
+          {error && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+          )}
 
           <Button
             type="submit"

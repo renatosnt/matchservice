@@ -3,7 +3,7 @@ import instance from "./Instance";
 
 export const loginUser = async ({ userEmail, password }) =>
   instance
-    .post("/", {
+    .post("/login", {
       email: userEmail,
       password,
     })
