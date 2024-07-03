@@ -21,8 +21,29 @@ const serviceProviderProfileAdapter = new ServiceProviderProfileAdapter(
 const schedulingAdapter = new SchedulingAdapter(new SchedulingDatabase());
 const userAdapter = new UserAdapter(new UserDatabase());
 
-router.get("/:serviceProviderId", async (req: Request, res: Response) => {
-  const profileId = req.params.serviceProviderId as UUID;
+/**
+ * @openapi
+ * /profile/{profileId}:
+ *   get:
+ *     tags:
+ *       - profile
+ *     summary: Gets the profile by it's ID.
+ *     parameters:
+ *       - in: path
+ *         name: profileId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The profile ID.
+ *     responses:
+ *       200:
+ *         description: Returns the profile
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
+router.get("/:profileId", async (req: Request, res: Response) => {
+  const profileId = req.params.profileId as UUID;
 
   try {
     const profile = await serviceProviderProfileAdapter.getById(profileId);
@@ -32,10 +53,31 @@ router.get("/:serviceProviderId", async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @openapi
+ * /profile/{profileId}/rating:
+ *   get:
+ *     tags:
+ *       - profile
+ *     summary: Gets the average rating of a profile by it's ID.
+ *     parameters:
+ *       - in: path
+ *         name: profileId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The profile ID.
+ *     responses:
+ *       200:
+ *         description: Returns the average rating
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.get(
-  "/:serviceProviderId/rating",
+  "/:profileId/rating",
   async (req: Request, res: Response) => {
-    const profileId = req.params.serviceProviderId as UUID;
+    const profileId = req.params.profileId as UUID;
 
     try {
       const profile = await serviceProviderProfileAdapter.getById(profileId);
@@ -51,10 +93,31 @@ router.get(
   },
 );
 
+/**
+ * @openapi
+ * /profile/{profileId}/schedule:
+ *   get:
+ *     tags:
+ *       - profile
+ *     summary: Gets the entire schedule of a profile by it's ID.
+ *     parameters:
+ *       - in: path
+ *         name: profileId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The profile ID.
+ *     responses:
+ *       200:
+ *         description: Returns the entire schedule
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.get(
-  "/:serviceProviderId/schedule",
+  "/:profileId/schedule",
   async (req: Request, res: Response) => {
-    const profileId = req.params.serviceProviderId as UUID;
+    const profileId = req.params.profileId as UUID;
 
     try {
       const schedule =
@@ -67,12 +130,46 @@ router.get(
   },
 );
 
+/**
+ * @openapi
+ * /profile/{profileId}:
+ *   patch:
+ *     tags:
+ *       - profile
+ *     summary: Updates the content of a profile.
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: profileId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The profile ID.
+ *     requestBody:
+ *       description: The profile information. Only the provided fields are going to be updated.
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               telephoneNumber:
+ *                 type: string
+ *               specialty:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Returns the updated profile
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.patch(
-  "/:serviceProviderId",
+  "/:profileId",
   [ContentTypeMiddleware, sessionMiddleware],
   async (req: Request, res: Response) => {
     const userData = (req as CustomRequest).userData;
-    const profileId = req.params.serviceProviderId as UUID;
+    const profileId = req.params.profileId as UUID;
 
     try {
       const authenticatedUser = await userAdapter.getById(userData.id);
@@ -97,6 +194,36 @@ router.patch(
   },
 );
 
+/**
+ * @openapi
+ * /profile/create:
+ *   patch:
+ *     tags:
+ *       - profile
+ *     summary: Creates a new profile.
+ *     security:
+ *       - JWT: []
+ *     requestBody:
+ *       description: The profile information.
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               telephoneNumber:
+ *                 type: string
+ *               specialty:
+ *                 type: string
+ *             required:
+ *               - telephoneNumber
+ *               - specialty
+ *     responses:
+ *       200:
+ *         description: Returns the new profile
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.post(
   "/create",
   [ContentTypeMiddleware, sessionMiddleware],

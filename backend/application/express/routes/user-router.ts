@@ -79,6 +79,29 @@ router.get("/:userId", async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @openapi
+ * /user/{userId}/schedule:
+ *   get:
+ *     tags:
+ *       - users
+ *     summary: Gets all the schedules the user has.
+ *     security:
+ *       - JWT: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: UUID
+ *         description: The user ID.
+ *     responses:
+ *       200:
+ *         description: Returns the user schedules.
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
 router.get(
   "/:userId/schedule",
   sessionMiddleware,
