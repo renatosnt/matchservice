@@ -11,13 +11,13 @@ import {
   CardContent,
   Card,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ServiceModalProps } from "../../application/ServiceModalProps";
 import BasicDateCalendar from "./Calendar";
 import { ConfirmModal } from "./ConfirmModal";
 import WorkIcon from "@mui/icons-material/Work";
 import PersonIcon from "@mui/icons-material/Person";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+
 export const ServiceModal = ({
   open,
   handleClose,
@@ -25,6 +25,16 @@ export const ServiceModal = ({
 }: ServiceModalProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [userType, setUserType] = useState<string | null>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setUserType(parsedUser.type);
+    }
+  }, []);
+
   const handleConfirmClose = () => {
     setConfirmOpen(false);
   };
@@ -38,6 +48,7 @@ export const ServiceModal = ({
     setConfirmOpen(false);
     handleClose();
   };
+
   return (
     <>
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
@@ -83,17 +94,19 @@ export const ServiceModal = ({
                   </Grid>
                 </Grid>
                 <Grid item xs={4} container justifyContent="center">
-                  <Button
-                    variant="contained"
-                    style={{
-                      padding: "6px 12px",
-                      borderRadius: "20px",
-                      backgroundColor: "#232426",
-                      color: "#fff",
-                    }}
-                  >
-                    Entrar em contato
-                  </Button>
+                  {userType === "Customer" && (
+                    <Button
+                      variant="contained"
+                      style={{
+                        padding: "6px 12px",
+                        borderRadius: "20px",
+                        backgroundColor: "#232426",
+                        color: "#fff",
+                      }}
+                    >
+                      Entrar em contato
+                    </Button>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
@@ -152,16 +165,18 @@ export const ServiceModal = ({
             >
               Fechar
             </Button>
-            <Button
-              onClick={handleConfirmOpen}
-              color="success"
-              variant="contained"
-              sx={{
-                marginRight: "1rem",
-              }}
-            >
-              Agendar
-            </Button>
+            {userType === "Customer" && (
+              <Button
+                onClick={handleConfirmOpen}
+                color="success"
+                variant="contained"
+                sx={{
+                  marginRight: "1rem",
+                }}
+              >
+                Agendar
+              </Button>
+            )}
           </Box>
         </DialogActions>
       </Dialog>
