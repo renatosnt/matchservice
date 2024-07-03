@@ -70,27 +70,27 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 
 
 ### História 1: Como usuário, gostaria de criar e acessar uma conta no sistema.
-- [ ] Criar e estruturar a base de dados para armazenar usuários (Michel)
-- [ ] Implementar a lógica de autenticação e criação de contas (Michel)
+- [x] Criar e estruturar a base de dados para armazenar usuários (Michel)
+- [x] Implementar a lógica de autenticação e criação de contas (Michel)
 - [x] Criar a interface de login e cadastro (Bruna)
 
 ### História 2: Como cliente, gostaria de visualizar os serviços disponíveis.
-- [ ] Modelar e criar tabela para serviços, bem como implementar a sua relação com a tabela de prestadores de Serviço (Gabriel)
+- [x] Modelar e criar tabela para serviços, bem como implementar a sua relação com a tabela de prestadores de Serviço (Gabriel)
 - [x] Criar a interface de listagem de serviços. (Bruna)
-- [ ] Integrar a interface de listagem com a API de serviços (Michel)
+- [x] Integrar a interface de listagem com a API de serviços (Michel)
 
 ### História 3: Como prestador de serviço, gostaria de anunciar meus serviços no meu perfil.
-- [ ] Criar rotas para a adição, edição e remoção de serviços. (Michel)
-- [ ] Incluir campos no banco de dados como nome, descrição, preço e fotos. (Gabriel)
+- [x] Criar rotas para a adição, edição e remoção de serviços. (Michel)
+- [x] Incluir campos no banco de dados como nome, descrição, preço e fotos. (Gabriel)
 - [x] Adicionar modal com a confirmação de que as alterações foram salvas. (Renato)
 
 ### História 4: Como cliente, gostaria de ver mais informações sobre o prestador de algum serviço.
 - [x] Criar página de perfil do prestador de serviços e seus serviços oferecidos. (Renato)
-- [ ] Criar estrutura de avaliações e comentários de trabalhos anteriores do prestador. (Michel)
+- [x] Criar estrutura de avaliações e comentários de trabalhos anteriores do prestador. (Michel)
 
 ### História 5: Como cliente, gostaria de filtrar os serviços disponíveis baseado em vários critérios.
 - [x] Implementar a lógica de busca de serviços. (Bruna)
-- [ ] Implementar filtros por categoria de serviço. (Michel)
+- [x] Implementar filtros por categoria de serviço. (Michel)
 - [ ] Implementar filtros por localização do prestador de serviço. (Renato)
 - [ ] Implementar filtros por avaliação do prestador de serviço. (Renato)
 - [ ] Implementar filtros por horário de funcionamento do prestador. (Renato)
@@ -99,8 +99,8 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 - [ ] Exibir nas interfaces de um serviço e de perfil de um prestador, informações de contato claras para comunicação direta. (Gabriel)
 
 ### História 7: Como prestador de serviço, gostaria de deletar serviços do meu perfil.
-- [ ] Implementar rota de DELETE para serviços na API. (Michel)
-- [ ] Implementar validação da rota de DELETE (apenas o prestador de serviço criador de serviço X deve poder deletá-lo). (Michel)
+- [x] Implementar rota de DELETE para serviços na API. (Michel)
+- [x] Implementar validação da rota de DELETE (apenas o prestador de serviço criador de serviço X deve poder deletá-lo). (Michel)
 - [ ] Criar um botão de delete, que deve ser exibido a um prestador de serviço, para cada um de seus serviços, quando acessar seu próprio perfil. (Gabriel)
 - [ ] Implementar modal de confirmação de remoção do serviço. (Gabriel)
 - [ ] Implementar tela/modal/pop-up de confirmação de remoção com sucesso. (Gabriel)

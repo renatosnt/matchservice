@@ -34,6 +34,8 @@ export class PrismaServiceMapper {
       createdAt: service.createdAt,
       creatorProfileId: service.creatorProfileId,
       schedule: service.getSchedule(),
+      basePrice: service.basePrice!,
+      pictureLinks: service.pictureLinks!
     };
   }
 }

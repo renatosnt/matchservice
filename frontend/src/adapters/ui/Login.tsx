@@ -44,7 +44,7 @@ export const Login = () => {
     try {
       const response = await loginUser({ userEmail: email, password });
       console.log(response);
-      if (response) {
+      if (response.status === 201) {
         localStorage.setItem("user", JSON.stringify(response.data.userData));
         navigate("/services");
       } else {
