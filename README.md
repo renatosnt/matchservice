@@ -111,7 +111,7 @@ A arquitetura hexagonal do sistema backend consiste em:
 ### História 5: Como cliente, gostaria de filtrar os serviços disponíveis baseado em vários critérios.
 - [x] Implementar a lógica de busca de serviços. (Bruna)
 - [x] Implementar filtros por categoria de serviço. (Michel)
-- [ ] Implementar filtros por localização do prestador de serviço. (Renato)
+- [x] Implementar filtros por localização do prestador de serviço. (Renato)
 - [ ] Implementar filtros por avaliação do prestador de serviço. (Renato)
 - [ ] Implementar filtros por horário de funcionamento do prestador. (Renato)
 
