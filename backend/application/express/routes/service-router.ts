@@ -79,14 +79,14 @@ router.get("/", async (req: Request, res: Response) => {
  *
  */
 router.get("/search", async (req: Request, res: Response) => {
-  const { title, description, category, ProfileId } = req.body;
+  const { title, description, category, profileId } = req.body;
 
   try {
     const services = await serviceAdapter.search(
       title,
       description,
       category,
-      ProfileId,
+      profileId,
     );
     res.json(services);
   } catch (error: any) {

@@ -1,11 +1,13 @@
 import instance from "./Instance";
 import { Service } from "../../application/ServiceModalProps";
 
-export const loginUser = async ({ userEmail, password }: any) =>
+export const loginUser = async ({ token, userEmail, password, type }: any) =>
   instance
     .post("/login", {
       email: userEmail,
       password,
+      token,
+      type,
     })
     .catch((err) => err.response.data);
 

@@ -48,6 +48,15 @@ Notificações: Alertas sobre novos agendamentos, mudanças de horário, e avali
 ### Frontend
 - React + TypeScript
 
+### Docker
+
+Como rodar:
+
+ - Para iniciar: execute `docker compose up -d` na raiz do projeto
+ - Para parar: execute `docker stop matchservice-frontend-1 matchservice-backend-1 matchservice-db-1`
+ - Para atualizar a imagem: execute `docker compose up -d --build` na raiz do projeto
+ - Para deletar o container e o banco de dados: execute `docker rm matchservice-frontend-1 matchservice-backend-1 matchservice-db-1`
+
 ## Arquitetura Hexagonal
 
 A arquitetura hexagonal do sistema backend consiste em:
