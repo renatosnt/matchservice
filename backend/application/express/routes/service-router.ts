@@ -25,6 +25,32 @@ const scheduleAdapter = new SchedulingAdapter(new SchedulingDatabase());
 
 /**
  * @openapi
+ * /service/:
+ *   get:
+ *     tags:
+ *       - service
+ *     summary: Gets all services in the database.
+ *     responses:
+ *       200:
+ *         description: Returns all services
+ *       500:
+ *         description: Internal Server Error
+ *
+ */
+router.get("/", async (req: Request, res: Response) => {
+
+  try {
+    const services = await serviceAdapter.getAll();
+
+    res.status(200).json(services);
+  } catch (error: any) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
+
+/**
+ * @openapi
  * /service/search:
  *   get:
  *     tags:

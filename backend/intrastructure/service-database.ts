@@ -15,6 +15,13 @@ export class ServiceDatabase implements IServicePort {
     this.prismaClient = new PrismaClient();
   }
 
+  public async getAll(): Promise<Service[]> {
+
+    const result = await this.prismaClient.service.findMany();
+
+    return result.map((i) => PrismaServiceMapper.toDomain(i));
+  }
+
   public async getById(id: UUID): Promise<Service> {
     validateParameterIsNotUndefined(id);
     validateUUID(id);

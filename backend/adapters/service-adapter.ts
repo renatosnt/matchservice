@@ -10,6 +10,10 @@ export class ServiceAdapter implements IServicePort {
     this.serviceRepository = serviceRepository;
   }
 
+  async getAll(): Promise<Service[]> {
+    return await this.serviceRepository.getAll();
+  }
+
   async getById(id: UUID): Promise<Service> {
     return await this.serviceRepository.getById(id);
   }

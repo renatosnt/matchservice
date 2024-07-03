@@ -3,6 +3,7 @@ import { Service } from "../entities/service.entity";
 import { UUID } from "crypto";
 
 export interface IServicePort {
+  getAll(): Promise<Service[]>;
   getById(id: UUID): Promise<Service>;
   deleteById(id: UUID): Promise<Service>;
   getServiceSchedulingById(id: UUID): Promise<Scheduling[]>;
