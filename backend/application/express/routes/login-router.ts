@@ -74,8 +74,7 @@ router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
     const token = jwt.sign(userData, SECRET_KEY, {
       expiresIn: "7d",
     });
-    res.set("x-access-token", token);
-    res.status(201).json({ userData });
+    res.status(201).json({ "x-access-token": token,  ...userData });
     res.end();
   } catch (error: any) {
     res.status(500).json({ message: error.message });
