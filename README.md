@@ -140,11 +140,16 @@ A arquitetura hexagonal do sistema backend consiste em:
 - [x] Criar a interface de login e cadastro (Bruna)
 - [x] Integrar o cadastro com o back-end e implementar os diferentes tipos de cadastros para Cliente e Prestador de Serviço (Renato)
 - [x] Integrar o login com o back-end (Bruna)
+- [x] Criação da primeira versão da estrutura do projeto e adicionado primeiras ferramentas de desenvolvimento(Bruna)
+- [x] Adicionar Eslint ao projeto que permite definir regras que devem ser seguidas no código (Bruna)
+- [x] Criar arquivo routes para interface frontend (Bruna)
+- [x] Integrar axios ao frontend (Bruna)
 
 ### História 2: Como cliente, gostaria de visualizar os serviços disponíveis.
 - [x] Modelar e criar tabela para serviços, bem como implementar a sua relação com a tabela de prestadores de Serviço (Gabriel)
 - [x] Criar a interface de listagem de serviços. (Renato)
 - [x] Integrar a interface de listagem com a API de serviços (Renato)
+- [x] Criar Header para ser exibido na pagina home e serviços (Bruna)
 
 ### História 3: Como prestador de serviço, gostaria de anunciar meus serviços no meu perfil.
 - [x] Criar rotas para a adição, edição e remoção de serviços. (Michel / Gabriel)
