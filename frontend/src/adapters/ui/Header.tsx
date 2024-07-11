@@ -7,7 +7,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
@@ -93,7 +93,7 @@ export default function AccountMenu() {
         <MenuItem
           onClick={handleClose}
           component={Link}
-          to={userType == "Customer" ? "/profile" : "/account"}
+          to={userType === "Customer" ? "/profile" : "/account"}
         >
           <Avatar /> Meu Perfil
         </MenuItem>

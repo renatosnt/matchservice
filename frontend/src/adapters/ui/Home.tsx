@@ -14,7 +14,10 @@ import backgroundImage from "../../infrastructure/assets/Working remotely.png";
 
 const Home: React.FC = () => {
   return (
-    <Box sx={{ flexGrow: 1, overflow: "hidden", backgroundColor: "#F2FAFA" }}>
+    <Box
+      data-testid="cypress-title"
+      sx={{ flexGrow: 1, overflow: "hidden", backgroundColor: "#F2FAFA" }}
+    >
       <AppBar
         position="fixed"
         color="transparent"
