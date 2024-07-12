@@ -91,6 +91,7 @@ export const Login = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            data-testid="logo-container"
           >
             <a href="/" style={{ textDecoration: "none" }}>
               <Typography
@@ -105,7 +106,12 @@ export const Login = () => {
               </Typography>
             </a>
           </Box>
-          <Typography variant="h5" align="center" gutterBottom>
+          <Typography
+            variant="h5"
+            align="center"
+            gutterBottom
+            data-testid="welcome-title"
+          >
             Bem-vindo novamente!
           </Typography>
           <TextField
@@ -123,6 +129,7 @@ export const Login = () => {
               ),
             }}
             sx={{ background: "white" }}
+            data-testid="email-input"
           />
 
           <TextField
@@ -146,15 +153,17 @@ export const Login = () => {
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
+                    data-testid="toggle-password-button"
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
+            data-testid="password-input"
           />
           {error && (
-            <Alert severity="error" sx={{ mt: 2 }}>
+            <Alert severity="error" sx={{ mt: 2 }} data-testid="error-alert">
               {error}
             </Alert>
           )}
@@ -169,6 +178,7 @@ export const Login = () => {
               textTransform: "none",
               borderRadius: 10,
             }}
+            data-testid="login-button"
           >
             Entrar
           </Button>
@@ -178,6 +188,7 @@ export const Login = () => {
               textTransform: "none",
               color: "gray",
             }}
+            data-testid="forgot-password-link"
           >
             Esqueci a senha
           </Button>
