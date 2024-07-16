@@ -60,6 +60,8 @@ export const NewServiceModal = ({
     try {
       // Get the user from local storage to use their ID and token
       const user = localStorage.getItem("user");
+      console.log("aqui");
+
       if (user) {
         const parsedUser = JSON.parse(user);
 
@@ -71,9 +73,9 @@ export const NewServiceModal = ({
           locationCity,
           basePrice,
         };
-
+        console.log(parsedUser);
         // Call the createService function with the token
-        await createService(newService, parsedUser.data.token);
+        await createService(newService, parsedUser.token);
 
         // Clear the form and close the modal
         setTitle("");
@@ -106,6 +108,7 @@ export const NewServiceModal = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 margin="normal"
+                inputProps={{ "data-testid": "service-title-input" }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -118,6 +121,7 @@ export const NewServiceModal = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 margin="normal"
+                inputProps={{ "data-testid": "service-description-input" }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,6 +131,7 @@ export const NewServiceModal = ({
                   value={category}
                   onChange={(e) => setCategory(e.target.value as string)}
                   label="Categoria"
+                  inputProps={{ "data-testid": "service-category-select" }}
                 >
                   {categories.map((cat) => (
                     <MenuItem key={cat} value={cat}>
@@ -143,6 +148,7 @@ export const NewServiceModal = ({
                   value={locationCity}
                   onChange={(e) => setLocationCity(e.target.value as string)}
                   label="Cidade"
+                  inputProps={{ "data-testid": "service-city-select" }}
                 >
                   {cities.map((city) => (
                     <MenuItem key={city} value={city}>
@@ -161,6 +167,7 @@ export const NewServiceModal = ({
                 value={basePrice}
                 onChange={(e) => setBasePrice(e.target.value)}
                 margin="normal"
+                inputProps={{ "data-testid": "service-price-input" }}
               />
             </Grid>
             {error && (
@@ -174,7 +181,11 @@ export const NewServiceModal = ({
           <Button onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button onClick={handleSave} color="primary">
+          <Button
+            onClick={handleSave}
+            color="primary"
+            data-testod="serviec-save-button"
+          >
             Salvar
           </Button>
         </DialogActions>

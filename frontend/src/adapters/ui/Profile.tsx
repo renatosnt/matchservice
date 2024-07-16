@@ -81,14 +81,26 @@ export default function ServiceProviderProfile() {
     // Get user data from localStorage
     const user = localStorage.getItem("user");
     if (user) {
-      const parsedUser = JSON.parse(user);
-      setUserData({
-        name: parsedUser.data.realName || parsedUser.data.username,
-        profession: parsedUser.data.profession || "Profissão não informada",
-        profileId: parsedUser.profileData.id,
-      });
-      // Fetch user services
-      fetchUserServices(parsedUser.profileData.id);
+      try {
+        const parsedUser = JSON.parse(user);
+        const userData = parsedUser.data || {}; // Safe access to data
+        const profileData = parsedUser.profileData || {}; // Safe access to profileData
+
+        setUserData({
+          name: userData.realName || userData.username || "Nome não informado",
+          profession: userData.profession || "Profissão não informada",
+          profileId: profileData.id || "ID não informado",
+        });
+
+        // Fetch user services
+        if (profileData.id) {
+          fetchUserServices(profileData.id);
+        } else {
+          console.error("Profile ID is missing");
+        }
+      } catch (error) {
+        console.error("Failed to parse user data from localStorage:", error);
+      }
     }
   }, []);
   const handleNewServiceModalSave = () => {

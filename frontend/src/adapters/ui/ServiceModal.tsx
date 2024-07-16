@@ -86,7 +86,13 @@ export const ServiceModal = ({
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="md"
+        fullWidth
+        data-testid="service-modal"
+      >
         {service && (
           <DialogContent>
             <Grid container spacing={2}>
@@ -107,7 +113,11 @@ export const ServiceModal = ({
                       <WorkIcon style={{ color: "black" }} />
                     </Grid>
                     <Grid item>
-                      <Typography variant="h6" component="p">
+                      <Typography
+                        variant="h6"
+                        component="p"
+                        data-testid="service-title"
+                      >
                         {service.title}
                       </Typography>
                     </Grid>
@@ -122,7 +132,11 @@ export const ServiceModal = ({
                       <PersonIcon style={{ color: "black" }} />
                     </Grid>
                     <Grid item>
-                      <Typography variant="h6" component="p">
+                      <Typography
+                        variant="h6"
+                        component="p"
+                        data-testid="provider-name"
+                      >
                         {providerName}
                       </Typography>
                     </Grid>
@@ -134,7 +148,11 @@ export const ServiceModal = ({
                     style={{ marginTop: "8px" }}
                   >
                     <Grid item>
-                      <Typography variant="body1" component="p">
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        data-testid="service-location"
+                      >
                         Localização: {service.locationCity}
                       </Typography>
                     </Grid>
@@ -146,7 +164,11 @@ export const ServiceModal = ({
                     style={{ marginTop: "8px" }}
                   >
                     <Grid item>
-                      <Typography variant="body1" component="p">
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        data-testid="service-basePrice"
+                      >
                         Preço Base: R$ {basePrice}
                       </Typography>
                     </Grid>
@@ -162,6 +184,7 @@ export const ServiceModal = ({
                         backgroundColor: "#232426",
                         color: "#fff",
                       }}
+                      data-testid="contact-button"
                     >
                       Entrar em contato
                     </Button>
@@ -221,10 +244,11 @@ export const ServiceModal = ({
               sx={{
                 marginRight: "1rem",
               }}
+              data-testid="close-button"
             >
               Fechar
             </Button>
-            {userType === "Customer" && (
+            {
               <Button
                 onClick={handleConfirmOpen}
                 color="success"
@@ -232,10 +256,11 @@ export const ServiceModal = ({
                 sx={{
                   marginRight: "1rem",
                 }}
+                data-testid="confirm-button"
               >
                 Agendar
               </Button>
-            )}
+            }
           </Box>
         </DialogActions>
       </Dialog>
@@ -245,6 +270,7 @@ export const ServiceModal = ({
         handleConfirm={handleConfirm}
         service={service}
         text="Deseja agendar este serviço?"
+        data-testid="confirm-modal"
       />
     </>
   );
