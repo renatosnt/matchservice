@@ -22,7 +22,7 @@ import { makeStyles } from "@mui/styles";
 import { ScheduleModal } from "./ScheduleModal";
 import { EditServiceModal } from "./EditServiceModal";
 import { NewServiceModal } from "./NewServiceModal";
-import { getAllServices } from "../api/api";
+import { getAllServices, getUserById } from "../api/api";
 import { Service } from "../../application/ServiceModalProps";
 import { EditProfileModal } from "./EditProfileModal";
 
@@ -81,26 +81,19 @@ export default function ServiceProviderProfile() {
     // Get user data from localStorage
     const user = localStorage.getItem("user");
     if (user) {
-      try {
-        const parsedUser = JSON.parse(user);
-        const userData = parsedUser.data || {}; // Safe access to data
-        const profileData = parsedUser.profileData || {}; // Safe access to profileData
+      const parsedUser = JSON.parse(user);
+      let profileId = "";
+      getUserById(parsedUser.id).then((data) => {
+        profileId = data.serviceProviderProfileId;
 
         setUserData({
-          name: userData.realName || userData.username || "Nome não informado",
-          profession: userData.profession || "Profissão não informada",
-          profileId: profileData.id || "ID não informado",
+          name: parsedUser.realName || parsedUser.username,
+          profession: "Profissão não informada",
+          profileId: profileId, // TODO
         });
-
         // Fetch user services
-        if (profileData.id) {
-          fetchUserServices(profileData.id);
-        } else {
-          console.error("Profile ID is missing");
-        }
-      } catch (error) {
-        console.error("Failed to parse user data from localStorage:", error);
-      }
+        fetchUserServices(profileId);
+      });
     }
   }, []);
   const handleNewServiceModalSave = () => {

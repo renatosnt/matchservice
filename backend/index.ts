@@ -1,8 +1,7 @@
 import { app } from "./application/express/express";
-import dotenv from "dotenv";
-dotenv.config();
+import { getBackendPort } from "./environment";
 
-const port = process.env.BACKEND_PORT || 3301;
+const port = getBackendPort();
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

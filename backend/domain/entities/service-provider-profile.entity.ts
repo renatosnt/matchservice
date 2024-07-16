@@ -28,8 +28,6 @@ export class ServiceProviderProfile implements IServiceProviderProfile {
   ) {}
 
   public addService(serviceId: UUID): ServiceProviderProfile {
-    if (this.services === undefined)
-      throw new Error("The service array is uninitialized.");
     this.services.push(serviceId);
     return this;
   }

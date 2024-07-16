@@ -134,10 +134,7 @@ export const Register = () => {
       }
 
       toast.success("Registration successful!");
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ ...loginResponse, profileData }),
-      );
+      localStorage.setItem("user", JSON.stringify(loginResponse.data));
       setTimeout(() => {
         navigate("/services");
       }, 2000);

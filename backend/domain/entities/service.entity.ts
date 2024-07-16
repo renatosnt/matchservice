@@ -40,8 +40,6 @@ export class Service implements IService {
   }
 
   public addSchedule(scheduleId: UUID): Service {
-    if (this.schedule === undefined)
-      throw new Error("The schedule array is uninitialized.");
     this.schedule.push(scheduleId);
     return this;
   }

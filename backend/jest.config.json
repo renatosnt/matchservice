@@ -1,0 +1,12 @@
+{
+    "collectCoverageFrom": [
+        "**/*.{ts,tsx}"
+    ],
+    "coveragePathIgnorePatterns": [
+        "node_modules",
+        "backend/domain/ports/*",
+        "backend/index.ts",
+        "application/express/express.ts",
+        "application/express/swagger.ts"
+    ]
+}

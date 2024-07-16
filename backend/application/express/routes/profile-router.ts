@@ -1,25 +1,20 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { ServiceProviderProfileAdapter } from "../../../adapters/service-provider-profile-adapter";
 import { ServiceProviderProfileDatabase } from "../../../intrastructure/service-provider-profile-database";
-import { randomUUID, UUID } from "crypto";
 import { SchedulingAdapter } from "../../../adapters/scheduling-adapter";
 import { SchedulingDatabase } from "../../../intrastructure/scheduling-database";
-import {
-  sessionMiddleware,
-  CustomRequest,
-  ContentTypeMiddleware,
-} from "../middlewares";
-import { ServiceProviderProfile } from "../../../domain/entities/service-provider-profile.entity";
+import { sessionMiddleware, ContentTypeMiddleware } from "../middlewares";
 import { UserAdapter } from "../../../adapters/user-adapter";
 import { UserDatabase } from "../../../intrastructure/user-database";
+import { ProfileRouterHandler } from "./handlers/profile-handler";
 
 export const router = express.Router();
 
-const serviceProviderProfileAdapter = new ServiceProviderProfileAdapter(
-  new ServiceProviderProfileDatabase(),
+const profileHandler = new ProfileRouterHandler(
+  new ServiceProviderProfileAdapter(new ServiceProviderProfileDatabase()),
+  new SchedulingAdapter(new SchedulingDatabase()),
+  new UserAdapter(new UserDatabase()),
 );
-const schedulingAdapter = new SchedulingAdapter(new SchedulingDatabase());
-const userAdapter = new UserAdapter(new UserDatabase());
 
 /**
  * @openapi
@@ -42,16 +37,10 @@ const userAdapter = new UserAdapter(new UserDatabase());
  *         description: Internal Server Error
  *
  */
-router.get("/:profileId", async (req: Request, res: Response) => {
-  const profileId = req.params.profileId as UUID;
-
-  try {
-    const profile = await serviceProviderProfileAdapter.getById(profileId);
-    res.status(200).json(profile);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get(
+  "/:profileId",
+  profileHandler.getProfileByIdHandler.bind(profileHandler),
+);
 
 /**
  * @openapi
@@ -74,21 +63,10 @@ router.get("/:profileId", async (req: Request, res: Response) => {
  *         description: Internal Server Error
  *
  */
-router.get("/:profileId/rating", async (req: Request, res: Response) => {
-  const profileId = req.params.profileId as UUID;
-
-  try {
-    const profile = await serviceProviderProfileAdapter.getById(profileId);
-    const schedule =
-      await schedulingAdapter.getByServiceProviderProfileId(profileId);
-    const result = profile.calculateAndSetAverageRating(schedule);
-    await serviceProviderProfileAdapter.save(profile);
-
-    res.status(200).json(result);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get(
+  "/:profileId/rating",
+  profileHandler.getProfileRatingByIdHandler.bind(profileHandler),
+);
 
 /**
  * @openapi
@@ -111,18 +89,10 @@ router.get("/:profileId/rating", async (req: Request, res: Response) => {
  *         description: Internal Server Error
  *
  */
-router.get("/:profileId/schedule", async (req: Request, res: Response) => {
-  const profileId = req.params.profileId as UUID;
-
-  try {
-    const schedule =
-      await schedulingAdapter.getByServiceProviderProfileId(profileId);
-
-    res.status(200).json(schedule);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get(
+  "/:profileId/schedule",
+  profileHandler.getProfileScheduleByIdHandler.bind(profileHandler),
+);
 
 /**
  * @openapi
@@ -161,31 +131,7 @@ router.get("/:profileId/schedule", async (req: Request, res: Response) => {
 router.patch(
   "/:profileId",
   [ContentTypeMiddleware, sessionMiddleware],
-  async (req: Request, res: Response) => {
-    const userData = (req as CustomRequest).userData;
-    const profileId = req.params.profileId as UUID;
-
-    try {
-      const authenticatedUser = await userAdapter.getById(userData.id);
-      if (authenticatedUser.type !== "ServiceProvider")
-        throw new Error("Authenticated user is not a Service Provider.");
-
-      if (authenticatedUser.serviceProviderProfileId !== profileId)
-        throw new Error("Authenticated user does not own this Profile.");
-
-      const { telephoneNumber, specialty } = req.body;
-
-      const profile = await serviceProviderProfileAdapter.getById(profileId);
-
-      if (telephoneNumber) profile.telephoneNumber = telephoneNumber;
-      if (specialty) profile.specialty = specialty;
-
-      const savedUser = await serviceProviderProfileAdapter.save(profile);
-      res.status(201).json(savedUser);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+  profileHandler.getProfileByIdHandler.bind(profileHandler),
 );
 
 /**
@@ -221,31 +167,5 @@ router.patch(
 router.post(
   "/create",
   [ContentTypeMiddleware, sessionMiddleware],
-  async (req: Request, res: Response) => {
-    const userData = (req as CustomRequest).userData;
-
-    try {
-      const authenticatedUser = await userAdapter.getById(userData.id);
-      if (authenticatedUser.type !== "ServiceProvider")
-        throw new Error("Authenticated user is not a Service Provider.");
-
-      const { telephoneNumber, specialty } = req.body;
-
-      const newProfile = new ServiceProviderProfile(
-        randomUUID(),
-        userData.id,
-        telephoneNumber,
-        specialty,
-        0,
-        [],
-        [],
-      );
-      const savedUser = await serviceProviderProfileAdapter.save(newProfile);
-      authenticatedUser.serviceProviderProfileId = newProfile.id;
-      await userAdapter.save(authenticatedUser);
-      res.status(201).json(savedUser);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+  profileHandler.createProfileHandler.bind(profileHandler),
 );
