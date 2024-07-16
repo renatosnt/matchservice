@@ -20,7 +20,7 @@ export const ConfirmModal = ({
   const [rating, setRating] = useState<number | null>(null);
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={handleClose} data-testid="confirm-modal">
       <DialogContent>
         {rate ? (
           <Rating

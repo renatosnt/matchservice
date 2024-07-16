@@ -270,7 +270,6 @@ export const ServiceModal = ({
         handleConfirm={handleConfirm}
         service={service}
         text="Deseja agendar este serviço?"
-        data-testid="confirm-modal"
       />
     </>
   );

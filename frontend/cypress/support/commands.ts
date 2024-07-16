@@ -47,6 +47,6 @@ Cypress.Commands.add("login", (email, password) => {
   }).then((response) => {
     expect(response.status).to.eq(201);
     // Save the user data in localStorage as the application does
-    cy.window().then(win => win.localStorage.setItem("user", JSON.stringify(response.body.data)));
+    cy.setLocalStorage("user", JSON.stringify(response.body));
   });
 });
