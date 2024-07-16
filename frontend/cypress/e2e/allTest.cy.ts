@@ -98,7 +98,10 @@ describe("Service List Filtering", () => {
   });
 
   it("should display all services initially", () => {
-    cy.get('[data-testid="service-card"]', {timeout: 10000}).should("have.length", 8);
+    cy.get('[data-testid="service-card"]', { timeout: 10000 }).should(
+      "have.length",
+      8,
+    );
   });
 
   it("should filter services by search term", () => {
@@ -106,29 +109,45 @@ describe("Service List Filtering", () => {
     cy.get('[data-testid="service-card"]').should("have.length", 1);
     cy.get('[data-testid="service-card"]').first().contains("Fotografia");
   });
-  it('should filter services by category', () => {
-    cy.get('[data-testid="category-select"]').parent().click(); // Click on the parent element to open the dropdown
-    cy.get('li[data-value="Fotografia"]').click(); // Click on the appropriate menu item
-    cy.get('[data-testid="service-card"]').should('have.length', 1);
-    cy.get('[data-testid="service-card"]').first().contains('Fotografia');
+  it("should filter services by category", () => {
+    cy.get('[data-testid="category-select"]').parent().click(); 
+    cy.get('li[data-value="Fotografia"]').click(); 
+    cy.get('[data-testid="service-card"]').should("have.length", 1);
+    cy.get('[data-testid="service-card"]').first().contains("Fotografia");
   });
-  it('should filter services by city', () => {
-    cy.get('[data-testid="city-select"]').parent().click({ multiple: true }).first().then(() => {
-      cy.get('li[data-value="São Paulo"]').click({ force: true }); // Click on the appropriate menu item
-      cy.wait(1000); // Wait for the filter to apply
-      cy.get('[data-testid="service-card"]').should('have.length', 1);
-    });
+  it("should filter services by city", () => {
+    cy.get('[data-testid="city-select"]')
+      .parent()
+      .click({ multiple: true })
+      .first()
+      .then(() => {
+        cy.get('li[data-value="São Paulo"]').click({ force: true }); 
+        cy.wait(1000); 
+        cy.get('[data-testid="service-card"]').should("have.length", 1);
+      });
   });
 
-  it('should filter services by search term, category, and city', () => {
-    cy.get('input[placeholder="Procurar por serviço"]').type('Fotografia');
-    cy.get('[data-testid="category-select"]').parent().click({ multiple: true }).first().then(() => {
-      cy.get('li[data-value="Fotografia"]').click({ force: true }); // Click on the appropriate menu item
-      cy.get('[data-testid="city-select"]').parent().click({ multiple: true }).first().then(() => {
-        cy.get('li[data-value="Rio de Janeiro"]').click({ force: true }); // Click on the appropriate menu item
-        cy.wait(1000); // Wait for the filter to apply
-        cy.get('[data-testid="service-card"]', { timeout: 10000 }).should('have.length', 1);
+  it("should filter services by search term, category, and city", () => {
+    cy.get('input[placeholder="Procurar por serviço"]').type("Fotografia");
+    cy.get('[data-testid="category-select"]')
+      .parent()
+      .click({ multiple: true })
+      .first()
+      .then(() => {
+        cy.get('li[data-value="Fotografia"]').click({ force: true });
+        cy.get('[data-testid="city-select"]')
+          .parent()
+          .click({ multiple: true })
+          .first()
+          .then(() => {
+            cy.get('li[data-value="Rio de Janeiro"]').click({ force: true });
+            cy.wait(1000); 
+            cy.get('[data-testid="service-card"]', { timeout: 10000 }).should(
+              "have.length",
+              1,
+            );
+          });
       });
-    });
   });
 });
+
