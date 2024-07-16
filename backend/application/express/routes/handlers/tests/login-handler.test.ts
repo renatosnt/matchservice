@@ -42,6 +42,7 @@ describe("tests login router handler", () => {
       body: { email: "whatever@example.com", password: "password" },
     });
     const { res } = getMockRes();
+    process.env.SECRET_KEY = "SOMETHING";
     await loginRouterHandler.LoginRootHandler(request, res);
 
     expect(res.status).toHaveBeenCalledWith(201);
