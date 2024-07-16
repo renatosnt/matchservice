@@ -18,7 +18,7 @@ describe("tests the environment variables", () => {
     expect(getBackendPort()).toBe(process.env.BACKEND_PORT);
   });
 
-  test("tests if throws an error if the secret key is not set", () => {
+  test("tests if throws an error if the backend port is not set", () => {
     delete process.env.BACKEND_PORT;
     expect(getBackendPort).toThrowError(
       new Error("BACKEND_PORT environment variable is not set."),

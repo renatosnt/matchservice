@@ -1,19 +1,17 @@
-import { UUID, randomUUID } from "crypto";
-import express, { Request, Response } from "express";
-import { User } from "../../../domain/entities/user.entity";
+import express from "express";
 import { UserAdapter } from "../../../adapters/user-adapter";
 import { UserDatabase } from "../../../intrastructure/user-database";
-import {
-  ContentTypeMiddleware,
-  CustomRequest,
-  sessionMiddleware,
-} from "../middlewares";
+import { ContentTypeMiddleware, sessionMiddleware } from "../middlewares";
 import { SchedulingAdapter } from "../../../adapters/scheduling-adapter";
 import { SchedulingDatabase } from "../../../intrastructure/scheduling-database";
+import { UserRouterHandler } from "./handlers/user-handler";
 
 export const router = express.Router();
-const userAdapter = new UserAdapter(new UserDatabase());
-const scheduleAdapter = new SchedulingAdapter(new SchedulingDatabase());
+
+const userHandler = new UserRouterHandler(
+  new SchedulingAdapter(new SchedulingDatabase()),
+  new UserAdapter(new UserDatabase()),
+);
 
 /**
  * @openapi
@@ -33,16 +31,11 @@ const scheduleAdapter = new SchedulingAdapter(new SchedulingDatabase());
  *         description: Internal Server Error
  *
  */
-router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
-  try {
-    const userData = (req as CustomRequest).userData;
-    await userAdapter.getById(userData.id);
-
-    res.status(200).json(userData);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get(
+  "/self",
+  sessionMiddleware,
+  userHandler.getSelfUserHandler.bind(userHandler),
+);
 
 /**
  * @openapi
@@ -65,19 +58,7 @@ router.get("/self", sessionMiddleware, async (req: Request, res: Response) => {
  *         description: Internal Server Error
  *
  */
-router.get("/:userId", async (req: Request, res: Response) => {
-  const userId: UUID = req.params.userId as UUID;
-
-  try {
-    const user: User = await userAdapter.getById(userId);
-
-    const responseWithoutPassword = { ...user };
-    delete (responseWithoutPassword as any).password;
-    res.status(200).json(responseWithoutPassword);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get("/:userId", userHandler.getUserByIdHandler.bind(userHandler));
 
 /**
  * @openapi
@@ -105,20 +86,7 @@ router.get("/:userId", async (req: Request, res: Response) => {
 router.get(
   "/:userId/schedule",
   sessionMiddleware,
-  async (req: Request, res: Response) => {
-    const userId: UUID = req.params.userId as UUID;
-    const userData = (req as CustomRequest).userData;
-
-    try {
-      if (userData.id !== userId)
-        throw new Error("Authenticated user cannot see this schedule.");
-
-      const schedule = await scheduleAdapter.getByCustomerId(userId);
-      res.status(200).json(schedule);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+  userHandler.getUserScheduleByIdHandler.bind(userHandler),
 );
 
 /**
@@ -168,34 +136,7 @@ router.get(
 router.post(
   "/register",
   ContentTypeMiddleware,
-  async (req: Request, res: Response) => {
-    try {
-      const { username, realName, email, password, type } = req.body;
-
-      if (type !== "Customer" && type !== "ServiceProvider") {
-        res
-          .status(422)
-          .json({ message: "Type should be one of Customer, ServiceProvider" });
-        return;
-      }
-
-      const newUser = new User(
-        randomUUID(),
-        username,
-        realName,
-        email,
-        password,
-        type,
-        [],
-        null,
-        new Date(),
-      );
-      const savedUser = await userAdapter.save(newUser);
-      res.status(201).json(savedUser);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+  userHandler.registerUserHandler.bind(userHandler),
 );
 
 /**
@@ -245,26 +186,5 @@ router.post(
 router.patch(
   "/:userId",
   [ContentTypeMiddleware, sessionMiddleware],
-  async (req: Request, res: Response) => {
-    const userId = req.params.userId as UUID;
-    const userData = (req as CustomRequest).userData;
-
-    try {
-      if (userData.id !== userId)
-        throw new Error(`Authenticated user is not ${userId}.`);
-
-      const user = await userAdapter.getById(userId);
-      const { username, realName, email, password } = req.body;
-
-      if (username) user.username = username;
-      if (realName) user.realName = realName;
-      if (email) user.email = email;
-      if (password) user.password = password;
-
-      const updatedUser = await userAdapter.save(user);
-      res.status(200).json(updatedUser);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+  userHandler.patchUserByIdHandler.bind(userHandler),
 );
