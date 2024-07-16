@@ -16,7 +16,6 @@ export class ServiceDatabase implements IServicePort {
   }
 
   public async getAll(): Promise<Service[]> {
-
     const result = await this.prismaClient.service.findMany();
 
     return result.map((i) => PrismaServiceMapper.toDomain(i));

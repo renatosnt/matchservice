@@ -1,6 +1,6 @@
 export function validateParameterIsNotUndefined(parameter: any) {
   if (parameter === undefined)
     throw new Error(
-      `${Object.keys({ parameter })[0]} should not be undefined.`,
+      `One of the parameters passed is undefined, but it shouldn't be.`,
     );
 }

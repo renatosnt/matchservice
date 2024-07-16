@@ -74,24 +74,21 @@ router.get("/:profileId", async (req: Request, res: Response) => {
  *         description: Internal Server Error
  *
  */
-router.get(
-  "/:profileId/rating",
-  async (req: Request, res: Response) => {
-    const profileId = req.params.profileId as UUID;
+router.get("/:profileId/rating", async (req: Request, res: Response) => {
+  const profileId = req.params.profileId as UUID;
 
-    try {
-      const profile = await serviceProviderProfileAdapter.getById(profileId);
-      const schedule =
-        await schedulingAdapter.getByServiceProviderProfileId(profileId);
-      const result = profile.calculateAndSetAverageRating(schedule);
-      await serviceProviderProfileAdapter.save(profile);
+  try {
+    const profile = await serviceProviderProfileAdapter.getById(profileId);
+    const schedule =
+      await schedulingAdapter.getByServiceProviderProfileId(profileId);
+    const result = profile.calculateAndSetAverageRating(schedule);
+    await serviceProviderProfileAdapter.save(profile);
 
-      res.status(200).json(result);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-);
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 /**
  * @openapi
@@ -114,21 +111,18 @@ router.get(
  *         description: Internal Server Error
  *
  */
-router.get(
-  "/:profileId/schedule",
-  async (req: Request, res: Response) => {
-    const profileId = req.params.profileId as UUID;
+router.get("/:profileId/schedule", async (req: Request, res: Response) => {
+  const profileId = req.params.profileId as UUID;
 
-    try {
-      const schedule =
-        await schedulingAdapter.getByServiceProviderProfileId(profileId);
+  try {
+    const schedule =
+      await schedulingAdapter.getByServiceProviderProfileId(profileId);
 
-      res.status(200).json(schedule);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-);
+    res.status(200).json(schedule);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 /**
  * @openapi

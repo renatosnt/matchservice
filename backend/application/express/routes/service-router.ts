@@ -38,7 +38,6 @@ const scheduleAdapter = new SchedulingAdapter(new SchedulingDatabase());
  *
  */
 router.get("/", async (req: Request, res: Response) => {
-
   try {
     const services = await serviceAdapter.getAll();
 
@@ -47,7 +46,6 @@ router.get("/", async (req: Request, res: Response) => {
     res.status(404).json({ message: error.message });
   }
 });
-
 
 /**
  * @openapi

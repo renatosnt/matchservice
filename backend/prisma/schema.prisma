@@ -46,7 +46,7 @@ model Service {
   createdAt        DateTime @default(now())
   schedule         String[] @db.Uuid
   creatorProfileId String   @db.Uuid
-  basePrice        String   @default("0")
+  basePrice        String?  @default("0")
   pictureLinks     String[] @default([])
 }
 
