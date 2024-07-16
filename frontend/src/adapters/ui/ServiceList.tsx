@@ -241,6 +241,7 @@ export const ServiceList = () => {
                   <Select
                     value={selectedCategory}
                     onChange={handleCategoryChange}
+                    inputProps={{ "data-testid": "category-select" }}
                   >
                     <MenuItem value="">
                       <em>Todas</em>
@@ -262,7 +263,11 @@ export const ServiceList = () => {
                   }}
                 >
                   <InputLabel>Cidade</InputLabel>
-                  <Select value={selectedCity} onChange={handleCityChange}>
+                  <Select
+                    value={selectedCity}
+                    onChange={handleCityChange}
+                    inputProps={{ "data-testid": "city-select" }}
+                  >
                     <MenuItem value="">
                       <em>Todas</em>
                     </MenuItem>
@@ -297,7 +302,14 @@ export const ServiceList = () => {
       </AppBar>
       <Grid container spacing={4} sx={{ mt: 12 }}>
         {filteredServices.map((service) => (
-          <Grid item key={service.id} xs={12} sm={6} md={3}>
+          <Grid
+            item
+            key={service.id}
+            xs={12}
+            sm={6}
+            md={3}
+            data-testid="service-card"
+          >
             <Card
               onClick={() => handleClickOpen(service)}
               sx={{ cursor: "pointer" }}

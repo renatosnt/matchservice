@@ -35,3 +35,18 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add("login", (email, password) => {
+  cy.request({
+    method: "POST",
+    url: "http://localhost:3301/login", // Adjust the URL based on your login endpoint
+    body: {
+      email: email,
+      password: password,
+    },
+  }).then((response) => {
+    expect(response.status).to.eq(201);
+    // Save the user data in localStorage as the application does
+    window.localStorage.setItem("user", JSON.stringify(response.body.data));
+  });
+});

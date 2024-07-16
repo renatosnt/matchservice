@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "image": "https://via.placeholder.com/350",
+    "title": "Limpeza de Casa",
+    "description": "Serviço completo de limpeza residencial.",
+    "provider": "Limpeza Total",
+    "category": "Limpeza",
+    "locationCity": "São Paulo"
+  },
+  {
+    "id": 2,
+    "image": "https://via.placeholder.com/350",
+    "title": "Fotografia de Eventos",
+    "description": "Fotografia profissional para eventos.",
+    "provider": "Foto Eventos",
+    "category": "Fotografia",
+    "locationCity": "Rio de Janeiro"
+  },
+  {
+    "id": 3,
+    "image": "https://via.placeholder.com/350",
+    "title": "Cuidados Infantis",
+    "description": "Babá com experiência e referências.",
+    "provider": "Cuida Bem",
+    "category": "Cuidados Infantis",
+    "locationCity": "Belo Horizonte"
+  },
+  {
+    "id": 4,
+    "image": "https://via.placeholder.com/350",
+    "title": "Treinamento Fitness",
+    "description": "Personal trainer especializado.",
+    "provider": "Fit Life",
+    "category": "Fitness",
+    "locationCity": "Curitiba"
+  },
+  {
+    "id": 5,
+    "image": "https://via.placeholder.com/350",
+    "title": "Jardinagem Profissional",
+    "description": "Manutenção e criação de jardins.",
+    "provider": "Jardim Perfeito",
+    "category": "Jardinagem",
+    "locationCity": "Porto Alegre"
+  },
+  {
+    "id": 6,
+    "image": "https://via.placeholder.com/350",
+    "title": "Construção Civil",
+    "description": "Serviços completos de construção.",
+    "provider": "Construtora XYZ",
+    "category": "Construção",
+    "locationCity": "Salvador"
+  },
+  {
+    "id": 7,
+    "image": "https://via.placeholder.com/350",
+    "title": "Manutenção de Computadores",
+    "description": "Assistência técnica para computadores.",
+    "provider": "Tech Help",
+    "category": "Manutenção",
+    "locationCity": "Brasília"
+  },
+  {
+    "id": 8,
+    "image": "https://via.placeholder.com/350",
+    "title": "Beleza e Estética",
+    "description": "Serviços de beleza e estética.",
+    "provider": "Beleza Pura",
+    "category": "Beleza",
+    "locationCity": "Fortaleza"
+  }
+]

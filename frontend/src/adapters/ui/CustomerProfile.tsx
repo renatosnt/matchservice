@@ -68,14 +68,29 @@ export default function CustomerProfile() {
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
 
   useEffect(() => {
-    // Get user data from localStorage
     const user = localStorage.getItem("user");
+    console.log("Raw user from localStorage:", user);
+
     if (user) {
-      const parsedUser = JSON.parse(user);
-      setUserData({
-        name: parsedUser.data.realName || parsedUser.data.username,
-        profileId: parsedUser.profileData,
-      });
+      try {
+        const parsedUser = JSON.parse(user);
+        console.log("Parsed user object:", parsedUser);
+        if (parsedUser && parsedUser.data) {
+          setUserData({
+            name: parsedUser.data.realName || parsedUser.data.username,
+            profileId: parsedUser.profileData,
+          });
+        } else {
+          console.warn(
+            "Parsed user data is not in the expected format:",
+            parsedUser,
+          );
+        }
+      } catch (error) {
+        console.error("Failed to parse user from localStorage:", error);
+      }
+    } else {
+      console.warn("No user found in localStorage.");
     }
   }, []);
 
