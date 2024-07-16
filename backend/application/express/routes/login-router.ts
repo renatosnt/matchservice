@@ -2,17 +2,12 @@ import express, { Request, Response } from "express";
 import { UserAdapter } from "../../../adapters/user-adapter";
 import { UserDatabase } from "../../../intrastructure/user-database";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import {
   CustomRequest,
   ContentTypeMiddleware,
   sessionMiddleware,
 } from "../middlewares";
-dotenv.config();
-
-const SECRET_KEY = process.env.SECRET_KEY;
-if (SECRET_KEY === undefined)
-  throw new Error("SECRET_KEY environment variable is not set.");
+import { getSecretKey } from "../../../environment";
 
 interface UserLoginData {
   email: string;
@@ -71,7 +66,7 @@ router.post("/", ContentTypeMiddleware, async (req: Request, res: Response) => {
       realName: databaseUser.realName,
     };
 
-    const token = jwt.sign(userData, SECRET_KEY, {
+    const token = jwt.sign(userData, getSecretKey(), {
       expiresIn: "7d",
     });
     res.status(201).json({ token: token, ...userData });
