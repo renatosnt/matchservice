@@ -33,9 +33,23 @@ export const ServiceModal = ({
 
   useEffect(() => {
     const user = localStorage.getItem("user");
+    console.log("Raw user from localStorage:", user);
     if (user) {
-      const parsedUser = JSON.parse(user).data;
-      setUserType(parsedUser.type);
+      try {
+        const parsedUser = JSON.parse(user);
+        console.log("Parsed user object:", parsedUser);
+
+        if (parsedUser && parsedUser.type) {
+          setUserType(parsedUser.type);
+          console.log("User type set to:", parsedUser.type);
+        } else {
+          console.warn("Parsed user does not have a type property.");
+        }
+      } catch (error) {
+        console.error("Failed to parse user from localStorage:", error);
+      }
+    } else {
+      console.warn("No user found in localStorage.");
     }
 
     if (service && service.creatorProfileId) {
