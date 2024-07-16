@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { makeStyles } from "@mui/styles";
-import { getAllServices } from "../api/api";
+import { getAllServices, getUserById } from "../api/api";
 import { Service } from "../../application/ServiceModalProps";
 import { ScheduleModal } from "./ScheduleModal";
 
@@ -75,10 +75,14 @@ export default function CustomerProfile() {
       try {
         const parsedUser = JSON.parse(user);
         console.log("Parsed user object:", parsedUser);
-        if (parsedUser && parsedUser.data) {
+        let profileId = "";
+        getUserById(parsedUser.id).then(
+          (data) => (profileId = data.serviceProviderProfileId || ""),
+        );
+        if (parsedUser) {
           setUserData({
-            name: parsedUser.data.realName || parsedUser.data.username,
-            profileId: parsedUser.profileData,
+            name: parsedUser.realName || parsedUser.username,
+            profileId: profileId, // TODO
           });
         } else {
           console.warn(

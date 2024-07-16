@@ -73,7 +73,7 @@ export const NewServiceModal = ({
         };
 
         // Call the createService function with the token
-        await createService(newService, parsedUser.data.token);
+        await createService(newService, parsedUser.token);
 
         // Clear the form and close the modal
         setTitle("");

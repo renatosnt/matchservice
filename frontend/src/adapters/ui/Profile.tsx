@@ -22,7 +22,7 @@ import { makeStyles } from "@mui/styles";
 import { ScheduleModal } from "./ScheduleModal";
 import { EditServiceModal } from "./EditServiceModal";
 import { NewServiceModal } from "./NewServiceModal";
-import { getAllServices } from "../api/api";
+import { getAllServices, getUserById } from "../api/api";
 import { Service } from "../../application/ServiceModalProps";
 import { EditProfileModal } from "./EditProfileModal";
 
@@ -82,13 +82,18 @@ export default function ServiceProviderProfile() {
     const user = localStorage.getItem("user");
     if (user) {
       const parsedUser = JSON.parse(user);
-      setUserData({
-        name: parsedUser.data.realName || parsedUser.data.username,
-        profession: parsedUser.data.profession || "Profissão não informada",
-        profileId: parsedUser.profileData.id,
+      let profileId = "";
+      getUserById(parsedUser.id).then((data) => {
+        profileId = data.serviceProviderProfileId;
+
+        setUserData({
+          name: parsedUser.realName || parsedUser.username,
+          profession: "Profissão não informada",
+          profileId: profileId, // TODO
+        });
+        // Fetch user services
+        fetchUserServices(profileId);
       });
-      // Fetch user services
-      fetchUserServices(parsedUser.profileData.id);
     }
   }, []);
   const handleNewServiceModalSave = () => {
