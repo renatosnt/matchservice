@@ -61,8 +61,12 @@ export class ScheduleRouterHandler {
     let { rating } = req.body;
 
     try {
-      if (userData.type !== "Customer")
-        throw new Error("Authenticated user is not a Customer.");
+      if (userData.type !== "Customer") {
+        res
+          .status(403)
+          .json({ message: "Authenticated user is not a Customer." });
+        return;
+      }
 
       const existingSchedule = await this.schedulingAdapter.getById(scheduleId);
 
@@ -97,8 +101,10 @@ export class ScheduleRouterHandler {
       if (scheduledDate)
         existingSchedule.scheduledDate = new Date(scheduledDate);
 
-      if (!existingSchedule.scheduledDate.toJSON())
-        throw new Error("Scheduled Date is invalid.");
+      if (!existingSchedule.scheduledDate.toJSON()) {
+        res.status(422).json({ message: "Scheduled Date is invalid." });
+        return;
+      }
 
       const updatedSchedule =
         await this.schedulingAdapter.save(existingSchedule);
@@ -116,8 +122,12 @@ export class ScheduleRouterHandler {
       const userData = (req as CustomRequest).userData;
 
       const authenticatedUser = await this.userAdapter.getById(userData.id);
-      if (authenticatedUser.type !== "Customer")
-        throw new Error("Authenticated user is not a Customer.");
+      if (authenticatedUser.type !== "Customer") {
+        res
+          .status(403)
+          .json({ message: "Authenticated user is not a Customer." });
+        return;
+      }
 
       const service = await this.serviceAdapter.getById(serviceId);
       const profile = await this.serviceProviderProfileAdapter.getById(
@@ -135,8 +145,10 @@ export class ScheduleRouterHandler {
         userData.id,
       );
 
-      if (!newSchedule.scheduledDate.toJSON())
-        throw new Error("Scheduled Date is invalid.");
+      if (!newSchedule.scheduledDate.toJSON()) {
+        res.status(422).json({ message: "Scheduled Date is invalid." });
+        return;
+      }
 
       const createdSchedule = await this.schedulingAdapter.save(newSchedule);
 
