@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { User } from "../../domain/entities/user.entity";
 import { IUserPort } from "../../domain/ports/user-port";
 import { Service } from "../../domain/entities/service.entity";
-import { UserAdapter } from "../user-adapter"
+import { UserAdapter } from "../user-adapter";
 
 // Create a mock implementation of IUserPort
 const mockUserRepository: IUserPort = {
@@ -36,9 +36,11 @@ describe("UserAdapter", () => {
       "Customer",
       [],
       null,
-      new Date()
+      new Date(),
     );
-    (mockUserRepository.getById as jest.Mock).mockImplementation(() => Promise.resolve(expectedUser));
+    (mockUserRepository.getById as jest.Mock).mockImplementation(() =>
+      Promise.resolve(expectedUser),
+    );
 
     const userAdapter = new UserAdapter(mockUserRepository);
     const result = await userAdapter.getById(userId);
@@ -60,10 +62,12 @@ describe("UserAdapter", () => {
         "City 1",
         userId,
         [],
-        new Date()
+        new Date(),
       ),
     ];
-    (mockUserRepository.getUserServicesById as jest.Mock).mockResolvedValue(expectedServices);
+    (mockUserRepository.getUserServicesById as jest.Mock).mockResolvedValue(
+      expectedServices,
+    );
 
     const result = await userAdapter.getUserServicesById(userId);
 
@@ -82,9 +86,11 @@ describe("UserAdapter", () => {
       "Customer",
       [],
       null,
-      new Date()
+      new Date(),
     );
-    (mockUserRepository.getByUsername as jest.Mock).mockResolvedValue(expectedUser);
+    (mockUserRepository.getByUsername as jest.Mock).mockResolvedValue(
+      expectedUser,
+    );
 
     const result = await userAdapter.getByUsername(username);
 
@@ -103,9 +109,11 @@ describe("UserAdapter", () => {
       "Customer",
       [],
       null,
-      new Date()
+      new Date(),
     );
-    (mockUserRepository.getByEmail as jest.Mock).mockResolvedValue(expectedUser);
+    (mockUserRepository.getByEmail as jest.Mock).mockResolvedValue(
+      expectedUser,
+    );
 
     const result = await userAdapter.getByEmail(email);
 
@@ -123,7 +131,7 @@ describe("UserAdapter", () => {
       "Customer",
       [],
       null,
-      new Date()
+      new Date(),
     );
     (mockUserRepository.save as jest.Mock).mockResolvedValue(user);
 

@@ -39,7 +39,7 @@ describe("ServiceAdapter", () => {
         "City 1",
         randomUUID(),
         [randomUUID(), randomUUID()],
-        new Date()
+        new Date(),
       ),
       new Service(
         randomUUID(),
@@ -51,10 +51,12 @@ describe("ServiceAdapter", () => {
         "City 2",
         randomUUID(),
         [randomUUID()],
-        new Date()
+        new Date(),
       ),
     ];
-    (mockServiceRepository.getAll as jest.Mock).mockResolvedValue(expectedServices);
+    (mockServiceRepository.getAll as jest.Mock).mockResolvedValue(
+      expectedServices,
+    );
 
     const result = await serviceAdapter.getAll();
 
@@ -75,7 +77,7 @@ describe("ServiceAdapter", () => {
         "City 1",
         randomUUID(),
         [randomUUID(), randomUUID()],
-        new Date()
+        new Date(),
       ),
       new Service(
         randomUUID(),
@@ -87,10 +89,12 @@ describe("ServiceAdapter", () => {
         "City 2",
         randomUUID(),
         [randomUUID()],
-        new Date()
+        new Date(),
       ),
     ];
-    (mockServiceRepository.getById as jest.Mock).mockResolvedValue(expectedServices);
+    (mockServiceRepository.getById as jest.Mock).mockResolvedValue(
+      expectedServices,
+    );
 
     const result = await serviceAdapter.getById(serviceId);
 
@@ -111,7 +115,7 @@ describe("ServiceAdapter", () => {
         "City 1",
         randomUUID(),
         [randomUUID(), randomUUID()],
-        new Date()
+        new Date(),
       ),
       new Service(
         randomUUID(),
@@ -123,10 +127,12 @@ describe("ServiceAdapter", () => {
         "City 2",
         randomUUID(),
         [randomUUID()],
-        new Date()
+        new Date(),
       ),
     ];
-    (mockServiceRepository.deleteById  as jest.Mock).mockResolvedValue(expectedServices);
+    (mockServiceRepository.deleteById as jest.Mock).mockResolvedValue(
+      expectedServices,
+    );
 
     const result = await serviceAdapter.deleteById(serviceId);
 
@@ -147,7 +153,7 @@ describe("ServiceAdapter", () => {
         "City 1",
         randomUUID(),
         [randomUUID(), randomUUID()],
-        new Date()
+        new Date(),
       ),
       new Service(
         randomUUID(),
@@ -159,14 +165,18 @@ describe("ServiceAdapter", () => {
         "City 2",
         randomUUID(),
         [randomUUID()],
-        new Date()
+        new Date(),
       ),
     ];
-    (mockServiceRepository.getServiceSchedulingById as jest.Mock).mockResolvedValue(expectedServices);
+    (
+      mockServiceRepository.getServiceSchedulingById as jest.Mock
+    ).mockResolvedValue(expectedServices);
 
     const result = await serviceAdapter.getServiceSchedulingById(serviceId);
 
-    expect(mockServiceRepository.getServiceSchedulingById).toHaveBeenCalledWith(serviceId);
+    expect(mockServiceRepository.getServiceSchedulingById).toHaveBeenCalledWith(
+      serviceId,
+    );
     expect(result).toEqual(expectedServices);
   });
 
@@ -183,7 +193,7 @@ describe("ServiceAdapter", () => {
         "City 1",
         randomUUID(),
         [randomUUID(), randomUUID()],
-        new Date()
+        new Date(),
       ),
       new Service(
         randomUUID(),
@@ -195,20 +205,27 @@ describe("ServiceAdapter", () => {
         "City 2",
         randomUUID(),
         [randomUUID()],
-        new Date()
+        new Date(),
       ),
     ];
-    (mockServiceRepository.getByServiceProviderId as jest.Mock).mockResolvedValue(expectedServices);
+    (
+      mockServiceRepository.getByServiceProviderId as jest.Mock
+    ).mockResolvedValue(expectedServices);
 
-    const result = await serviceAdapter.getByServiceProviderId(serviceProviderId);
+    const result =
+      await serviceAdapter.getByServiceProviderId(serviceProviderId);
 
-    expect(mockServiceRepository.getByServiceProviderId).toHaveBeenCalledWith(serviceProviderId);
+    expect(mockServiceRepository.getByServiceProviderId).toHaveBeenCalledWith(
+      serviceProviderId,
+    );
     expect(result).toEqual(expectedServices);
   });
 
   test("should call getUniqueCategories on the service repository", async () => {
     const expectedCategories: string[] = ["Category 1", "Category 2"];
-    (mockServiceRepository.getUniqueCategories as jest.Mock).mockResolvedValue(expectedCategories);
+    (mockServiceRepository.getUniqueCategories as jest.Mock).mockResolvedValue(
+      expectedCategories,
+    );
 
     const result = await serviceAdapter.getUniqueCategories();
 
@@ -221,7 +238,7 @@ describe("ServiceAdapter", () => {
     const description = "Service Description";
     const category = "Service Category";
     const creatorProfileId = randomUUID();
-  
+
     const expectedServices: Service[] = [
       new Service(
         randomUUID(),
@@ -233,7 +250,7 @@ describe("ServiceAdapter", () => {
         "City 1",
         creatorProfileId,
         [randomUUID(), randomUUID()],
-        new Date()
+        new Date(),
       ),
       new Service(
         randomUUID(),
@@ -245,15 +262,27 @@ describe("ServiceAdapter", () => {
         "City 2",
         randomUUID(),
         [randomUUID()],
-        new Date()
+        new Date(),
       ),
     ];
-  
-    (mockServiceRepository.search as jest.Mock).mockResolvedValue(expectedServices);
-  
-    const result = await serviceAdapter.search(title, description, category, creatorProfileId);
-  
-    expect(mockServiceRepository.search).toHaveBeenCalledWith(title, description, category, creatorProfileId);
+
+    (mockServiceRepository.search as jest.Mock).mockResolvedValue(
+      expectedServices,
+    );
+
+    const result = await serviceAdapter.search(
+      title,
+      description,
+      category,
+      creatorProfileId,
+    );
+
+    expect(mockServiceRepository.search).toHaveBeenCalledWith(
+      title,
+      description,
+      category,
+      creatorProfileId,
+    );
     expect(result).toEqual(expectedServices);
   });
 
@@ -268,9 +297,9 @@ describe("ServiceAdapter", () => {
       "City",
       randomUUID(),
       [randomUUID(), randomUUID()],
-      new Date()
+      new Date(),
     );
-  
+
     const expectedSavedService: Service = new Service(
       serviceToSave.id,
       serviceToSave.title,
@@ -281,13 +310,15 @@ describe("ServiceAdapter", () => {
       serviceToSave.locationCity,
       serviceToSave.creatorProfileId,
       serviceToSave.getSchedule(),
-      serviceToSave.createdAt
+      serviceToSave.createdAt,
     );
-  
-    (mockServiceRepository.save as jest.Mock).mockResolvedValue(expectedSavedService);
-  
+
+    (mockServiceRepository.save as jest.Mock).mockResolvedValue(
+      expectedSavedService,
+    );
+
     const result = await serviceAdapter.save(serviceToSave);
-  
+
     expect(mockServiceRepository.save).toHaveBeenCalledWith(serviceToSave);
     expect(result).toEqual(expectedSavedService);
   });

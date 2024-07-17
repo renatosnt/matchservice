@@ -34,9 +34,11 @@ describe("SchedulingAdapter", () => {
       false,
       0,
       "provider123",
-      randomUUID()
+      randomUUID(),
     );
-    (mockSchedulingRepository.getById as jest.Mock).mockResolvedValue(expectedScheduling);
+    (mockSchedulingRepository.getById as jest.Mock).mockResolvedValue(
+      expectedScheduling,
+    );
 
     const result = await schedulingAdapter.getById(schedulingId);
 
@@ -54,13 +56,17 @@ describe("SchedulingAdapter", () => {
       false,
       0,
       "provider123",
-      randomUUID()
+      randomUUID(),
     );
-    (mockSchedulingRepository.deleteById as jest.Mock).mockResolvedValue(expectedScheduling);
+    (mockSchedulingRepository.deleteById as jest.Mock).mockResolvedValue(
+      expectedScheduling,
+    );
 
     const result = await schedulingAdapter.deleteById(schedulingId);
 
-    expect(mockSchedulingRepository.deleteById).toHaveBeenCalledWith(schedulingId);
+    expect(mockSchedulingRepository.deleteById).toHaveBeenCalledWith(
+      schedulingId,
+    );
     expect(result).toEqual(expectedScheduling);
   });
 
@@ -75,7 +81,7 @@ describe("SchedulingAdapter", () => {
         false,
         0,
         "provider123",
-        randomUUID()
+        randomUUID(),
       ),
       new Scheduling(
         randomUUID(),
@@ -85,14 +91,19 @@ describe("SchedulingAdapter", () => {
         false,
         4,
         "provider123",
-        randomUUID()
+        randomUUID(),
       ),
     ];
-    (mockSchedulingRepository.getByServiceProviderProfileId as jest.Mock).mockResolvedValue(expectedSchedulings);
+    (
+      mockSchedulingRepository.getByServiceProviderProfileId as jest.Mock
+    ).mockResolvedValue(expectedSchedulings);
 
-    const result = await schedulingAdapter.getByServiceProviderProfileId(serviceProviderId);
+    const result =
+      await schedulingAdapter.getByServiceProviderProfileId(serviceProviderId);
 
-    expect(mockSchedulingRepository.getByServiceProviderProfileId).toHaveBeenCalledWith(serviceProviderId);
+    expect(
+      mockSchedulingRepository.getByServiceProviderProfileId,
+    ).toHaveBeenCalledWith(serviceProviderId);
     expect(result).toEqual(expectedSchedulings);
   });
 
@@ -107,7 +118,7 @@ describe("SchedulingAdapter", () => {
         false,
         0,
         "provider123",
-        customerId
+        customerId,
       ),
       new Scheduling(
         randomUUID(),
@@ -117,17 +128,21 @@ describe("SchedulingAdapter", () => {
         false,
         4,
         "provider456",
-        customerId
+        customerId,
       ),
     ];
-    (mockSchedulingRepository.getByCustomerId as jest.Mock).mockResolvedValue(expectedSchedulings);
-  
+    (mockSchedulingRepository.getByCustomerId as jest.Mock).mockResolvedValue(
+      expectedSchedulings,
+    );
+
     const result = await schedulingAdapter.getByCustomerId(customerId);
-  
-    expect(mockSchedulingRepository.getByCustomerId).toHaveBeenCalledWith(customerId);
+
+    expect(mockSchedulingRepository.getByCustomerId).toHaveBeenCalledWith(
+      customerId,
+    );
     expect(result).toEqual(expectedSchedulings);
   });
-  
+
   test("should call getByServiceId on the scheduling repository", async () => {
     const serviceId = randomUUID();
     const expectedSchedulings: Scheduling[] = [
@@ -139,7 +154,7 @@ describe("SchedulingAdapter", () => {
         false,
         0,
         "provider123",
-        randomUUID()
+        randomUUID(),
       ),
       new Scheduling(
         randomUUID(),
@@ -149,17 +164,21 @@ describe("SchedulingAdapter", () => {
         false,
         4,
         "provider456",
-        randomUUID()
+        randomUUID(),
       ),
     ];
-    (mockSchedulingRepository.getByServiceId as jest.Mock).mockResolvedValue(expectedSchedulings);
-  
+    (mockSchedulingRepository.getByServiceId as jest.Mock).mockResolvedValue(
+      expectedSchedulings,
+    );
+
     const result = await schedulingAdapter.getByServiceId(serviceId);
-  
-    expect(mockSchedulingRepository.getByServiceId).toHaveBeenCalledWith(serviceId);
+
+    expect(mockSchedulingRepository.getByServiceId).toHaveBeenCalledWith(
+      serviceId,
+    );
     expect(result).toEqual(expectedSchedulings);
   });
-  
+
   test("should call save on the scheduling repository", async () => {
     const scheduling: Scheduling = new Scheduling(
       randomUUID(),
@@ -169,12 +188,12 @@ describe("SchedulingAdapter", () => {
       false,
       0,
       "provider123",
-      randomUUID()
+      randomUUID(),
     );
     (mockSchedulingRepository.save as jest.Mock).mockResolvedValue(scheduling);
-  
+
     const result = await schedulingAdapter.save(scheduling);
-  
+
     expect(mockSchedulingRepository.save).toHaveBeenCalledWith(scheduling);
     expect(result).toEqual(scheduling);
   });

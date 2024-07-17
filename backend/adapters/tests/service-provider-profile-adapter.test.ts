@@ -37,11 +37,15 @@ describe("ServiceProviderProfileAdapter", () => {
       [randomUUID(), randomUUID()],
       [randomUUID()],
     );
-    (mockServiceProviderProfileRepository.getById as jest.Mock).mockResolvedValue(expectedProfile);
+    (
+      mockServiceProviderProfileRepository.getById as jest.Mock
+    ).mockResolvedValue(expectedProfile);
 
     const result = await serviceProviderProfileAdapter.getById(profileId);
 
-    expect(mockServiceProviderProfileRepository.getById).toHaveBeenCalledWith(profileId);
+    expect(mockServiceProviderProfileRepository.getById).toHaveBeenCalledWith(
+      profileId,
+    );
     expect(result).toEqual(expectedProfile);
   });
 
@@ -56,47 +60,69 @@ describe("ServiceProviderProfileAdapter", () => {
       [randomUUID(), randomUUID()],
       [randomUUID()],
     );
-    (mockServiceProviderProfileRepository.getByServiceProviderId as jest.Mock).mockResolvedValue(expectedProfile);
+    (
+      mockServiceProviderProfileRepository.getByServiceProviderId as jest.Mock
+    ).mockResolvedValue(expectedProfile);
 
-    const result = await serviceProviderProfileAdapter.getByServiceProviderId(serviceProviderId);
+    const result =
+      await serviceProviderProfileAdapter.getByServiceProviderId(
+        serviceProviderId,
+      );
 
-    expect(mockServiceProviderProfileRepository.getByServiceProviderId).toHaveBeenCalledWith(serviceProviderId);
+    expect(
+      mockServiceProviderProfileRepository.getByServiceProviderId,
+    ).toHaveBeenCalledWith(serviceProviderId);
     expect(result).toEqual(expectedProfile);
   });
 
   test("should call getUserIdByProfileId on the service provider profile repository", async () => {
     const profileId = randomUUID();
     const expectedUserId = randomUUID();
-    (mockServiceProviderProfileRepository.getUserIdByProfileId as jest.Mock).mockResolvedValue(expectedUserId);
+    (
+      mockServiceProviderProfileRepository.getUserIdByProfileId as jest.Mock
+    ).mockResolvedValue(expectedUserId);
 
-    const result = await serviceProviderProfileAdapter.getUserIdByProfileId(profileId);
+    const result =
+      await serviceProviderProfileAdapter.getUserIdByProfileId(profileId);
 
-    expect(mockServiceProviderProfileRepository.getUserIdByProfileId).toHaveBeenCalledWith(profileId);
+    expect(
+      mockServiceProviderProfileRepository.getUserIdByProfileId,
+    ).toHaveBeenCalledWith(profileId);
     expect(result).toEqual(expectedUserId);
   });
 
   test("should call getServicesByProfileId on the service provider profile repository", async () => {
     const profileId = randomUUID();
     const expectedServices = [randomUUID(), randomUUID()];
-    (mockServiceProviderProfileRepository.getServicesByProfileId as jest.Mock).mockResolvedValue(expectedServices);
+    (
+      mockServiceProviderProfileRepository.getServicesByProfileId as jest.Mock
+    ).mockResolvedValue(expectedServices);
 
-    const result = await serviceProviderProfileAdapter.getServicesByProfileId(profileId);
+    const result =
+      await serviceProviderProfileAdapter.getServicesByProfileId(profileId);
 
-    expect(mockServiceProviderProfileRepository.getServicesByProfileId).toHaveBeenCalledWith(profileId);
+    expect(
+      mockServiceProviderProfileRepository.getServicesByProfileId,
+    ).toHaveBeenCalledWith(profileId);
     expect(result).toEqual(expectedServices);
   });
-  
+
   test("should call getScheduleByProfileId on the service provider profile repository", async () => {
     const profileId = randomUUID();
     const expectedSchedule = [randomUUID(), randomUUID()];
-    (mockServiceProviderProfileRepository.getScheduleByProfileId as jest.Mock).mockResolvedValue(expectedSchedule);
-  
-    const result = await serviceProviderProfileAdapter.getScheduleByProfileId(profileId);
-  
-    expect(mockServiceProviderProfileRepository.getScheduleByProfileId).toHaveBeenCalledWith(profileId);
+    (
+      mockServiceProviderProfileRepository.getScheduleByProfileId as jest.Mock
+    ).mockResolvedValue(expectedSchedule);
+
+    const result =
+      await serviceProviderProfileAdapter.getScheduleByProfileId(profileId);
+
+    expect(
+      mockServiceProviderProfileRepository.getScheduleByProfileId,
+    ).toHaveBeenCalledWith(profileId);
     expect(result).toEqual(expectedSchedule);
   });
-  
+
   test("should call save on the service provider profile repository", async () => {
     const profileToSave = new ServiceProviderProfile(
       randomUUID(),
@@ -116,11 +142,15 @@ describe("ServiceProviderProfileAdapter", () => {
       profileToSave.getServices(),
       profileToSave.getSchedule(),
     );
-    (mockServiceProviderProfileRepository.save as jest.Mock).mockResolvedValue(expectedSavedProfile);
-  
+    (mockServiceProviderProfileRepository.save as jest.Mock).mockResolvedValue(
+      expectedSavedProfile,
+    );
+
     const result = await serviceProviderProfileAdapter.save(profileToSave);
-  
-    expect(mockServiceProviderProfileRepository.save).toHaveBeenCalledWith(profileToSave);
+
+    expect(mockServiceProviderProfileRepository.save).toHaveBeenCalledWith(
+      profileToSave,
+    );
     expect(result).toEqual(expectedSavedProfile);
   });
 });
