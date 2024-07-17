@@ -30,7 +30,7 @@ export class SchedulingAdapter implements ISchedulingPort {
   }
 
   async getByServiceId(serviceId: UUID): Promise<Scheduling[]> {
-    return await this.schedulingRepository.getByCustomerId(serviceId);
+    return await this.schedulingRepository.getByServiceId(serviceId);
   }
 
   async save(scheduling: Scheduling): Promise<Scheduling> {
