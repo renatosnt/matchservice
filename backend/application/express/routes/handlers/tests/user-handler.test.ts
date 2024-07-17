@@ -40,6 +40,25 @@ describe("tests service router handler", () => {
     expect(res.json).toBeCalledWith(expect.objectContaining({ id: userId }));
   });
 
+  test("tests if it can handle error when getting self user", async () => {
+    const userId = randomUUID();
+    mockUserAdapter.getById.mockImplementation(() => {
+      throw new Error("Sample Error");
+    });
+    const req = getMockReq({
+      userData: { id: userId },
+    });
+    const { res } = getMockRes();
+
+    await userRouterHandler.getSelfUserHandler(req, res);
+
+    expect(mockUserAdapter.getById).toBeCalledWith(userId);
+    expect(res.status).toBeCalledWith(500);
+    expect(res.json).toBeCalledWith(
+      expect.objectContaining({ message: "Sample Error" }),
+    );
+  });
+
   test("tests if it can get user by id", async () => {
     const userId = randomUUID();
     mockUserAdapter.getById.mockReturnValue({

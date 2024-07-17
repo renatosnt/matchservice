@@ -30,25 +30,25 @@ describe("UserAdapter", () => {
   });
 
   test("should get scheduling by id", async () => {
-    const userId = randomUUID();
+    const schedulingId = randomUUID();
     prismaMock.scheduling.findFirst.mockReturnValue(sampleScheduling as any);
 
-    const result = await schedulingDatabase.getById(userId);
+    const result = await schedulingDatabase.getById(schedulingId);
 
     expect(prismaMock.scheduling.findFirst).toHaveBeenCalledWith({
-      where: { id: userId },
+      where: { id: schedulingId },
     });
     expect(result).toEqual(sampleScheduling);
   });
 
   test("should delete scheduling by id", async () => {
-    const userId = randomUUID();
+    const schedulingId = randomUUID();
     prismaMock.scheduling.delete.mockReturnValue(sampleScheduling as any);
 
-    const result = await schedulingDatabase.deleteById(userId);
+    const result = await schedulingDatabase.deleteById(schedulingId);
 
     expect(prismaMock.scheduling.delete).toHaveBeenCalledWith({
-      where: { id: userId },
+      where: { id: schedulingId },
     });
     expect(result).toEqual(sampleScheduling);
   });
@@ -91,7 +91,6 @@ describe("UserAdapter", () => {
   });
 
   test("should save the scheduling", async () => {
-    const serviceId = randomUUID();
     prismaMock.scheduling.upsert.mockReturnValue(sampleScheduling as any);
 
     const result = await schedulingDatabase.save(

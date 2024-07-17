@@ -82,9 +82,9 @@ export class ServiceDatabase implements IServicePort {
 
     if (categories === null) throw new Error("No categories found.");
 
-    const result = [...new Set(categories)];
+    const result = [...new Set(categories.map((x) => x.category))];
 
-    return result.map((x) => x.category);
+    return result;
   }
 
   public async search(
