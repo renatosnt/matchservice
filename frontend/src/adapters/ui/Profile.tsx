@@ -200,7 +200,7 @@ export default function ServiceProviderProfile() {
                 />
                 <Box display="flex" alignItems="center" mb={1}>
                   <PersonIcon />
-                  <Typography variant="h6" ml={1}>
+                  <Typography variant="h6" ml={1} data-testid="profile-name">
                     {userData.name}
                   </Typography>
                 </Box>

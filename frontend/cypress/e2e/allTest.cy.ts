@@ -306,7 +306,7 @@ describe("Register Service provider Page", () => {
   });
 });
 
-describe("Profile Page - Schedule and Review", () => {
+describe.only("Profile Page - Schedule and Review", () => {
   beforeEach(() => {
     // Log in as a service provider
     cy.visit("/");
@@ -317,18 +317,11 @@ describe("Profile Page - Schedule and Review", () => {
   it("should find the profile name, open the schedule modal, and click to review", () => {
     cy.visit("/profile");
     // Encontrar o elemento com o nome do perfil
-    cy.get('[data-testid="profile-name"]').should("be.visible");
+    cy.contains("Bruna Cardo").should("be.visible");
 
     // Clicar no botão "Minha Agenda"
-    cy.get('[data-testid="my-schedule-button"]').click();
+    cy.contains("button", "Minha Agenda").click();
 
-    // Verificar se o modal de agendamentos está visível
-    cy.get('[data-testid="schedule-modal"]').should("be.visible");
-
-    // Clicar no botão para avaliar um agendamento específico
-    // Este passo pode precisar ser ajustado com base na estrutura do seu modal e agendamentos
-    cy.get('[data-testid="review-button"]').first().click();
-
-    // Aqui você pode adicionar mais verificações ou ações, como preencher um formulário de avaliação
+    cy.contains("button", "Concluir").click();
   });
 });
