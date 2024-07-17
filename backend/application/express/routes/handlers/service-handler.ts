@@ -96,15 +96,23 @@ export class ServiceRouterHandler {
       if (
         authenticatedUser.serviceProviderProfileId === undefined ||
         authenticatedUser.serviceProviderProfileId === null
-      )
-        throw new Error("Authenticated user is not a Service Provider.");
+      ) {
+        res
+          .status(403)
+          .json({ message: "Authenticated user is not a Service Provider." });
+        return;
+      }
 
       const authenticatedProfile =
         await this.serviceProviderProfileAdapter.getById(
           authenticatedUser.serviceProviderProfileId,
         );
-      if (!authenticatedProfile.getServices().includes(serviceId))
-        throw new Error("Authenticated user does not own this Service.");
+      if (!authenticatedProfile.getServices().includes(serviceId)) {
+        res
+          .status(403)
+          .json({ message: "Authenticated user does not own this Service." });
+        return;
+      }
 
       const allServices = authenticatedProfile.getServices();
       const idx = allServices.indexOf(serviceId);
@@ -130,8 +138,12 @@ export class ServiceRouterHandler {
       if (
         authenticatedUser.serviceProviderProfileId === undefined ||
         authenticatedUser.serviceProviderProfileId === null
-      )
-        throw new Error("Authenticated user is not a Service Provider.");
+      ) {
+        res
+          .status(403)
+          .json({ message: "Authenticated user is not a Service Provider." });
+        return;
+      }
 
       const { title, description, category, locationState, locationCity } =
         req.body;
@@ -176,8 +188,12 @@ export class ServiceRouterHandler {
       if (
         existingService.creatorProfileId !==
         authenticatedUser.serviceProviderProfileId
-      )
-        throw new Error("Authenticated user does not own this service.");
+      ) {
+        res
+          .status(403)
+          .json({ message: "Authenticated user does not own this Service." });
+        return;
+      }
 
       if (title) existingService.title = title;
       if (description) existingService.description = description;

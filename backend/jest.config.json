@@ -7,6 +7,7 @@
         "backend/domain/ports/*",
         "backend/index.ts",
         "application/express/express.ts",
-        "application/express/swagger.ts"
+        "application/express/swagger.ts",
+        "application/express/routes/handlers/tests/mocks.ts"
     ]
 }
