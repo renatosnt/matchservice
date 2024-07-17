@@ -69,14 +69,21 @@ export class ProfileRouterHandler {
 
     try {
       const authenticatedUser = await this.userAdapter.getById(userData.id);
-      if (authenticatedUser.type !== "ServiceProvider")
-        throw new Error("Authenticated user is not a Service Provider.");
+      if (authenticatedUser.type !== "ServiceProvider") {
+        res
+          .status(403)
+          .json({ message: "Authenticated user is not a Service Provider." });
+        return;
+      }
 
-      if (authenticatedUser.serviceProviderProfileId !== profileId)
-        throw new Error("Authenticated user does not own this Profile.");
+      if (authenticatedUser.serviceProviderProfileId !== profileId) {
+        res
+          .status(403)
+          .json({ message: "Authenticated user does not own this Profile." });
+        return;
+      }
 
       const { telephoneNumber, specialty } = req.body;
-
       const profile =
         await this.serviceProviderProfileAdapter.getById(profileId);
 
@@ -95,8 +102,12 @@ export class ProfileRouterHandler {
 
     try {
       const authenticatedUser = await this.userAdapter.getById(userData.id);
-      if (authenticatedUser.type !== "ServiceProvider")
-        throw new Error("Authenticated user is not a Service Provider.");
+      if (authenticatedUser.type !== "ServiceProvider") {
+        res
+          .status(403)
+          .json({ message: "Authenticated user is not a Service Provider." });
+        return;
+      }
 
       const { telephoneNumber, specialty } = req.body;
 
