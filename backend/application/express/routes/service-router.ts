@@ -9,14 +9,17 @@ import { ServiceProviderProfileDatabase } from "../../../intrastructure/service-
 import { SchedulingAdapter } from "../../../adapters/scheduling-adapter";
 import { SchedulingDatabase } from "../../../intrastructure/scheduling-database";
 import { ServiceRouterHandler } from "./handlers/service-handler";
+import { PrismaClient } from "@prisma/client";
 
 export const router = express.Router();
 
 const serviceHandler = new ServiceRouterHandler(
-  new ServiceProviderProfileAdapter(new ServiceProviderProfileDatabase()),
-  new SchedulingAdapter(new SchedulingDatabase()),
-  new ServiceAdapter(new ServiceDatabase()),
-  new UserAdapter(new UserDatabase()),
+  new ServiceProviderProfileAdapter(
+    new ServiceProviderProfileDatabase(new PrismaClient()),
+  ),
+  new SchedulingAdapter(new SchedulingDatabase(new PrismaClient())),
+  new ServiceAdapter(new ServiceDatabase(new PrismaClient())),
+  new UserAdapter(new UserDatabase(new PrismaClient())),
 );
 
 /**

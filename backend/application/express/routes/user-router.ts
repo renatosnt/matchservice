@@ -5,12 +5,13 @@ import { ContentTypeMiddleware, sessionMiddleware } from "../middlewares";
 import { SchedulingAdapter } from "../../../adapters/scheduling-adapter";
 import { SchedulingDatabase } from "../../../intrastructure/scheduling-database";
 import { UserRouterHandler } from "./handlers/user-handler";
+import { PrismaClient } from "@prisma/client";
 
 export const router = express.Router();
 
 const userHandler = new UserRouterHandler(
-  new SchedulingAdapter(new SchedulingDatabase()),
-  new UserAdapter(new UserDatabase()),
+  new SchedulingAdapter(new SchedulingDatabase(new PrismaClient())),
+  new UserAdapter(new UserDatabase(new PrismaClient())),
 );
 
 /**

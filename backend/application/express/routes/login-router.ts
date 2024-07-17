@@ -4,11 +4,12 @@ import { UserDatabase } from "../../../intrastructure/user-database";
 
 import { ContentTypeMiddleware, sessionMiddleware } from "../middlewares";
 import { LoginRouterHandler } from "./handlers/login-handler";
+import { PrismaClient } from "@prisma/client";
 
 export const router = express.Router();
 
 const routeHandler = new LoginRouterHandler(
-  new UserAdapter(new UserDatabase()),
+  new UserAdapter(new UserDatabase(new PrismaClient())),
 );
 
 /**

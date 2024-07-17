@@ -12,8 +12,8 @@ import { validateUUID } from "./mappings/uuid-validation";
 export class UserDatabase implements IUserPort {
   private readonly prismaClient: PrismaClient;
 
-  constructor() {
-    this.prismaClient = new PrismaClient();
+  constructor(prismaClient: PrismaClient) {
+    this.prismaClient = prismaClient;
   }
 
   public async getById(id: UUID): Promise<User> {

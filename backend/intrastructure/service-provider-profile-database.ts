@@ -11,8 +11,8 @@ export class ServiceProviderProfileDatabase
 {
   private readonly prismaClient: PrismaClient;
 
-  constructor() {
-    this.prismaClient = new PrismaClient();
+  constructor(prismaClient: PrismaClient) {
+    this.prismaClient = prismaClient;
   }
 
   public async getById(id: UUID): Promise<ServiceProviderProfile> {

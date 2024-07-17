@@ -7,13 +7,16 @@ import { sessionMiddleware, ContentTypeMiddleware } from "../middlewares";
 import { UserAdapter } from "../../../adapters/user-adapter";
 import { UserDatabase } from "../../../intrastructure/user-database";
 import { ProfileRouterHandler } from "./handlers/profile-handler";
+import { PrismaClient } from "@prisma/client";
 
 export const router = express.Router();
 
 const profileHandler = new ProfileRouterHandler(
-  new ServiceProviderProfileAdapter(new ServiceProviderProfileDatabase()),
-  new SchedulingAdapter(new SchedulingDatabase()),
-  new UserAdapter(new UserDatabase()),
+  new ServiceProviderProfileAdapter(
+    new ServiceProviderProfileDatabase(new PrismaClient()),
+  ),
+  new SchedulingAdapter(new SchedulingDatabase(new PrismaClient())),
+  new UserAdapter(new UserDatabase(new PrismaClient())),
 );
 
 /**
