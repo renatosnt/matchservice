@@ -4,21 +4,21 @@ import PersonIcon from "@mui/icons-material/Person";
 import {
   Box,
   Button,
+  FormControl,
   Grid,
   InputAdornment,
-  TextField,
-  Typography,
+  InputLabel,
   MenuItem,
   Select,
-  FormControl,
-  InputLabel,
+  TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, createProfile, loginUser } from "../api/api";
-import BackgroundImageRegister from "./BackgroundImageRegister";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { createProfile, loginUser, registerUser } from "../api/api";
+import BackgroundImageRegister from "./BackgroundImageRegister";
 
 export const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -169,6 +169,7 @@ export const Register = () => {
         <Box
           component="form"
           onSubmit={handleSubmit}
+          data-testid="register-form"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -225,10 +226,12 @@ export const Register = () => {
             sx={{ background: "white" }}
             error={!!validationErrors.fullName}
             helperText={validationErrors.fullName}
+            data-testid="fullName"
           />
           <TextField
             label="Username"
             value={username}
+            data-testid="username"
             onChange={(e) => setUsername(e.target.value)}
             fullWidth
             size="small"
@@ -260,11 +263,13 @@ export const Register = () => {
             sx={{ background: "white" }}
             error={!!validationErrors.email}
             helperText={validationErrors.email}
+            data-testid="email"
           />
 
           <TextField
             label="Senha"
             type="password"
+            data-testid="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             fullWidth
@@ -284,6 +289,7 @@ export const Register = () => {
           <TextField
             label="Número de Telefone"
             value={telephoneNumber}
+            data-testid="telephoneNumber"
             onChange={(e) => setTelephoneNumber(e.target.value)}
             fullWidth
             size="small"
@@ -299,6 +305,7 @@ export const Register = () => {
               value={type}
               label="Tipo de Conta"
               onChange={(e) => setType(e.target.value as string)}
+              inputProps={{ "data-testid": "type" }}
             >
               <MenuItem value="Customer">Cliente</MenuItem>
               <MenuItem value="ServiceProvider">Prestador de Serviço</MenuItem>
@@ -327,6 +334,7 @@ export const Register = () => {
             variant="contained"
             color="primary"
             fullWidth
+            data-testid="registerButton"
             sx={{
               mt: 2,
               textTransform: "none",

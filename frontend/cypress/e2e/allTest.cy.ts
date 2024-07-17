@@ -1,4 +1,3 @@
-import { loginUser } from "../../src/adapters/api/api";
 import "../support/commands";
 describe("Home Page", () => {
   beforeEach(() => {
@@ -203,5 +202,37 @@ describe("Add a new service Test", () => {
 
     cy.get('[data-testid="confirm-modal"]').should("not.exist");
     cy.get('[data-testid="service-modal"]').should("not.exist");
+  });
+});
+
+describe("Register Page", () => {
+  beforeEach(() => {
+    cy.visit("/register");
+
+    // Mocks para as chamadas de API
+    cy.intercept("POST", "**/register");
+  });
+
+  it("renders the logo and title", () => {
+    cy.contains("MatchService").should("be.visible");
+    cy.contains("Olá!").should("be.visible");
+    cy.contains("Cadastre-se para começar").should("be.visible");
+  });
+
+  it("registers a new customer successfully", () => {
+    cy.get('[data-testid="fullName"]').type("John Doe");
+    cy.get('[data-testid="username"]').type("johndoe17");
+    cy.get('[data-testid="email"]').type("johndoe16@example.com");
+    cy.get('[data-testid="password"]').type("password123");
+    cy.get('[data-testid="telephoneNumber"]').type("1234567890");
+
+    cy.get('[data-testid="type"]').click({ force: true }); // Força o clique no dropdown
+    cy.contains("Cliente").click({ force: true }); // Clica na opção "Cliente"
+
+    cy.get('[data-testid="registerButton"]').click({ force: true }); // Força o clique no botão de registro
+    cy.wait(2000);
+    // Verifica se a mensagem de sucesso foi exibida (opcional)
+    cy.contains("Registration successful!").should("be.visible");
+    cy.visit("/services");
   });
 });
