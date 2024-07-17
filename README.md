@@ -185,4 +185,3 @@ A arquitetura hexagonal do sistema backend consiste em:
 
 ### História 9: Como cliente, gostaria de poder agendar serviços de prestadores
 - [x] Criar rotas para criação, edição e recuperação de dados de agendamentos (Gabriel)
-
