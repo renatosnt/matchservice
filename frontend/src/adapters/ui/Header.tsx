@@ -65,6 +65,7 @@ export default function AccountMenu() {
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
+            data-testid="profile-icon"
           >
             <Avatar sx={{ width: 32, height: 32 }}></Avatar>
           </IconButton>
@@ -104,16 +105,18 @@ export default function AccountMenu() {
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        data-testid="account-menu"
       >
         <MenuItem
           onClick={handleClose}
           component={Link}
           to={userType === "Customer" ? "/profile" : "/account"}
+          data-testid="my-profile-option"
         >
           <Avatar /> Meu Perfil
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleLogout}>
+        <MenuItem onClick={handleLogout} data-testid="logout-option">
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

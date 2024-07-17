@@ -58,6 +58,7 @@
   "devDependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@faker-js/faker": "^8.4.1",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.15.21",
     "@types/bcryptjs": "^2.4.6",

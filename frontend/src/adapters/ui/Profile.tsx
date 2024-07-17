@@ -1,30 +1,30 @@
-import Header from "./Header";
-import React, { useEffect, useState } from "react";
-import {
-  AppBar,
-  Box,
-  Button,
-  Grid,
-  Toolbar,
-  alpha,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  Avatar,
-  Container,
-  CardActions,
-  Paper,
-} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import WorkIcon from "@mui/icons-material/Work";
+import {
+  alpha,
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  Paper,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { ScheduleModal } from "./ScheduleModal";
-import { EditServiceModal } from "./EditServiceModal";
-import { NewServiceModal } from "./NewServiceModal";
-import { getAllServices, getUserById } from "../api/api";
+import { useEffect, useState } from "react";
 import { Service } from "../../application/ServiceModalProps";
+import { getAllServices, getUserById } from "../api/api";
 import { EditProfileModal } from "./EditProfileModal";
+import { EditServiceModal } from "./EditServiceModal";
+import Header from "./Header";
+import { NewServiceModal } from "./NewServiceModal";
+import { ScheduleModal } from "./ScheduleModal";
 
 const useStyles = makeStyles({
   container: {
@@ -186,7 +186,7 @@ export default function ServiceProviderProfile() {
             padding: 4,
           }}
         >
-          <Grid container spacing={16} mt={1}>
+          <Grid container spacing={16} mt={1} data-testid="profile-name">
             <Grid item xs={12} sm={4} mt={4}>
               <Box display="flex" flexDirection="column" alignItems="center">
                 <Avatar
@@ -196,6 +196,7 @@ export default function ServiceProviderProfile() {
                     height: 150,
                     marginBottom: 2,
                   }}
+                  data-testid="user-avatar"
                 />
                 <Box display="flex" alignItems="center" mb={1}>
                   <PersonIcon />
@@ -205,7 +206,11 @@ export default function ServiceProviderProfile() {
                 </Box>
                 <Box display="flex" alignItems="center">
                   <WorkIcon />
-                  <Typography variant="subtitle1" ml={1}>
+                  <Typography
+                    variant="subtitle1"
+                    ml={1}
+                    data-testid="user-profession"
+                  >
                     {userData.profession}
                   </Typography>
                 </Box>
@@ -215,6 +220,7 @@ export default function ServiceProviderProfile() {
                   fullWidth
                   sx={{ marginTop: 2 }}
                   onClick={() => setScheduleModalOpen(true)}
+                  data-testid="schedule-button"
                 >
                   Agenda
                 </Button>

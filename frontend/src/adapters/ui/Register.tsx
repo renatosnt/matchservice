@@ -319,6 +319,7 @@ export const Register = () => {
                 value={specialty}
                 label="Especialidade"
                 onChange={(e) => setSpecialty(e.target.value as string)}
+                inputProps={{ "data-testid": "specialty-field" }}
               >
                 {specialties.map((spec) => (
                   <MenuItem key={spec} value={spec}>

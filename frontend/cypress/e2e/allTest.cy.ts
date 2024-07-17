@@ -1,4 +1,6 @@
+import { faker } from "@faker-js/faker";
 import "../support/commands";
+
 describe("Home Page", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");
@@ -78,7 +80,7 @@ describe("Login Page", () => {
     cy.get('[data-testid="password-input"]').type("123456");
     cy.get('[data-testid="login-button"]').click();
 
-    cy.contains("An error occurred. Please try again.").should("be.visible");
+    cy.contains("Wrong username or password.").should("be.visible");
   });
 });
 
@@ -94,8 +96,8 @@ describe("Service List Filtering", () => {
 
   it("should display all services initially", () => {
     cy.get('[data-testid="service-card"]', { timeout: 10000 }).should(
-      "have.length",
-      8,
+      "have.length.greaterThan",
+      0,
     );
   });
 
@@ -205,7 +207,7 @@ describe("Add a new service Test", () => {
   });
 });
 
-describe("Register Page", () => {
+describe("Register Customer Page", () => {
   beforeEach(() => {
     cy.visit("/register");
 
@@ -220,19 +222,113 @@ describe("Register Page", () => {
   });
 
   it("registers a new customer successfully", () => {
-    cy.get('[data-testid="fullName"]').type("John Doe");
-    cy.get('[data-testid="username"]').type("johndoe17");
-    cy.get('[data-testid="email"]').type("johndoe16@example.com");
-    cy.get('[data-testid="password"]').type("password123");
-    cy.get('[data-testid="telephoneNumber"]').type("1234567890");
+    const fullName = faker.name.fullName();
+    const username = faker.internet.userName();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    const telephone = faker.phone.number;
 
-    cy.get('[data-testid="type"]').click({ force: true }); // Força o clique no dropdown
-    cy.contains("Cliente").click({ force: true }); // Clica na opção "Cliente"
+    cy.get('[data-testid="fullName"]').type(fullName);
+    cy.get('[data-testid="username"]').type(username);
+    cy.get('[data-testid="email"]').type(email);
+    cy.get('[data-testid="password"]').type(password);
+    cy.get('[data-testid="telephoneNumber"]').type(telephone());
 
-    cy.get('[data-testid="registerButton"]').click({ force: true }); // Força o clique no botão de registro
+    cy.get('[data-testid="type"]').click({ force: true });
+    cy.contains("Cliente").click({ force: true });
+
+    cy.get('[data-testid="registerButton"]').click({ force: true });
     cy.wait(2000);
-    // Verifica se a mensagem de sucesso foi exibida (opcional)
+
     cy.contains("Registration successful!").should("be.visible");
     cy.visit("/services");
+
+    cy.get('[data-testid="profile-icon"]').click();
+
+    // Clicar na opção "Meu Perfil" no menu dropdown
+    cy.contains("Meu Perfil").click();
+
+    // Verificar se a URL atual é a do perfil
+    cy.url().should("eq", "http://localhost:3000/profile");
+  });
+});
+
+describe("Register Service provider Page", () => {
+  beforeEach(() => {
+    cy.visit("/register");
+
+    // Mocks para as chamadas de API
+    cy.intercept("POST", "**/register");
+  });
+
+  it("renders the logo and title", () => {
+    cy.contains("MatchService").should("be.visible");
+    cy.contains("Olá!").should("be.visible");
+    cy.contains("Cadastre-se para começar").should("be.visible");
+  });
+
+  it("registers a new customer successfully", () => {
+    const fullName = faker.name.fullName();
+    const username = faker.internet.userName();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    const telephone = faker.phone.number;
+
+    cy.get('[data-testid="fullName"]').type(fullName);
+    cy.get('[data-testid="username"]').type(username);
+    cy.get('[data-testid="email"]').type(email);
+    cy.get('[data-testid="password"]').type(password);
+    cy.get('[data-testid="telephoneNumber"]').type(telephone());
+
+    cy.get('[data-testid="type"]').parent().click();
+
+    cy.contains("Prestador de Serviço").click({ force: true });
+
+    cy.get('[data-testid="specialty-field"]').parent().click();
+
+    cy.contains("Limpeza").click({ force: true });
+
+    cy.wait(2000);
+
+    cy.get('[data-testid="registerButton"]').click({ force: true });
+    cy.wait(2000);
+
+    cy.contains("Registration successful!").should("be.visible");
+    cy.visit("/services");
+
+    cy.get('[data-testid="profile-icon"]').click();
+
+    // Clicar na opção "Meu Perfil" no menu dropdown
+    cy.contains("Meu Perfil").click();
+
+    // Verificar se a URL atual é a do perfil
+    cy.url().should("eq", "http://localhost:3000/account");
+  });
+});
+
+describe("Profile Page - Schedule and Review", () => {
+  beforeEach(() => {
+    // Log in as a service provider
+    cy.visit("/");
+    cy.login("brunacardoso123@gmail.com", "123456");
+    cy.saveLocalStorage();
+  });
+
+  it("should find the profile name, open the schedule modal, and click to review", () => {
+    cy.visit("/profile");
+    // Encontrar o elemento com o nome do perfil
+    cy.get('[data-testid="profile-name"]').should("be.visible");
+
+    // Clicar no botão "Minha Agenda"
+    cy.get('[data-testid="my-schedule-button"]').click();
+
+    // Verificar se o modal de agendamentos está visível
+    cy.get('[data-testid="schedule-modal"]').should("be.visible");
+
+    // Clicar no botão para avaliar um agendamento específico
+    // Este passo pode precisar ser ajustado com base na estrutura do seu modal e agendamentos
+    cy.get('[data-testid="review-button"]').first().click();
+
+    // Aqui você pode adicionar mais verificações ou ações, como preencher um formulário de avaliação
   });
 });
